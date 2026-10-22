@@ -18,8 +18,10 @@ Populate this section from actual checks on the exact submission archive:
   using `--as-cran` with remote incoming checks explicitly disabled, because
   the default attempt on 0.0.2 timed out retrieving CRAN's package index.
   Examples, tests, vignette rebuilds and HTML manuals are part of that run.
-* Current R-release and R-devel: pending.
-* Linux and macOS: pending.
+* GitHub Actions, 22 October 2026, on commit `3a7b890` (the 0.0.3 source plus
+  `URL`/`BugReports` fields): Windows release, macOS release, Ubuntu release,
+  R-devel, oldrel-1 and R 4.1 all returned status OK with no notes under
+  `--as-cran --no-manual`. Repeat on the exact submission archive.
 
 ## Results
 

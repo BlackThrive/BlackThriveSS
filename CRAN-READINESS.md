@@ -77,7 +77,7 @@ dataset through its checksum.
 | URL round trip | Tests cover both link forms the dashboard reads, all three orderings through the state form, legacy links with force labels, the dashboard's default year and group, and explicit failures for other pages, the expanded definition, unknown years and groups, and malformed state. The live base address is configurable and has not been fetched from this package. |
 | Historical replay | The 2025 release and schema 1 views are unchanged and replay; schema 2 views carry year, group and highlight. |
 | Local package check | Run `dev/check-release.R`. Results and archive SHA-256 are in `artifacts/check-summary.json`; all notes require review. |
-| Current R and other systems | **Pending external execution.** CI is prepared for Windows/macOS/Linux, current release/devel, old release and declared R 4.1 minimum. A workflow file is not a passing result. |
+| Current R and other systems | **Passed on GitHub Actions, 22 October 2026** (run 39811985340 on commit `3a7b890`, the 0.0.3 source plus the `URL`/`BugReports` fields and a workflow fix): Windows release, macOS release, Ubuntu release, devel, oldrel-1 and R 4.1 all completed `R CMD check --as-cran --no-manual` with status OK and no notes, with the workflow set to fail on any warning. Re-run on the exact archive intended for submission. |
 | Source-data review | Reconfirm Police.uk and ONS attributions, population construction and disclosure scope for the council table. No restricted survey records are bundled. Statistical review should distinguish faithful reproduction from sound inference. |
 | Ownership and support | Maintainer contact and Black Thrive ownership are carried from the existing project metadata. Confirm final authorship, rights, support responsibility and email availability before public submission. |
 | Public distribution | The repository is `https://github.com/BlackThrive/BlackThriveSS` (private at creation; release 0.0.3 tagged `v0.0.3`), and `DESCRIPTION` carries matching `URL` and `BugReports` fields from 0.0.3.9000. Decide the visibility and release location, and preserve supported historical releases. |
@@ -123,9 +123,11 @@ prerequisite for this first release.
 
 ## External services
 
-The CI workflow is based on the official [r-lib/actions example](https://github.com/r-lib/actions/blob/v2/examples/check-standard.yaml).
-It becomes executable after the project is placed in its intended GitHub
-repository. No CI job has been dispatched by this local preparation.
+The CI workflow is based on the official [r-lib/actions example](https://github.com/r-lib/actions/blob/v2/examples/check-standard.yaml)
+and runs on every push to `main` of `BlackThrive/BlackThriveSS`. The first
+two runs failed before checking anything because the `error-on` input was
+passed unquoted and evaluated as an R symbol; the input is now `'"warning"'`
+as in the upstream example, and the matrix passes (see the release gates).
 
 Win-builder sends results to the maintainer address and is a separate upload.
 Record any such result before claiming it passed. [Win-builder](https://win-builder.r-project.org/)
