@@ -88,8 +88,11 @@ and Pandoc, which RStudio and Positron include.
 
 ```{r report, eval = FALSE}
 btg_report(force = "metropolitan", file = "metropolitan-2025.html")
-btg_report(council = "E09000022", year = 2024, file = "lambeth-2024.html")
+btg_report(council = "E09000022", year = 2024, file = "lambeth-2024.docx")
 ```
+
+A `.docx` file name, or `format = "docx"`, gives the same briefing as a
+Word document for people who need to edit it or paste from it.
 
 The template is also listed in those editors under *New R Markdown, From
 Template* as "BlackThriveSS briefing", for anyone who wants to add their own

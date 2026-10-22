@@ -79,4 +79,18 @@ test_that("the briefing renders to a self-contained HTML file", {
   expect_error(btg_report(force = "metropolitan", file = path), "File exists")
   council <- btg_report(council = "E09000022", file = path, overwrite = TRUE, draws = 200)
   expect_match(paste(readLines(council, warn = FALSE), collapse = "\n"), "Lambeth, 2025", fixed = TRUE)
+  expect_error(btg_report(force = "kent", file = path, format = "pdf", overwrite = TRUE), "format must be")
+})
+
+test_that("the briefing also renders as a Word document", {
+  skip_if_not_installed("rmarkdown")
+  skip_if_not(rmarkdown::pandoc_available("2.0"))
+  path <- tempfile(fileext = ".docx")
+  on.exit(unlink(path))
+  out <- btg_report(force = "kent", year = 2024, file = path, draws = 200)
+  expect_true(file.exists(path))
+  expect_gt(file.info(path)$size, 50000)
+  zipped <- utils::unzip(path, list = TRUE)$Name
+  expect_true("word/document.xml" %in% zipped)
+  expect_true(any(grepl("^word/media/", zipped)))
 })

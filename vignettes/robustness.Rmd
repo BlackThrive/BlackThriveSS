@@ -177,6 +177,39 @@ basename(files)
 unlink(files)
 ```
 
+## Methods in one place
+
+Every quantity above is computed from four recorded numbers per area, year
+and group: the group's recorded stops `g`, the White recorded stops `w`,
+and the Census 2021 resident populations `P_g` and `P_w`; `u` is the number
+of recorded stops with no recorded ethnicity.
+
+* Rate per 1,000 residents: `1000 * g / P_g` and `1000 * w / P_w`.
+* Ratio: `(g / P_g) / (w / P_w)`, withheld when `w` is zero or the
+  populations are not comparable.
+* 95% interval: `exp(log(ratio) ± 1.96 * sqrt(1/g + 1/w))`, for positive
+  counts. It treats both counts as independent Poisson counts with fixed
+  denominators.
+* Allocation range: `ratio_min = (g / P_g) / ((w + u) / P_w)` and
+  `ratio_max = ((g + u) / P_g) / (w / P_w)`. For any split of the unknown
+  stops between the two groups, with the remainder in other groups, the
+  ratio lies between them.
+* Rank bounds: a force's best rank is one plus the number of other eligible
+  forces whose `ratio_min` exceeds its `ratio_max`; its worst rank is one
+  plus the number whose `ratio_max` exceeds its `ratio_min`.
+* Rank interval: draw `g* ~ Poisson(g)` and `w* ~ Poisson(w)` for every
+  eligible force, rank the simulated ratios, repeat `draws` times, and take
+  the 2.5th and 97.5th percentiles of each force's rank; `prob_top` is the
+  share of draws in which the force ranks within the top `top`.
+* Change between years: `ratio_to / ratio_from` with the interval
+  `exp(log(change) ± 1.96 * sqrt(1/g_1 + 1/w_1 + 1/g_2 + 1/w_2))`.
+
+Eligibility and ranks follow the dashboard's display rule: a positive finite
+ratio from at least 200 stops with known ethnicity and comparable resident
+populations (White residents of at least 50,000, and neither British
+Transport Police nor City of London). The audit in `btg_validate()` checks
+that the stored ratios, intervals and ranks reproduce these calculations.
+
 ## What these tools do not do
 
 They do not adjust for who is present in an area, impute missing returns,

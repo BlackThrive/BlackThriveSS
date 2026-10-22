@@ -19,7 +19,8 @@
   as plain statements that carry their qualifications, with the tables behind
   them; `btg_report()` renders a self-contained HTML briefing from the
   installed R Markdown template "BlackThriveSS briefing", which the editors
-  also list under new R Markdown templates.
+  also list under new R Markdown templates, as a self-contained web page or
+  a Word document.
 * Sharing. `btg_export()` writes a dataset to CSV with a JSON provenance
   sidecar; `btg_glossary()` defines every term the package uses.
 * Auditing the source. `btg_source_status()` reads the Police.uk

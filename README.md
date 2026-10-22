@@ -105,12 +105,13 @@ p <- btg_profile(force = "metropolitan")
 p                                  # plain statements, each with its qualification
 p$comparisons                      # the numbers behind them
 btg_report(force = "metropolitan", file = "metropolitan-2025.html")
-btg_report(council = "E09000022", file = "lambeth-2025.html")
+btg_report(council = "E09000022", file = "lambeth-2025.docx")
 ```
 
-The briefing is a self-contained HTML file: statements, charts with the
-area highlighted, tables, monthly coverage, national context, how to read
-it, and the code and citations that reproduce every figure. It needs the
+The briefing is a self-contained HTML page, or a Word document: statements,
+charts with the area highlighted, tables, monthly coverage, national
+context, how to read it, and the code and citations that reproduce every
+figure. It needs the
 rmarkdown package and Pandoc, which RStudio and Positron include. The same
 template appears in those editors as "BlackThriveSS briefing". See
 `vignette("briefing", package = "BlackThriveSS")`.

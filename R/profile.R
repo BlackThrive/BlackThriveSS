@@ -247,7 +247,10 @@ print.btg_profile <- function(x, ...) {
 #' citation and release identifiers needed to reproduce every figure.
 #'
 #' @inheritParams btg_profile
-#' @param file Path of the HTML file to write.
+#' @param file Path of the file to write.
+#' @param format `"html"` for a self-contained web page, or `"docx"` for a
+#'   Word document with the same content. `NULL` takes the format from the
+#'   file's extension.
 #' @param overwrite Whether to replace an existing file.
 #' @return The path of the written file, invisibly.
 #' @details Rendering needs the `rmarkdown` package and Pandoc, which
@@ -264,8 +267,12 @@ print.btg_profile <- function(x, ...) {
 #' }
 #' }
 btg_report <- function(force = NULL, council = NULL, year = NULL, release = NULL, file,
-                       overwrite = FALSE, draws = 2000L, seed = 1L) {
+                       format = NULL, overwrite = FALSE, draws = 2000L, seed = 1L) {
   .scalar_string(file, "file")
+  format <- format %||% if (grepl("[.]docx$", file, ignore.case = TRUE)) "docx" else "html"
+  if (!is.character(format) || length(format) != 1L || !format %in% c("html", "docx")) {
+    stop("format must be html or docx.", call. = FALSE)
+  }
   if (!is.logical(overwrite) || length(overwrite) != 1L || is.na(overwrite)) {
     stop("overwrite must be TRUE or FALSE.", call. = FALSE)
   }
@@ -285,8 +292,12 @@ btg_report <- function(force = NULL, council = NULL, year = NULL, release = NULL
   on.exit(unlink(work, recursive = TRUE), add = TRUE)
   input <- file.path(work, "briefing.Rmd")
   file.copy(template, input)
+  output_format <- if (identical(format, "docx")) {
+    rmarkdown::word_document(toc = TRUE, fig_width = 7.5, fig_height = 5)
+  } else NULL
   output <- rmarkdown::render(
-    input, output_file = "briefing.html", output_dir = work, quiet = TRUE,
+    input, output_format = output_format, output_file = paste0("briefing.", format),
+    output_dir = work, quiet = TRUE,
     envir = new.env(parent = asNamespace("BlackThriveSS")),
     params = list(force = force, council = council, year = year, release = release,
                   draws = draws, seed = seed))

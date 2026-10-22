@@ -17,7 +17,13 @@ params:
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE,
-                      fig.width = 10, fig.height = 6.5, dpi = 96, fig.align = "left")
+                      fig.width = 10, fig.height = 6.5, dpi = 96)
+if (knitr::is_html_output()) {
+  knitr::opts_chunk$set(fig.align = "left")
+} else {
+  # alternative text is an HTML feature; Word output takes the figure alone
+  knitr::opts_hooks$set(fig.alt = function(options) { options$fig.alt <- NULL; options })
+}
 if (!isNamespaceLoaded("BlackThriveSS")) library(BlackThriveSS)
 profile <- btg_profile(force = params$force, council = params$council, year = params$year,
                        release = params$release, draws = params$draws, seed = params$seed)

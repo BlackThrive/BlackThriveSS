@@ -10,6 +10,7 @@ btg_report(
   year = NULL,
   release = NULL,
   file,
+  format = NULL,
   overwrite = FALSE,
   draws = 2000L,
   seed = 1L
@@ -27,7 +28,11 @@ source covers in full.}
 \item{release}{A value from \code{\link[=btg_releases]{btg_releases()}}; \code{NULL} uses the default
 catalogue release.}
 
-\item{file}{Path of the HTML file to write.}
+\item{file}{Path of the file to write.}
+
+\item{format}{\code{"html"} for a self-contained web page, or \code{"docx"} for a
+Word document with the same content. \code{NULL} takes the format from the
+file's extension.}
 
 \item{overwrite}{Whether to replace an existing file.}
 
