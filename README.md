@@ -12,6 +12,82 @@ dashboard's July 2026 Police.uk source release, built in September 2026, and
 Census 2021 populations. The package does not query the live website; it and
 its examples run offline without Shiny, Python or a database.
 
+## Install from GitHub
+
+You need **R 4.1.0 or newer** and an internet connection for installation.
+Run this in a fresh R session or the RStudio console:
+
+```r
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes", repos = "https://cloud.r-project.org")
+}
+
+remotes::install_github(
+  "BlackThrive/BlackThriveSS",
+  repos = "https://cloud.r-project.org",
+  upgrade = "never",
+  build_vignettes = FALSE
+)
+
+library(BlackThriveSS)
+```
+
+This installs the current development version from the public repository and
+its required dependencies. You do not need to clone the repository, download
+the dashboard or create a GitHub account. BlackThriveSS is **not on CRAN yet**;
+`install.packages("BlackThriveSS")` is not an installation route at present.
+
+The [remotes installer](https://remotes.r-lib.org/reference/install_github.html)
+skips building the tutorial here, so Pandoc and LaTeX are not needed. The
+package contains no compiled code; if R needs to install dependencies from
+source, those dependencies may require build tools. On Windows and macOS,
+use available CRAN binary dependencies. Restart R before updating a loaded
+copy of BlackThriveSS, then rerun the installation block.
+
+## Reproduce an example chart
+
+After installation, copy this into R. It reads the bundled **2025 Black:White
+stop-rate comparison** and draws the ten highest dashboard-eligible force
+ratios. The data release is explicit so the example does not switch to a newer
+snapshot when the package is updated.
+
+```r
+library(BlackThriveSS)
+
+x <- btg_get_data(
+  "force_disparity",
+  years = 2025,
+  release = "dashboard-2026-07-2025-99a88b69f2d6"
+)
+
+p <- btg_plot_disparity(x, n = 10, ranking = "highest")
+print(p)
+```
+
+The plot appears in RStudio's **Plots** pane or R's graphics window. It uses
+recorded stop counts and Census 2021 resident populations. The line at 1 marks
+equal recorded rates; an asterisk marks incomplete or unverified monthly
+returns. These are descriptive event-rate ratios, not individual probabilities
+or evidence of a causal effect. All data needed for this example are bundled,
+so it works offline after installation.
+
+Save the chart and inspect the numbers behind it:
+
+```r
+ggplot2::ggsave(
+  "black-white-disparity-2025.png", plot = p,
+  width = 11.5, height = 7.5, units = "in", dpi = 160
+)
+
+btg_figure_data(p)[c("force_label", "ratio", "coverage_status")]
+btg_validate(x)
+```
+
+The PNG is saved in your current working directory (`getwd()`). Validation
+reports the integrity and consistency checks; each `passed` value should be
+`TRUE`. See [Save and reproduce the chart](#save-and-reproduce-the-chart) to
+share a machine-readable view tied to this exact data release.
+
 ## The catalogue
 
 ```r
@@ -42,79 +118,47 @@ return is always `NA`, never zero.
 ## Round-trip with the dashboard website
 
 ```r
-p <- btg_plot_disparity(btg_get_data("force_ethnicity_year"),
+q <- btg_plot_disparity(btg_get_data("force_ethnicity_year"),
                         year = 2024, group = "Asian", highlight = "metropolitan")
-btg_dashboard_url(p)
-#> https://.../?tab=disparity&year=2024&eth=Asian&def=std&view=chart&force=Metropolitan%20Police
+url <- btg_dashboard_url(q)
+url
 
-back <- btg_from_url("https://.../?tab=disparity&year=2024&eth=Asian&view=chart&force=Metropolitan%20Police")
-identical(btg_figure_data(back), btg_figure_data(p))
+back <- btg_from_url(url)
+identical(btg_figure_data(back), btg_figure_data(q))
 #> TRUE
 ```
 
-`btg_dashboard_url()` opens the Disparity page at the chart's year, group and
-selected force. `btg_from_url()` reproduces the chart behind any link copied
+`btg_dashboard_url()` returns a link to the Disparity page at the chart's year,
+group and selected force; use `browseURL(url)` to open it. `btg_from_url()`
+reproduces supported standard-group Disparity charts from links copied
 from the website's Share view button, in either link form the dashboard has
 used, and warns when the link was made from a different source month than the
 snapshot. A link selects a view; the website recomputes from its current
 release, while the chart in R stays pinned to the bundled snapshot.
 
-## Try it in R
+## Explore and customise
 
-Open `BlackThriveSS.Rproj` and run the following in a fresh R session. The
-installer verifies the source archive, installs missing required dependencies
-from CRAN, and puts the package into this project's `artifacts/library` folder.
-It does not require devtools or a running dashboard.
+Using `x` and `p` from the example above:
 
 ```r
-source("install.R")
-install_blackthrivess()
-library(BlackThriveSS)
-
-x <- btg_get_data()
-p <- btg_plot_disparity(x)
-p
-
 x$data                      # Ordinary data frame: all 44 forces
 btg_figure_data(p)           # Original chart table, in display order
 btg_coverage(x)              # 528 monthly reporting observations
 btg_metadata(x)$source      # Source release, retrieval time and checksum
 btg_citation(x)
-btg_validate(x)              # Integrity, coverage and accounting checks
 ```
 
-To share this development build for testing, use
-`artifacts/BlackThriveSS-0.0.3-install.zip`. Extract it into a folder and follow
-`START-HERE.txt`; the full development project is not needed. The archive and
-manifest must stay together. This is a local release, not a published CRAN
-package. Do not use `install.packages("BlackThriveSS")` yet.
-
-For a different writable library, supply `lib = "/your/library"`. With all
-required dependencies already available, `dependencies = FALSE` performs an
-offline installation. The package itself contains no compiled code; source
-installation of dependencies can need build tools. Prefer available CRAN binary
-dependencies on Windows and macOS. No development packages are installed by the
-installer.
-
-When reopening R, enable the local library and load the package:
-
-```r
-.libPaths(c(normalizePath("artifacts/library"), .libPaths()))
-library(BlackThriveSS)
-vignette("getting-started", package = "BlackThriveSS")
-```
-
-The tutorial includes discovery, chart customisation, missing returns, a saved
-view round trip, validation and troubleshooting. Full function help is available
-with `help(package = "BlackThriveSS")`. Developers can instead use
-`pkgload::load_all()` from the project folder.
+Full function help is installed: use `help(package = "BlackThriveSS")` or
+`?btg_plot_disparity`. The [getting-started tutorial](vignettes/getting-started.Rmd)
+includes discovery, chart customisation, missing returns, saved-view replay,
+validation and troubleshooting. The quick installation above does not build
+an installed HTML vignette. In a later R session, simply run
+`library(BlackThriveSS)` again; no project-specific library path is needed.
 
 Customise the returned ggplot or inspect one force:
 
 ```r
 p + ggplot2::labs(title = "Recorded Black:White stop-rate comparison")
-ggplot2::ggsave("disparity.png", p, width = 11.5, height = 7.5, dpi = 160)
-
 met <- btg_get_data(force = "metropolitan")
 met$data[c("black_stops", "white_stops", "black_population",
            "white_population", "ratio", "coverage_status")]
@@ -131,8 +175,11 @@ accidentally claim to be the fixed dashboard result.
 ## Save and reproduce the chart
 
 ```r
-btg_save_view(p, "my-disparity-view.json")
-recreated <- btg_from_view("my-disparity-view.json")
+# Use a temporary path so this example can be rerun safely.
+# Replace it with a project file path to keep or share the view.
+view_file <- tempfile(fileext = ".json")
+btg_save_view(p, view_file)
+recreated <- btg_from_view(view_file)
 stopifnot(identical(btg_figure_data(p), btg_figure_data(recreated)))
 recreated
 
@@ -149,12 +196,14 @@ styling and layers are not stored in the view.
 
 ## What is reproduced
 
-The chart reproduces the force selection, ratios and ordering from the dashboard
-Disparity page's **2025 / Standard groups / Black / Compare the distribution**
-view. Highest, lowest and closest-to-parity orderings are supported. The output
+The first example reproduces the force selection, ratios and ordering from the
+dashboard Disparity page's **2025 / Standard groups / Black / Compare the
+distribution** view. Highest, lowest and closest-to-parity orderings are supported. The output
 uses the dashboard's colours in an editable static ggplot, with additional
-coverage labels. It does not reproduce Plotly interactions, selected-force
-highlighting or previous-year change annotations.
+coverage labels and optional selected-force highlighting. It does not reproduce
+Plotly interactions or previous-year change annotations. The
+`force_ethnicity_year` dataset supports other bundled years and groups, as in
+the dashboard-link example above.
 
 Forty forces have ratios eligible under the dashboard's display rules. British
 Transport Police and City of London have no displayed resident-based rate.
@@ -217,18 +266,16 @@ Those are maintainer tools, not runtime requirements for users. The build writes
 a source archive, checksummed manifest and installation ZIP. The check records
 the exact archive SHA-256, R version, errors, warnings and notes.
 
-See `CRAN-READINESS.md` for the evidence and remaining release gates, and
-`CONTRIBUTING.md` for development rules. `.github/workflows/R-CMD-check.yaml`
-defines Windows, macOS, Linux and R-version checks; it is prepared but has not
-run on an external repository. There are no claimed CI passes or CRAN acceptance.
+See [CRAN readiness](CRAN-READINESS.md) for the evidence and remaining release
+gates, and [Contributing](CONTRIBUTING.md) for development rules. The
+[GitHub Actions checks](https://github.com/BlackThrive/BlackThriveSS/actions/workflows/R-CMD-check.yaml)
+cover Windows, macOS, Linux and multiple R versions. Consult the workflow runs
+for the result on a specific commit; these checks do not imply CRAN acceptance.
 
-The **Use in R dashboard button is deferred**. The current priorities are
-installation, documentation, validation, release ownership and a supported
-distribution route. A larger dataset catalogue and public release store can
-follow once their contracts and maintenance arrangements are established.
-
-This is a local development package. It has not been submitted to CRAN or
-published, and it does not change the dashboard deployment.
+The package is publicly available on GitHub and remains a development package.
+It has not been submitted to CRAN. Report problems through
+[GitHub issues](https://github.com/BlackThrive/BlackThriveSS/issues), including
+your R version, package version and a small reproducible example.
 
 ## Attribution
 
