@@ -1,0 +1,8 @@
+citHeader("Please cite the package and identify the data release using btg_citation(x).")
+bibentry(
+  bibtype = "Manual",
+  title = "BlackThriveSS: Reproduce Black Thrive Stop and Search Dashboard Evidence",
+  author = person("Mustapha", "Wasseja"),
+  year = "2026",
+  note = paste("R package version", meta$Version, "; Black Thrive Global")
+)

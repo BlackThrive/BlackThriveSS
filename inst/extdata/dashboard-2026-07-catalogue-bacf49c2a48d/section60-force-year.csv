@@ -1,0 +1,628 @@
+"force","force_label","year","group","s60_stops"
+"btp","British Transport Police",2018,"Asian",52
+"btp","British Transport Police",2018,"Black",438
+"btp","British Transport Police",2018,"Other",5
+"btp","British Transport Police",2018,"Unknown",24
+"btp","British Transport Police",2018,"White",170
+"cheshire","Cheshire",2018,"Black",2
+"cheshire","Cheshire",2018,"White",19
+"city-of-london","London, City of",2018,"Black",4
+"city-of-london","London, City of",2018,"Unknown",5
+"city-of-london","London, City of",2018,"White",4
+"cumbria","Cumbria",2018,"Asian",1
+"dorset","Dorset",2018,"Black",2
+"dorset","Dorset",2018,"White",8
+"essex","Essex",2018,"Black",5
+"essex","Essex",2018,"White",34
+"greater-manchester","Greater Manchester",2018,"Black",1
+"hertfordshire","Hertfordshire",2018,"Asian",3
+"hertfordshire","Hertfordshire",2018,"Black",6
+"hertfordshire","Hertfordshire",2018,"Other",3
+"hertfordshire","Hertfordshire",2018,"White",19
+"lancashire","Lancashire",2018,"Asian",1
+"lancashire","Lancashire",2018,"White",22
+"leicestershire","Leicestershire",2018,"Asian",3
+"leicestershire","Leicestershire",2018,"Black",3
+"leicestershire","Leicestershire",2018,"Other",1
+"leicestershire","Leicestershire",2018,"White",3
+"merseyside","Merseyside",2018,"Unknown",3
+"merseyside","Merseyside",2018,"White",60
+"metropolitan","Metropolitan Police",2018,"Asian",842
+"metropolitan","Metropolitan Police",2018,"Black",4642
+"metropolitan","Metropolitan Police",2018,"Other",134
+"metropolitan","Metropolitan Police",2018,"Unknown",88
+"metropolitan","Metropolitan Police",2018,"White",1385
+"norfolk","Norfolk",2018,"White",2
+"northamptonshire","Northamptonshire",2018,"Black",7
+"northamptonshire","Northamptonshire",2018,"Unknown",1
+"northamptonshire","Northamptonshire",2018,"White",3
+"northumbria","Northumbria",2018,"White",1
+"nottinghamshire","Nottinghamshire",2018,"Asian",6
+"nottinghamshire","Nottinghamshire",2018,"Black",8
+"nottinghamshire","Nottinghamshire",2018,"Unknown",1
+"nottinghamshire","Nottinghamshire",2018,"White",11
+"suffolk","Suffolk",2018,"Asian",3
+"suffolk","Suffolk",2018,"Black",7
+"suffolk","Suffolk",2018,"Mixed",1
+"suffolk","Suffolk",2018,"Other",4
+"suffolk","Suffolk",2018,"White",27
+"sussex","Sussex",2018,"Asian",2
+"sussex","Sussex",2018,"Black",1
+"sussex","Sussex",2018,"Other",1
+"sussex","Sussex",2018,"White",8
+"thames-valley","Thames Valley",2018,"Asian",2
+"thames-valley","Thames Valley",2018,"Black",1
+"west-midlands","West Midlands",2018,"Asian",104
+"west-midlands","West Midlands",2018,"Other",11
+"west-midlands","West Midlands",2018,"Unknown",172
+"avon-and-somerset","Avon and Somerset",2019,"White",1
+"btp","British Transport Police",2019,"Asian",77
+"btp","British Transport Police",2019,"Black",534
+"btp","British Transport Police",2019,"Other",19
+"btp","British Transport Police",2019,"Unknown",52
+"btp","British Transport Police",2019,"White",254
+"cheshire","Cheshire",2019,"Asian",5
+"cheshire","Cheshire",2019,"Black",6
+"cheshire","Cheshire",2019,"Unknown",10
+"cheshire","Cheshire",2019,"White",233
+"city-of-london","London, City of",2019,"Asian",5
+"city-of-london","London, City of",2019,"Black",13
+"city-of-london","London, City of",2019,"Other",2
+"city-of-london","London, City of",2019,"Unknown",85
+"city-of-london","London, City of",2019,"White",5
+"cumbria","Cumbria",2019,"White",1
+"derbyshire","Derbyshire",2019,"White",1
+"devon-and-cornwall","Devon & Cornwall",2019,"White",1
+"dorset","Dorset",2019,"Black",1
+"dorset","Dorset",2019,"Unknown",1
+"dorset","Dorset",2019,"White",4
+"essex","Essex",2019,"Asian",35
+"essex","Essex",2019,"Black",57
+"essex","Essex",2019,"Other",33
+"essex","Essex",2019,"Unknown",9
+"essex","Essex",2019,"White",383
+"greater-manchester","Greater Manchester",2019,"White",1
+"hertfordshire","Hertfordshire",2019,"Black",13
+"hertfordshire","Hertfordshire",2019,"Unknown",5
+"hertfordshire","Hertfordshire",2019,"White",38
+"humberside","Humberside",2019,"Asian",4
+"humberside","Humberside",2019,"Unknown",11
+"humberside","Humberside",2019,"White",114
+"kent","Kent",2019,"Asian",1
+"kent","Kent",2019,"Black",7
+"kent","Kent",2019,"Mixed",1
+"kent","Kent",2019,"Other",24
+"kent","Kent",2019,"White",95
+"lancashire","Lancashire",2019,"Asian",52
+"lancashire","Lancashire",2019,"Black",11
+"lancashire","Lancashire",2019,"Other",5
+"lancashire","Lancashire",2019,"Unknown",17
+"lancashire","Lancashire",2019,"White",354
+"leicestershire","Leicestershire",2019,"Asian",1
+"leicestershire","Leicestershire",2019,"Black",1
+"merseyside","Merseyside",2019,"Black",1
+"merseyside","Merseyside",2019,"Unknown",1
+"merseyside","Merseyside",2019,"White",8
+"metropolitan","Metropolitan Police",2019,"Asian",1597
+"metropolitan","Metropolitan Police",2019,"Black",6318
+"metropolitan","Metropolitan Police",2019,"Other",569
+"metropolitan","Metropolitan Police",2019,"Unknown",233
+"metropolitan","Metropolitan Police",2019,"White",2834
+"north-wales","North Wales",2019,"Asian",3
+"north-wales","North Wales",2019,"Black",5
+"north-wales","North Wales",2019,"Other",12
+"north-wales","North Wales",2019,"White",173
+"northamptonshire","Northamptonshire",2019,"Black",1
+"northumbria","Northumbria",2019,"White",2
+"nottinghamshire","Nottinghamshire",2019,"Black",1
+"nottinghamshire","Nottinghamshire",2019,"Mixed",1
+"nottinghamshire","Nottinghamshire",2019,"White",5
+"staffordshire","Staffordshire",2019,"Unknown",1
+"staffordshire","Staffordshire",2019,"White",2
+"suffolk","Suffolk",2019,"Asian",2
+"suffolk","Suffolk",2019,"Black",6
+"suffolk","Suffolk",2019,"Mixed",5
+"suffolk","Suffolk",2019,"Other",14
+"suffolk","Suffolk",2019,"White",57
+"sussex","Sussex",2019,"Unknown",2
+"sussex","Sussex",2019,"White",12
+"thames-valley","Thames Valley",2019,"Asian",1
+"thames-valley","Thames Valley",2019,"White",4
+"west-midlands","West Midlands",2019,"Asian",672
+"west-midlands","West Midlands",2019,"Other",66
+"west-midlands","West Midlands",2019,"Unknown",1355
+"btp","British Transport Police",2020,"Asian",19
+"btp","British Transport Police",2020,"Black",95
+"btp","British Transport Police",2020,"Other",9
+"btp","British Transport Police",2020,"Unknown",3
+"btp","British Transport Police",2020,"White",71
+"cheshire","Cheshire",2020,"Asian",1
+"cheshire","Cheshire",2020,"Black",1
+"cheshire","Cheshire",2020,"White",51
+"devon-and-cornwall","Devon & Cornwall",2020,"White",1
+"durham","Durham",2020,"White",1
+"essex","Essex",2020,"Asian",30
+"essex","Essex",2020,"Black",52
+"essex","Essex",2020,"Other",24
+"essex","Essex",2020,"Unknown",39
+"essex","Essex",2020,"White",597
+"hampshire","Hampshire",2020,"Asian",21
+"hampshire","Hampshire",2020,"Black",24
+"hampshire","Hampshire",2020,"Other",8
+"hampshire","Hampshire",2020,"White",101
+"hertfordshire","Hertfordshire",2020,"Asian",1
+"hertfordshire","Hertfordshire",2020,"Black",6
+"hertfordshire","Hertfordshire",2020,"Unknown",2
+"hertfordshire","Hertfordshire",2020,"White",1
+"humberside","Humberside",2020,"Asian",19
+"humberside","Humberside",2020,"Black",4
+"humberside","Humberside",2020,"Unknown",8
+"humberside","Humberside",2020,"White",109
+"kent","Kent",2020,"Asian",18
+"kent","Kent",2020,"Black",67
+"kent","Kent",2020,"Mixed",25
+"kent","Kent",2020,"Other",36
+"kent","Kent",2020,"White",558
+"leicestershire","Leicestershire",2020,"White",2
+"merseyside","Merseyside",2020,"Unknown",2
+"merseyside","Merseyside",2020,"White",13
+"metropolitan","Metropolitan Police",2020,"Asian",1187
+"metropolitan","Metropolitan Police",2020,"Black",2916
+"metropolitan","Metropolitan Police",2020,"Other",389
+"metropolitan","Metropolitan Police",2020,"Unknown",136
+"metropolitan","Metropolitan Police",2020,"White",1913
+"north-wales","North Wales",2020,"Asian",1
+"north-wales","North Wales",2020,"Black",1
+"north-wales","North Wales",2020,"Other",19
+"north-wales","North Wales",2020,"Unknown",5
+"north-wales","North Wales",2020,"White",121
+"northamptonshire","Northamptonshire",2020,"White",2
+"northumbria","Northumbria",2020,"White",2
+"nottinghamshire","Nottinghamshire",2020,"Asian",2
+"nottinghamshire","Nottinghamshire",2020,"Black",3
+"nottinghamshire","Nottinghamshire",2020,"Unknown",1
+"nottinghamshire","Nottinghamshire",2020,"White",7
+"south-wales","South Wales",2020,"Asian",4
+"south-wales","South Wales",2020,"Black",6
+"south-wales","South Wales",2020,"Other",1
+"south-wales","South Wales",2020,"Unknown",1
+"south-wales","South Wales",2020,"White",12
+"sussex","Sussex",2020,"Black",8
+"sussex","Sussex",2020,"White",4
+"thames-valley","Thames Valley",2020,"Asian",4
+"thames-valley","Thames Valley",2020,"Black",3
+"thames-valley","Thames Valley",2020,"White",2
+"west-midlands","West Midlands",2020,"Asian",70
+"west-midlands","West Midlands",2020,"Other",4
+"west-midlands","West Midlands",2020,"Unknown",63
+"avon-and-somerset","Avon and Somerset",2021,"Unknown",1
+"btp","British Transport Police",2021,"Asian",9
+"btp","British Transport Police",2021,"Black",27
+"btp","British Transport Police",2021,"Other",1
+"btp","British Transport Police",2021,"Unknown",1
+"btp","British Transport Police",2021,"White",22
+"cambridgeshire","Cambridgeshire",2021,"Asian",1
+"cambridgeshire","Cambridgeshire",2021,"Black",3
+"cambridgeshire","Cambridgeshire",2021,"Other",1
+"cambridgeshire","Cambridgeshire",2021,"White",2
+"derbyshire","Derbyshire",2021,"Asian",4
+"essex","Essex",2021,"Black",2
+"essex","Essex",2021,"Mixed",3
+"essex","Essex",2021,"Other",1
+"essex","Essex",2021,"Unknown",68
+"essex","Essex",2021,"White",53
+"hampshire","Hampshire",2021,"Black",2
+"hampshire","Hampshire",2021,"White",10
+"humberside","Humberside",2021,"Unknown",1
+"humberside","Humberside",2021,"White",24
+"kent","Kent",2021,"Asian",73
+"kent","Kent",2021,"Black",98
+"kent","Kent",2021,"Mixed",43
+"kent","Kent",2021,"Other",59
+"kent","Kent",2021,"Unknown",2
+"kent","Kent",2021,"White",389
+"lancashire","Lancashire",2021,"Asian",80
+"lancashire","Lancashire",2021,"Black",28
+"lancashire","Lancashire",2021,"Other",2
+"lancashire","Lancashire",2021,"Unknown",24
+"lancashire","Lancashire",2021,"White",388
+"merseyside","Merseyside",2021,"Asian",4
+"merseyside","Merseyside",2021,"Black",11
+"merseyside","Merseyside",2021,"Other",4
+"merseyside","Merseyside",2021,"Unknown",43
+"merseyside","Merseyside",2021,"White",219
+"metropolitan","Metropolitan Police",2021,"Asian",521
+"metropolitan","Metropolitan Police",2021,"Black",1222
+"metropolitan","Metropolitan Police",2021,"Other",235
+"metropolitan","Metropolitan Police",2021,"Unknown",76
+"metropolitan","Metropolitan Police",2021,"White",754
+"north-wales","North Wales",2021,"White",42
+"northamptonshire","Northamptonshire",2021,"Asian",1
+"northamptonshire","Northamptonshire",2021,"Black",20
+"northamptonshire","Northamptonshire",2021,"Unknown",3
+"northamptonshire","Northamptonshire",2021,"White",42
+"northumbria","Northumbria",2021,"White",7
+"nottinghamshire","Nottinghamshire",2021,"Black",1
+"nottinghamshire","Nottinghamshire",2021,"Mixed",3
+"nottinghamshire","Nottinghamshire",2021,"Other",1
+"nottinghamshire","Nottinghamshire",2021,"White",3
+"south-wales","South Wales",2021,"Black",2
+"south-wales","South Wales",2021,"Unknown",2
+"south-wales","South Wales",2021,"White",11
+"staffordshire","Staffordshire",2021,"Unknown",2
+"suffolk","Suffolk",2021,"Asian",4
+"suffolk","Suffolk",2021,"Black",1
+"suffolk","Suffolk",2021,"Mixed",7
+"suffolk","Suffolk",2021,"Other",1
+"suffolk","Suffolk",2021,"White",14
+"sussex","Sussex",2021,"Asian",1
+"sussex","Sussex",2021,"Other",1
+"sussex","Sussex",2021,"White",3
+"thames-valley","Thames Valley",2021,"Asian",3
+"thames-valley","Thames Valley",2021,"Black",4
+"thames-valley","Thames Valley",2021,"White",9
+"west-midlands","West Midlands",2021,"Asian",9
+"west-midlands","West Midlands",2021,"Black",14
+"west-midlands","West Midlands",2021,"Unknown",12
+"west-midlands","West Midlands",2021,"White",26
+"btp","British Transport Police",2022,"Asian",1
+"btp","British Transport Police",2022,"Black",8
+"btp","British Transport Police",2022,"Other",1
+"btp","British Transport Police",2022,"Unknown",1
+"btp","British Transport Police",2022,"White",13
+"cambridgeshire","Cambridgeshire",2022,"Asian",4
+"cambridgeshire","Cambridgeshire",2022,"Black",2
+"cambridgeshire","Cambridgeshire",2022,"Unknown",1
+"cambridgeshire","Cambridgeshire",2022,"White",4
+"derbyshire","Derbyshire",2022,"Asian",6
+"derbyshire","Derbyshire",2022,"Black",1
+"derbyshire","Derbyshire",2022,"Other",3
+"devon-and-cornwall","Devon & Cornwall",2022,"White",1
+"essex","Essex",2022,"Asian",15
+"essex","Essex",2022,"Black",43
+"essex","Essex",2022,"Other",7
+"essex","Essex",2022,"Unknown",10
+"essex","Essex",2022,"White",234
+"hampshire","Hampshire",2022,"Asian",12
+"hampshire","Hampshire",2022,"Black",3
+"hampshire","Hampshire",2022,"Other",7
+"hampshire","Hampshire",2022,"White",97
+"hertfordshire","Hertfordshire",2022,"Asian",6
+"hertfordshire","Hertfordshire",2022,"Black",5
+"hertfordshire","Hertfordshire",2022,"Unknown",5
+"hertfordshire","Hertfordshire",2022,"White",27
+"kent","Kent",2022,"Asian",31
+"kent","Kent",2022,"Black",61
+"kent","Kent",2022,"Mixed",10
+"kent","Kent",2022,"Other",22
+"kent","Kent",2022,"White",289
+"lancashire","Lancashire",2022,"White",6
+"leicestershire","Leicestershire",2022,"Asian",71
+"leicestershire","Leicestershire",2022,"Black",5
+"leicestershire","Leicestershire",2022,"Other",1
+"leicestershire","Leicestershire",2022,"White",6
+"lincolnshire","Lincolnshire",2022,"White",2
+"merseyside","Merseyside",2022,"Asian",2
+"merseyside","Merseyside",2022,"Unknown",3
+"merseyside","Merseyside",2022,"White",67
+"metropolitan","Metropolitan Police",2022,"Asian",121
+"metropolitan","Metropolitan Police",2022,"Black",400
+"metropolitan","Metropolitan Police",2022,"Other",41
+"metropolitan","Metropolitan Police",2022,"Unknown",9
+"metropolitan","Metropolitan Police",2022,"White",218
+"north-wales","North Wales",2022,"Other",1
+"north-wales","North Wales",2022,"White",9
+"northamptonshire","Northamptonshire",2022,"Asian",1
+"northamptonshire","Northamptonshire",2022,"Black",3
+"northamptonshire","Northamptonshire",2022,"White",1
+"northumbria","Northumbria",2022,"White",1
+"nottinghamshire","Nottinghamshire",2022,"Black",2
+"nottinghamshire","Nottinghamshire",2022,"Mixed",3
+"nottinghamshire","Nottinghamshire",2022,"White",8
+"south-wales","South Wales",2022,"Asian",1
+"south-wales","South Wales",2022,"Black",1
+"south-wales","South Wales",2022,"Other",4
+"south-wales","South Wales",2022,"Unknown",4
+"south-wales","South Wales",2022,"White",32
+"staffordshire","Staffordshire",2022,"Asian",2
+"suffolk","Suffolk",2022,"Asian",4
+"suffolk","Suffolk",2022,"Black",16
+"suffolk","Suffolk",2022,"Other",5
+"suffolk","Suffolk",2022,"White",36
+"sussex","Sussex",2022,"Black",6
+"sussex","Sussex",2022,"White",10
+"west-mercia","West Mercia",2022,"Asian",2
+"west-mercia","West Mercia",2022,"Mixed",1
+"west-mercia","West Mercia",2022,"White",8
+"west-midlands","West Midlands",2022,"Asian",280
+"west-midlands","West Midlands",2022,"Black",163
+"west-midlands","West Midlands",2022,"Unknown",174
+"west-midlands","West Midlands",2022,"White",151
+"bedfordshire","Bedfordshire",2023,"Black",2
+"btp","British Transport Police",2023,"Asian",14
+"btp","British Transport Police",2023,"Black",50
+"btp","British Transport Police",2023,"Other",2
+"btp","British Transport Police",2023,"White",25
+"cheshire","Cheshire",2023,"Asian",2
+"cheshire","Cheshire",2023,"Black",5
+"cheshire","Cheshire",2023,"Other",2
+"cheshire","Cheshire",2023,"White",133
+"city-of-london","London, City of",2023,"Black",16
+"city-of-london","London, City of",2023,"Other",1
+"city-of-london","London, City of",2023,"Unknown",20
+"city-of-london","London, City of",2023,"White",3
+"derbyshire","Derbyshire",2023,"White",2
+"dorset","Dorset",2023,"Other",1
+"dorset","Dorset",2023,"Unknown",2
+"dorset","Dorset",2023,"White",9
+"essex","Essex",2023,"Asian",4
+"essex","Essex",2023,"Black",8
+"essex","Essex",2023,"Other",2
+"essex","Essex",2023,"Unknown",3
+"essex","Essex",2023,"White",84
+"hampshire","Hampshire",2023,"Asian",2
+"hampshire","Hampshire",2023,"Black",8
+"hampshire","Hampshire",2023,"Other",6
+"hampshire","Hampshire",2023,"White",78
+"hertfordshire","Hertfordshire",2023,"Unknown",1
+"hertfordshire","Hertfordshire",2023,"White",8
+"humberside","Humberside",2023,"White",1
+"kent","Kent",2023,"Asian",35
+"kent","Kent",2023,"Black",22
+"kent","Kent",2023,"Mixed",8
+"kent","Kent",2023,"Other",32
+"kent","Kent",2023,"Unknown",12
+"kent","Kent",2023,"White",161
+"lancashire","Lancashire",2023,"Asian",117
+"lancashire","Lancashire",2023,"Black",8
+"lancashire","Lancashire",2023,"Unknown",26
+"lancashire","Lancashire",2023,"White",114
+"leicestershire","Leicestershire",2023,"Asian",1
+"merseyside","Merseyside",2023,"Asian",20
+"merseyside","Merseyside",2023,"Black",23
+"merseyside","Merseyside",2023,"Other",14
+"merseyside","Merseyside",2023,"Unknown",35
+"merseyside","Merseyside",2023,"White",337
+"metropolitan","Metropolitan Police",2023,"Asian",126
+"metropolitan","Metropolitan Police",2023,"Black",768
+"metropolitan","Metropolitan Police",2023,"Other",62
+"metropolitan","Metropolitan Police",2023,"Unknown",27
+"metropolitan","Metropolitan Police",2023,"White",374
+"north-wales","North Wales",2023,"Other",1
+"north-wales","North Wales",2023,"White",31
+"northumbria","Northumbria",2023,"Mixed",1
+"northumbria","Northumbria",2023,"Unknown",1
+"northumbria","Northumbria",2023,"White",31
+"south-wales","South Wales",2023,"Unknown",1
+"south-wales","South Wales",2023,"White",4
+"staffordshire","Staffordshire",2023,"Unknown",2
+"suffolk","Suffolk",2023,"Asian",3
+"suffolk","Suffolk",2023,"Black",13
+"suffolk","Suffolk",2023,"Other",17
+"suffolk","Suffolk",2023,"Unknown",4
+"suffolk","Suffolk",2023,"White",55
+"surrey","Surrey",2023,"Asian",1
+"sussex","Sussex",2023,"White",7
+"west-mercia","West Mercia",2023,"Black",1
+"west-mercia","West Mercia",2023,"Mixed",1
+"west-mercia","West Mercia",2023,"Other",1
+"west-mercia","West Mercia",2023,"White",4
+"west-midlands","West Midlands",2023,"Asian",46
+"west-midlands","West Midlands",2023,"Black",49
+"west-midlands","West Midlands",2023,"Unknown",33
+"west-midlands","West Midlands",2023,"White",47
+"wiltshire","Wiltshire",2023,"Asian",1
+"wiltshire","Wiltshire",2023,"White",4
+"avon-and-somerset","Avon and Somerset",2024,"Asian",10
+"avon-and-somerset","Avon and Somerset",2024,"Black",18
+"avon-and-somerset","Avon and Somerset",2024,"Mixed",6
+"avon-and-somerset","Avon and Somerset",2024,"Unknown",6
+"avon-and-somerset","Avon and Somerset",2024,"White",25
+"bedfordshire","Bedfordshire",2024,"Asian",1
+"bedfordshire","Bedfordshire",2024,"Black",5
+"bedfordshire","Bedfordshire",2024,"White",2
+"btp","British Transport Police",2024,"Asian",8
+"btp","British Transport Police",2024,"Black",32
+"btp","British Transport Police",2024,"Other",8
+"btp","British Transport Police",2024,"White",19
+"cheshire","Cheshire",2024,"Asian",1
+"cheshire","Cheshire",2024,"Black",1
+"cheshire","Cheshire",2024,"Other",1
+"cheshire","Cheshire",2024,"White",81
+"city-of-london","London, City of",2024,"Asian",1
+"city-of-london","London, City of",2024,"Black",16
+"city-of-london","London, City of",2024,"Other",2
+"city-of-london","London, City of",2024,"White",1
+"cumbria","Cumbria",2024,"Black",4
+"cumbria","Cumbria",2024,"Other",3
+"cumbria","Cumbria",2024,"Unknown",3
+"cumbria","Cumbria",2024,"White",79
+"derbyshire","Derbyshire",2024,"Asian",2
+"derbyshire","Derbyshire",2024,"Black",1
+"derbyshire","Derbyshire",2024,"White",8
+"devon-and-cornwall","Devon & Cornwall",2024,"White",1
+"durham","Durham",2024,"White",11
+"essex","Essex",2024,"Asian",13
+"essex","Essex",2024,"Black",83
+"essex","Essex",2024,"Mixed",14
+"essex","Essex",2024,"Other",3
+"essex","Essex",2024,"White",75
+"gloucestershire","Gloucestershire",2024,"Other",1
+"gloucestershire","Gloucestershire",2024,"White",2
+"hampshire","Hampshire",2024,"Asian",2
+"hampshire","Hampshire",2024,"Black",7
+"hampshire","Hampshire",2024,"White",66
+"humberside","Humberside",2024,"Unknown",1
+"kent","Kent",2024,"Asian",10
+"kent","Kent",2024,"Black",45
+"kent","Kent",2024,"Mixed",9
+"kent","Kent",2024,"Other",33
+"kent","Kent",2024,"Unknown",1
+"kent","Kent",2024,"White",89
+"lancashire","Lancashire",2024,"Asian",24
+"lancashire","Lancashire",2024,"White",3
+"lincolnshire","Lincolnshire",2024,"Asian",1
+"lincolnshire","Lincolnshire",2024,"Black",3
+"lincolnshire","Lincolnshire",2024,"Unknown",1
+"lincolnshire","Lincolnshire",2024,"White",24
+"merseyside","Merseyside",2024,"Asian",25
+"merseyside","Merseyside",2024,"Black",63
+"merseyside","Merseyside",2024,"Other",41
+"merseyside","Merseyside",2024,"Unknown",138
+"merseyside","Merseyside",2024,"White",1200
+"metropolitan","Metropolitan Police",2024,"Asian",82
+"metropolitan","Metropolitan Police",2024,"Black",964
+"metropolitan","Metropolitan Police",2024,"Other",61
+"metropolitan","Metropolitan Police",2024,"Unknown",39
+"metropolitan","Metropolitan Police",2024,"White",151
+"north-wales","North Wales",2024,"White",6
+"northumbria","Northumbria",2024,"Asian",17
+"northumbria","Northumbria",2024,"Black",7
+"northumbria","Northumbria",2024,"Mixed",6
+"northumbria","Northumbria",2024,"Other",12
+"northumbria","Northumbria",2024,"Unknown",17
+"northumbria","Northumbria",2024,"White",512
+"south-wales","South Wales",2024,"White",5
+"staffordshire","Staffordshire",2024,"Unknown",7
+"suffolk","Suffolk",2024,"Black",1
+"sussex","Sussex",2024,"Black",2
+"sussex","Sussex",2024,"White",7
+"warwickshire","Warwickshire",2024,"Asian",2
+"warwickshire","Warwickshire",2024,"Black",2
+"warwickshire","Warwickshire",2024,"Mixed",1
+"warwickshire","Warwickshire",2024,"White",2
+"west-midlands","West Midlands",2024,"Asian",81
+"west-midlands","West Midlands",2024,"Black",27
+"west-midlands","West Midlands",2024,"Unknown",48
+"west-midlands","West Midlands",2024,"White",171
+"wiltshire","Wiltshire",2024,"White",4
+"bedfordshire","Bedfordshire",2025,"Black",1
+"bedfordshire","Bedfordshire",2025,"White",1
+"btp","British Transport Police",2025,"Asian",3
+"btp","British Transport Police",2025,"Black",91
+"btp","British Transport Police",2025,"Other",5
+"btp","British Transport Police",2025,"Unknown",1
+"btp","British Transport Police",2025,"White",56
+"cheshire","Cheshire",2025,"Asian",1
+"cheshire","Cheshire",2025,"Black",5
+"cheshire","Cheshire",2025,"Other",11
+"cheshire","Cheshire",2025,"White",80
+"city-of-london","London, City of",2025,"Asian",1
+"city-of-london","London, City of",2025,"Black",188
+"city-of-london","London, City of",2025,"Other",5
+"city-of-london","London, City of",2025,"Unknown",7
+"city-of-london","London, City of",2025,"White",11
+"cumbria","Cumbria",2025,"Asian",3
+"cumbria","Cumbria",2025,"Other",1
+"cumbria","Cumbria",2025,"Unknown",1
+"cumbria","Cumbria",2025,"White",7
+"derbyshire","Derbyshire",2025,"White",1
+"devon-and-cornwall","Devon & Cornwall",2025,"Asian",2
+"devon-and-cornwall","Devon & Cornwall",2025,"White",2
+"dorset","Dorset",2025,"White",1
+"essex","Essex",2025,"Black",1
+"essex","Essex",2025,"Mixed",1
+"hampshire","Hampshire",2025,"Asian",11
+"hampshire","Hampshire",2025,"Black",17
+"hampshire","Hampshire",2025,"Other",2
+"hampshire","Hampshire",2025,"White",25
+"hertfordshire","Hertfordshire",2025,"White",1
+"kent","Kent",2025,"Black",2
+"kent","Kent",2025,"Mixed",4
+"kent","Kent",2025,"White",19
+"lancashire","Lancashire",2025,"Asian",6
+"lancashire","Lancashire",2025,"Black",1
+"lancashire","Lancashire",2025,"Other",2
+"lancashire","Lancashire",2025,"Unknown",7
+"lancashire","Lancashire",2025,"White",4
+"leicestershire","Leicestershire",2025,"White",1
+"merseyside","Merseyside",2025,"Asian",21
+"merseyside","Merseyside",2025,"Black",33
+"merseyside","Merseyside",2025,"Other",25
+"merseyside","Merseyside",2025,"Unknown",115
+"merseyside","Merseyside",2025,"White",1107
+"metropolitan","Metropolitan Police",2025,"Asian",135
+"metropolitan","Metropolitan Police",2025,"Black",2200
+"metropolitan","Metropolitan Police",2025,"Other",89
+"metropolitan","Metropolitan Police",2025,"Unknown",120
+"metropolitan","Metropolitan Police",2025,"White",480
+"north-wales","North Wales",2025,"White",3
+"northamptonshire","Northamptonshire",2025,"Asian",1
+"northamptonshire","Northamptonshire",2025,"Black",4
+"northamptonshire","Northamptonshire",2025,"White",4
+"northumbria","Northumbria",2025,"Asian",5
+"northumbria","Northumbria",2025,"Black",3
+"northumbria","Northumbria",2025,"Other",2
+"northumbria","Northumbria",2025,"Unknown",10
+"northumbria","Northumbria",2025,"White",43
+"surrey","Surrey",2025,"Black",1
+"surrey","Surrey",2025,"White",2
+"sussex","Sussex",2025,"Other",2
+"sussex","Sussex",2025,"White",8
+"thames-valley","Thames Valley",2025,"Asian",2
+"thames-valley","Thames Valley",2025,"Black",3
+"thames-valley","Thames Valley",2025,"White",9
+"warwickshire","Warwickshire",2025,"Asian",2
+"warwickshire","Warwickshire",2025,"Black",2
+"warwickshire","Warwickshire",2025,"Mixed",1
+"warwickshire","Warwickshire",2025,"White",16
+"west-mercia","West Mercia",2025,"Asian",5
+"west-mercia","West Mercia",2025,"Black",1
+"west-midlands","West Midlands",2025,"Asian",119
+"west-midlands","West Midlands",2025,"Black",43
+"west-midlands","West Midlands",2025,"Other",2
+"west-midlands","West Midlands",2025,"Unknown",75
+"west-midlands","West Midlands",2025,"White",58
+"wiltshire","Wiltshire",2025,"Unknown",1
+"wiltshire","Wiltshire",2025,"White",3
+"btp","British Transport Police",2026,"Asian",3
+"btp","British Transport Police",2026,"Black",58
+"btp","British Transport Police",2026,"Other",4
+"btp","British Transport Police",2026,"White",12
+"cheshire","Cheshire",2026,"Asian",8
+"cheshire","Cheshire",2026,"Other",4
+"cheshire","Cheshire",2026,"White",9
+"derbyshire","Derbyshire",2026,"Asian",4
+"derbyshire","Derbyshire",2026,"Black",1
+"derbyshire","Derbyshire",2026,"Other",1
+"derbyshire","Derbyshire",2026,"White",6
+"essex","Essex",2026,"Asian",1
+"essex","Essex",2026,"Black",2
+"essex","Essex",2026,"Mixed",1
+"essex","Essex",2026,"White",8
+"hampshire","Hampshire",2026,"Asian",22
+"hampshire","Hampshire",2026,"Black",17
+"hampshire","Hampshire",2026,"Other",6
+"hampshire","Hampshire",2026,"White",47
+"humberside","Humberside",2026,"Other",1
+"humberside","Humberside",2026,"White",2
+"lancashire","Lancashire",2026,"Asian",29
+"lancashire","Lancashire",2026,"Black",8
+"lancashire","Lancashire",2026,"Other",3
+"lancashire","Lancashire",2026,"Unknown",15
+"lancashire","Lancashire",2026,"White",191
+"leicestershire","Leicestershire",2026,"Black",1
+"merseyside","Merseyside",2026,"Asian",20
+"merseyside","Merseyside",2026,"Black",47
+"merseyside","Merseyside",2026,"Other",25
+"merseyside","Merseyside",2026,"Unknown",87
+"merseyside","Merseyside",2026,"White",775
+"metropolitan","Metropolitan Police",2026,"Asian",50
+"metropolitan","Metropolitan Police",2026,"Black",127
+"metropolitan","Metropolitan Police",2026,"Other",19
+"metropolitan","Metropolitan Police",2026,"Unknown",23
+"metropolitan","Metropolitan Police",2026,"White",58
+"northumbria","Northumbria",2026,"Asian",12
+"northumbria","Northumbria",2026,"Black",3
+"northumbria","Northumbria",2026,"Other",7
+"northumbria","Northumbria",2026,"Unknown",59
+"northumbria","Northumbria",2026,"White",80
+"nottinghamshire","Nottinghamshire",2026,"Asian",1
+"staffordshire","Staffordshire",2026,"White",3
+"sussex","Sussex",2026,"White",1
+"thames-valley","Thames Valley",2026,"Asian",9
+"thames-valley","Thames Valley",2026,"Black",5
+"thames-valley","Thames Valley",2026,"Other",1
+"thames-valley","Thames Valley",2026,"White",16
+"wiltshire","Wiltshire",2026,"Unknown",3
+"wiltshire","Wiltshire",2026,"White",3

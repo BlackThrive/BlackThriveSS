@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release": "dashboard-2026-07-2025-99a88b69f2d6",
+  "dataset": "force_disparity",
+  "year": 2025,
+  "dashboard": "btg_stop_search_v9",
+  "dashboard_built_at": "2026-09-16T07:12:19Z",
+  "source": {
+    "latest_month": "2026-07",
+    "retrieved_at": "2026-09-16T06:43:43.711698+00:00",
+    "availability_url": "https://data.police.uk/api/crimes-street-dates",
+    "archive_url": "https://policeuk-data.s3.amazonaws.com/archive/2026-07.zip",
+    "archive_sha256": "312e3b1533ac953df07636781588578335113ef918584de4fcdfcb014a69ca16",
+    "source_last_modified": "Thu, 03 Sep 2026 15:53:27 GMT"
+  },
+  "source_files": [
+    {
+      "file": "agg_force_yr_eth.rds",
+      "sha256": "dc3e4fb849eba23f8f3df80ca69eda3f891026b103c4caa46193e86c96a78a75"
+    },
+    {
+      "file": "pop_eth_pfa.rds",
+      "sha256": "1b4a4e362b6d95b012c4f968486aa846749e2dc9f11408f73db1d574962db73b"
+    },
+    {
+      "file": "police_refresh.rds",
+      "sha256": "c7c765446ca7fa2e339642ddff8d165454d4edfdf08beb81d4b2d68c30a9830a"
+    },
+    {
+      "file": "manifest.rds",
+      "sha256": "5ec22678e11504871b1c5ca5bc264c1eb706f497ec028de70f34679e39b8f189"
+    }
+  ],
+  "files": {
+    "data": {
+      "file": "force-disparity.csv",
+      "sha256": "60677277458ff41d6f116cefa9d5ccccfe2830a5db7e2f7fe446cdb4c1638f42"
+    },
+    "coverage": {
+      "file": "coverage.csv",
+      "sha256": "25b0c0020a2236501e28e6dba66213d253c7a5a38f4e5b78d1b890f2ea4ab94f"
+    }
+  },
+  "ethnicity": {
+    "field": "Officer-defined ethnicity",
+    "comparison": "Black",
+    "reference": "White",
+    "missing": "Unknown or unrecognised values excluded from ratio; counts retained separately"
+  },
+  "population": {
+    "year": 2021,
+    "type": "Census residents",
+    "source": "ONS Census 2021 TS021 via Ethnicity Facts and Figures",
+    "construction": "Dashboard aggregates local-authority populations to police force areas using its LAD23/PFA23 lookup and documented historical-code assignments",
+    "url": "https://www.nomisweb.co.uk/sources/census_2021"
+  },
+  "calculation": {
+    "rates": "1000 * recorded group events / group resident population",
+    "ratio": "Black rate / White rate",
+    "interval": "95% Poisson log approximation; sqrt(1/Black events + 1/White events)",
+    "exclusions": "Resident rates withheld for BTP, City of London, missing/zero population or White resident population below 50000",
+    "display": "Finite positive ratio and at least 200 known-ethnicity events; no coverage exclusion"
+  },
+  "coverage_note": "Supplied months are reported submissions, not proof of complete event recording. Missing months are not zero stops; partial-year counts are not annualised.",
+  "limitations": ["This snapshot reproduces the local dashboard release; it is not asserted to be the latest live website or source release.", "Recorded events are not unique people. The source aggregate does not separate vehicle-only searches; unknown ethnicity is not necessarily item non-response.", "Officer-defined ethnicity is compared with Census self-reported ethnic categories; these classifications are not identical.", "Fixed 2021 resident populations are not measured 2025 exposure. Visitors and repeat stops are not accounted for.", "Intervals condition on recorded counts and denominators and do not quantify reporting, classification or exposure uncertainty.", "No adjustment, imputation, population forecast or causal interpretation is provided."],
+  "licence": {
+    "data": "Open Government Licence v3.0",
+    "url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "attribution": "Contains public sector information licensed under the Open Government Licence v3.0. Police.uk; Office for National Statistics, Census 2021."
+  }
+}

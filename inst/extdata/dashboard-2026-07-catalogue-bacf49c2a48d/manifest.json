@@ -1,0 +1,159 @@
+{
+  "schema_version": 2,
+  "release": "dashboard-2026-07-catalogue-bacf49c2a48d",
+  "dashboard": "btg_stop_search_v9",
+  "dashboard_built_at": "2026-09-16T07:12:19Z",
+  "source": {
+    "latest_month": "2026-07",
+    "retrieved_at": "2026-09-16T06:43:43.711698+00:00",
+    "availability_url": "https://data.police.uk/api/crimes-street-dates",
+    "archive_url": "https://policeuk-data.s3.amazonaws.com/archive/2026-07.zip",
+    "archive_sha256": "312e3b1533ac953df07636781588578335113ef918584de4fcdfcb014a69ca16",
+    "source_last_modified": "Thu, 03 Sep 2026 15:53:27 GMT"
+  },
+  "source_files": [
+    {
+      "file": "agg_force_yr_eth.rds",
+      "sha256": "dc3e4fb849eba23f8f3df80ca69eda3f891026b103c4caa46193e86c96a78a75"
+    },
+    {
+      "file": "pop_eth_pfa.rds",
+      "sha256": "1b4a4e362b6d95b012c4f968486aa846749e2dc9f11408f73db1d574962db73b"
+    },
+    {
+      "file": "police_refresh.rds",
+      "sha256": "c7c765446ca7fa2e339642ddff8d165454d4edfdf08beb81d4b2d68c30a9830a"
+    },
+    {
+      "file": "manifest.rds",
+      "sha256": "5ec22678e11504871b1c5ca5bc264c1eb706f497ec028de70f34679e39b8f189"
+    },
+    {
+      "file": "agg_national_yr.rds",
+      "sha256": "c1828550f2b7482fa3538977909b4de7192e8c1ab66d567fcd60b6d7e2f52a2a"
+    },
+    {
+      "file": "v2_mon_national_eth.rds",
+      "sha256": "53420ad9a880aa75b49e3e053b1f972d36ba84bc2de5a2664f83520fa210b22b"
+    },
+    {
+      "file": "agg_lad_yr_eth.rds",
+      "sha256": "b7868b3ea9b6c058bdfe8fa1e59e9f7b78385b53916cbc4eeb1406e3125e32c3"
+    },
+    {
+      "file": "v2_pop_la.rds",
+      "sha256": "10b4da762ebc31138685a3f3d1440b71ec93ca29c98086a6230f34b911ac7501"
+    },
+    {
+      "file": "agg_hitrate_eth_yr.rds",
+      "sha256": "e54aa7875cb3894dab6de51d0ca18375002edaa4deb9326d9370f8d12a21fa0e"
+    },
+    {
+      "file": "agg_s60.rds",
+      "sha256": "110fc1eb3d9109e024fcc657f149f3bca3a4668709b5ad5e4a92ccfc29bd2558"
+    }
+  ],
+  "files": {
+    "coverage": {
+      "file": "coverage.csv.gz",
+      "sha256": "ddbd8575471ed9b886e2e3224f6ee6d4f021c75a0ef6aa17093c488eb6a9d8ad",
+      "rows": 4532
+    }
+  },
+  "datasets": {
+    "force_ethnicity_year": {
+      "file": "force-ethnicity-year.csv.gz",
+      "sha256": "3ecc6e3e99f1f2c18591df63af35f72e5a908f5c0c3e5769d7723ad00217a5f6",
+      "rows": 1584,
+      "title": "Group to White stop-rate comparison by police force and year",
+      "level": "force",
+      "years": [2018, 2026],
+      "groups": ["Asian", "Black", "Mixed", "Other"],
+      "coverage": "coverage",
+      "description": "Recorded events, Census 2021 residents, rates per 1,000, rate ratios against White, Poisson intervals, the dashboard display rule and ranks within each year and group."
+    },
+    "national_year": {
+      "file": "national-year.csv",
+      "sha256": "5be85e2633208faa6ec56b568f7eb76d77c24d69c677d2fa8a06cc1af12e2234",
+      "rows": 9,
+      "title": "National totals and outcome rates by year",
+      "level": "national",
+      "years": [2018, 2026],
+      "groups": [],
+      "description": "England and Wales totals of recorded stops, arrests, no further action, Section 60, under-18s, strip searches and outcome-linked searches, with the derived rates the dashboard shows."
+    },
+    "national_month_ethnicity": {
+      "file": "national-month-ethnicity.csv",
+      "sha256": "cb3c55876e8af08a368660c45a11abdb07a2adbb7aa991c705d37dc19a12f795",
+      "rows": 510,
+      "title": "National monthly stops by officer-defined ethnicity",
+      "level": "national",
+      "years": [2018, 2026],
+      "groups": ["Asian", "Black", "Mixed", "Other", "White", "Unknown"],
+      "description": "Monthly recorded stops across all reporting forces, by officer-defined ethnic group, with unknown ethnicity kept as its own row."
+    },
+    "council_ethnicity_year": {
+      "file": "council-ethnicity-year.csv.gz",
+      "sha256": "dc426472cbeddbbf73f94eaf6e1f9ed5b470394268ad2395c3bb49416296f758",
+      "rows": 12200,
+      "title": "Group to White stop-rate comparison by council and year",
+      "level": "council",
+      "years": [2018, 2026],
+      "groups": ["Asian", "Black", "Mixed", "Other"],
+      "description": "Local-authority counts located by stop coordinates, Census 2021 residents, rates per 1,000 and rate ratios against White. Coordinates are missing for some forces, so council counts undercount; no display rule or rank is applied."
+    },
+    "hit_rate_ethnicity_year": {
+      "file": "hit-rate-ethnicity-year.csv",
+      "sha256": "f4d465b6ef7f2d3b368a8c702f21dcc1e95fbf4c518143691eaff42c7090de9e",
+      "rows": 45,
+      "title": "National outcome-linked search rate by ethnicity and year",
+      "level": "national",
+      "years": [2018, 2026],
+      "groups": ["Asian", "Black", "Mixed", "Other", "White", "Unknown"],
+      "description": "Percentage of searches with a known outcome whose outcome was linked to the object of search, by officer-defined ethnic group. Forces that machine-fill or omit the field are voided in the dashboard's preparation."
+    },
+    "section60_force_year": {
+      "file": "section60-force-year.csv",
+      "sha256": "98558026d388a2ff2d6e709b5d04105fa9020f434f7cebf1ab1c8165020d461c",
+      "rows": 627,
+      "title": "Section 60 searches by police force, year and ethnicity",
+      "level": "force",
+      "years": [2018, 2026],
+      "groups": ["Asian", "Black", "Mixed", "Other", "White", "Unknown"],
+      "coverage": "coverage",
+      "description": "Searches recorded under Section 60 of the Criminal Justice and Public Order Act 1994, which need no individual suspicion."
+    }
+  },
+  "coverage_window": {
+    "from": "2023-08",
+    "to": "2026-07",
+    "note": "The dashboard verifies monthly submissions inside this window; months outside it are unverified, never assumed supplied."
+  },
+  "ethnicity": {
+    "field": "Officer-defined ethnicity",
+    "groups": ["Asian", "Black", "Mixed", "Other"],
+    "reference": "White",
+    "missing": "Unknown or unrecognised values excluded from ratios; counts retained separately"
+  },
+  "population": {
+    "year": 2021,
+    "type": "Census residents",
+    "source": "ONS Census 2021 TS021 via Ethnicity Facts and Figures",
+    "construction": "Dashboard aggregates local-authority populations to police force areas using its LAD23/PFA23 lookup and documented historical-code assignments; council populations are the local authority's own Census residents",
+    "url": "https://www.nomisweb.co.uk/sources/census_2021"
+  },
+  "calculation": {
+    "rates": "1000 * recorded group events / group resident population",
+    "ratio": "group rate / White rate",
+    "interval": "95% Poisson log approximation; sqrt(1/group events + 1/White events)",
+    "exclusions": "Force resident rates withheld for BTP, City of London, missing/zero population or White resident population below 50000",
+    "display": "Force display rule: finite positive ratio and at least 200 known-ethnicity events; ranks within year and group; no coverage exclusion"
+  },
+  "coverage_note": "Supplied months are reported submissions, not proof of complete event recording. Missing months are not zero stops; partial-year counts are not annualised.",
+  "limitations": ["This snapshot reproduces the local dashboard release; it is not asserted to be the latest live website or source release.", "Recorded events are not unique people. The source aggregate does not separate vehicle-only searches; unknown ethnicity is not necessarily item non-response.", "Officer-defined ethnicity is compared with Census self-reported ethnic categories; these classifications are not identical.", "Fixed 2021 resident populations are not measured exposure in any year. Visitors and repeat stops are not accounted for.", "Intervals condition on recorded counts and denominators and do not quantify reporting, classification or exposure uncertainty.", "Council counts depend on stop coordinates, which some forces do not publish; they undercount and are not comparable across forces.", "The final source year is incomplete; its counts cover only the months published by the source month.", "No adjustment, imputation, population forecast or causal interpretation is provided."],
+  "licence": {
+    "data": "Open Government Licence v3.0",
+    "url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "attribution": "Contains public sector information licensed under the Open Government Licence v3.0. Police.uk; Office for National Statistics, Census 2021."
+  }
+}

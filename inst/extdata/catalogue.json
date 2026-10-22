@@ -1,0 +1,14 @@
+{
+  "schema_version": 2,
+  "default_release": "dashboard-2026-07-2025-99a88b69f2d6",
+  "default_releases": {
+    "force_disparity": "dashboard-2026-07-2025-99a88b69f2d6",
+    "force_ethnicity_year": "dashboard-2026-07-catalogue-bacf49c2a48d",
+    "national_year": "dashboard-2026-07-catalogue-bacf49c2a48d",
+    "national_month_ethnicity": "dashboard-2026-07-catalogue-bacf49c2a48d",
+    "council_ethnicity_year": "dashboard-2026-07-catalogue-bacf49c2a48d",
+    "hit_rate_ethnicity_year": "dashboard-2026-07-catalogue-bacf49c2a48d",
+    "section60_force_year": "dashboard-2026-07-catalogue-bacf49c2a48d"
+  },
+  "releases": ["dashboard-2026-07-2025-99a88b69f2d6", "dashboard-2026-07-catalogue-bacf49c2a48d"]
+}

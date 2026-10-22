@@ -1,0 +1,10 @@
+# Checksummed payloads must retain their exact bytes on every platform.
+inst/extdata/**/*.csv -text
+*.R text eol=lf
+*.Rd text eol=lf
+*.Rmd text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+inst/extdata/**/*.gz binary

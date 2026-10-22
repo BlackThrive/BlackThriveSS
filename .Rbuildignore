@@ -1,0 +1,16 @@
+^BlackThriveSS[.]Rproj$
+^[.]Rproj[.]user$
+^data-raw$
+^dev$
+^artifacts$
+^[.]git$
+^[.]gitignore$
+^[.]gitattributes$
+^[.]github$
+^install[.]R$
+^CRAN-READINESS[.]md$
+^cran-comments[.]md$
+^CONTRIBUTING[.]md$
+^release-tools$
+^BlackThriveSS_.*[.]tar[.]gz$
+^BlackThriveSS[.]Rcheck$
