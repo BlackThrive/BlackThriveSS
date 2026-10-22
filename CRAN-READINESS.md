@@ -1,11 +1,36 @@
 # BlackThriveSS: path to CRAN
 
-Working version: **0.0.3**. Review date: **22 October 2026**.
+Working version: **0.0.3.9000** (development). Review date: **22 October 2026**.
 Scope: two immutable data releases (the original 2025 `force_disparity`
 dataset and a six-dataset catalogue from the same dashboard snapshot), the
 force ranking chart for any year and group, saved views, and the URL round
-trip with the dashboard website. The dashboard button is deferred. No CRAN
-submission, public repository or hosted release is created by this work.
+trip with the dashboard website, plus, since 0.0.3: robustness analysis
+(`btg_sensitivity()`, `btg_rank_stability()`, `btg_plot_sensitivity()`),
+trends and change (`btg_plot_trend()`, `btg_change()`, `btg_plot_change()`),
+profiles and HTML briefings (`btg_profile()`, `btg_report()`), exports and
+the glossary, schema 3 saved views, two further vignettes and a pkgdown
+configuration. The dashboard button is deferred. No CRAN submission or
+hosted release is created by this work.
+
+## Development checks since 0.0.3
+
+* Ubuntu 24.04 / R 4.6.1 (current release), on the development tree before
+  these additions: `R CMD check --as-cran --no-manual` with remote incoming
+  checks disabled completed with 0 errors, 0 warnings and 1 note, the note
+  being the development version number (`0.0.3.9000`). An initial run also
+  warned that the container could not set the `en_US.UTF-8` locale, which
+  is an environment matter resolved by generating the locale.
+* The same check on the development tree with the additions is recorded in
+  `artifacts/check-summary.json` when `dev/check-release.R` is next run; see
+  the commit message for the result at the time of the change.
+* Help pages are generated with roxygen2 8.1.1, which replaces the
+  `RoxygenNote` field with `Config/roxygen2/version` and adds the repository
+  links and author list to the package help page. Regenerating with an older
+  roxygen2 will flip the field back; use 8.1 or later.
+* Known inaccuracy in the catalogue release: `national_month_ethnicity` and
+  `hit_rate_ethnicity_year` list an `Unknown` group that has no rows in the
+  bundled tables. A future catalogue build should drop it from `groups`; the
+  data dictionary records it meanwhile.
 
 ## Verified local results
 
@@ -70,12 +95,12 @@ dataset through its checksum.
 | Gate | Evidence or next action |
 |---|---|
 | Source installation | `install.R` and the installation ZIP resolve required dependencies, validate archive checksums and target a writable library. Record the fresh-session installation result. |
-| User documentation | Executed getting-started vignette covering the catalogue, the chart for any year and group, the URL round trip, validation and troubleshooting; function help; data dictionary with the catalogue section; package and data citations. |
+| User documentation | Executed vignettes: getting started (catalogue, chart, URL round trip, validation, troubleshooting), robustness (bounds, rank intervals, change, export) and briefing (profiles, charts, the HTML briefing); function help; data dictionary with catalogue and derived-table sections; glossary; package and data citations. The briefing test and example skip without rmarkdown and Pandoc. |
 | Data integrity | Payload SHA-256 checks on every file, gzip payloads included, plus `btg_validate()` on every dataset: keys, whole counts, ethnicity accounting, coverage reconciliation and the documented calculations. Tests include deliberate corruption. |
-| Mathematical correctness | Hand-calculated count/exposure fixtures, zero/missing-count cases, denominator exclusions and eligibility thresholds, shared by the generic group calculation. |
+| Mathematical correctness | Hand-calculated count/exposure fixtures, zero/missing-count cases, denominator exclusions and eligibility thresholds, shared by the generic group calculation. Allocation bounds, rank bounds and change intervals are checked against independent hand calculations on transcribed Metropolitan Police counts; rank intervals are checked for reproducibility, bracketing and the identity that top-n probabilities sum to n. |
 | Dashboard parity | `dev/verify-dashboard.R` checks source hashes, the original 42-row table and three orderings, and all 36 year-and-group tables of the catalogue against the dashboard's own functions. |
 | URL round trip | Tests cover both link forms the dashboard reads, all three orderings through the state form, legacy links with force labels, the dashboard's default year and group, and explicit failures for other pages, the expanded definition, unknown years and groups, and malformed state. The live base address is configurable and has not been fetched from this package. |
-| Historical replay | The 2025 release and schema 1 views are unchanged and replay; schema 2 views carry year, group and highlight. |
+| Historical replay | The 2025 release and schema 1 views are unchanged and replay; schema 2 views carry year, group and highlight for both force ranking charts; schema 3 views carry a dataset selection and chart settings for trend and change charts, and settings are never evaluated. |
 | Local package check | Run `dev/check-release.R`. Results and archive SHA-256 are in `artifacts/check-summary.json`; all notes require review. |
 | Current R and other systems | **Passed on GitHub Actions, 22 October 2026** (run 39811985340 on commit `3a7b890`, the 0.0.3 source plus the `URL`/`BugReports` fields and a workflow fix): Windows release, macOS release, Ubuntu release, devel, oldrel-1 and R 4.1 all completed `R CMD check --as-cran --no-manual` with status OK and no notes, with the workflow set to fail on any warning. Re-run on the exact archive intended for submission. |
 | Source-data review | Reconfirm Police.uk and ONS attributions, population construction and disclosure scope for the council table. No restricted survey records are bundled. Statistical review should distinguish faithful reproduction from sound inference. |

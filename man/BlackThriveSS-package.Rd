@@ -13,8 +13,21 @@ the original evidence specification offline.
 Inspect internal consistency with \code{\link[=btg_validate]{btg_validate()}}. The installed tutorial is
 available through \code{vignette("getting-started", package = "BlackThriveSS")}.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/BlackThrive/BlackThriveSS}
+  \item Report bugs at \url{https://github.com/BlackThrive/BlackThriveSS/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Mustapha Wasseja \email{mustapha.wasseja.mohammed@gmail.com}
+
+Authors:
+\itemize{
+  \item Mustapha Wasseja \email{mustapha.wasseja.mohammed@gmail.com}
+}
 
 Other contributors:
 \itemize{

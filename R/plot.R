@@ -17,7 +17,8 @@ utils::globalVariables(c("ratio", "axis_label", "value_label", "fill_label",
 # year slider starts on.
 .default_chart_year <- function(x) {
   d <- x$data
-  complete <- if ("months_in_source" %in% names(d)) d$year[d$months_in_source == 12L] else d$year
+  months <- if ("months_in_source" %in% names(d)) d$months_in_source else .months_in_source(x, d$year)
+  complete <- d$year[months == 12L]
   if (!length(complete)) complete <- d$year
   max(complete)
 }
@@ -45,6 +46,16 @@ utils::globalVariables(c("ratio", "axis_label", "value_label", "fill_label",
   }
   rows <- d[d$year == as.integer(year) & d$group == group, , drop = FALSE]
   list(rows = rows, year = as.integer(year), group = group, n_eligible = sum(rows$eligible))
+}
+
+# The caption line that explains the asterisks on a chart's displayed forces.
+.coverage_note <- function(d) {
+  partial <- sum(d$coverage_status != "all_months_supplied")
+  if (all(d$coverage_status == "unverified")) {
+    "* Monthly submissions for this year lie outside the window the dashboard verifies; counts are as published."
+  } else if (partial) {
+    sprintf("* %d displayed force(s) have incomplete or unverified returns; counts are not annualised.", partial)
+  } else "All displayed forces supplied all 12 months; this does not certify complete event recording."
 }
 
 .figure_rows <- function(d, n, ranking) {
@@ -126,15 +137,10 @@ btg_plot_disparity <- function(x = btg_get_data(), n = 10L,
   present <- fill_levels[fill_levels %in% plotted$fill_label]
   subtitle <- switch(ranking, highest = "Highest displayed ratios",
                      lowest = "Lowest displayed ratios", closest = "Closest to parity")
-  coverage_note <- if (all_unverified) {
-    "* Monthly submissions for this year lie outside the window the dashboard verifies; counts are as published."
-  } else if (partial) {
-    sprintf("* %d displayed force(s) have incomplete or unverified returns; counts are not annualised.", partial)
-  } else "All displayed forces supplied all 12 months; this does not certify complete event recording."
   caption <- paste(
     "Sources: Police.uk; ONS Census 2021. Resident-based event rates; officer-defined ethnicity.",
     "Dark lines are 95% Poisson intervals on the recorded counts; they exclude reporting and classification uncertainty.",
-    coverage_note,
+    .coverage_note(d),
     "Ranks follow dashboard eligibility, not a measure of individual risk or causal discrimination.",
     paste("Fixed release:", x$metadata$release), sep = "\n")
   upper <- max(1.35, max(plotted$label_x) * 1.16)

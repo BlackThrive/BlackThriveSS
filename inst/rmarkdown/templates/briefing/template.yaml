@@ -1,0 +1,6 @@
+name: BlackThriveSS briefing
+description: >
+  An evidence briefing for one police force or council from the bundled
+  Black Thrive stop and search datasets: headline statements, charts, tables,
+  coverage, methods and reproduction details.
+create_dir: false

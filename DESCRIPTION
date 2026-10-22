@@ -9,11 +9,15 @@ Description: Retrieve fixed, documented snapshots of public aggregate stop and
     search evidence used by the Black Thrive dashboard: force, council and
     national tables from 2018 onwards with monthly reporting coverage and
     provenance. Recreate the dashboard's force ranking of group to White stop
-    rates for any year and group as an editable plot, replay a saved chart
-    specification, and exchange links with the dashboard website, all without
-    a running dashboard or network connection. Contains public sector
-    information licensed under the Open Government Licence v3.0. Source
-    documentation is available at <https://data.police.uk/about/>.
+    rates for any year and group as an editable plot, bound every ratio under
+    the allocation of stops with unknown ethnicity, estimate how far sampling
+    variability moves a force's rank, draw trends and year-on-year change with
+    coverage attached, write plain-language profiles and HTML briefings for one
+    force or council, replay saved chart specifications, and exchange links
+    with the dashboard website, all without a running dashboard or network
+    connection. Contains public sector information licensed under the Open
+    Government Licence v3.0. Source documentation is available at
+    <https://data.police.uk/about/>.
 License: MIT + file LICENSE
 URL: https://github.com/BlackThrive/BlackThriveSS
 BugReports: https://github.com/BlackThrive/BlackThriveSS/issues
@@ -33,4 +37,4 @@ Suggests:
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.1.1

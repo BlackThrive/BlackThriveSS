@@ -1,0 +1,157 @@
+---
+title: "How robust is a disparity estimate?"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{How robust is a disparity estimate?}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 10, fig.height = 7)
+library(BlackThriveSS)
+```
+
+A stop-rate ratio is a simple number built on several choices and on data
+that are incomplete in known ways. This vignette shows how BlackThriveSS
+lets you ask, for any force, year and group, which conclusions survive those
+choices and which depend on them. Everything below runs offline from the
+bundled release, and every table and chart can be saved and replayed.
+
+Three kinds of uncertainty are kept apart throughout:
+
+* **Sampling variability**: the 95% Poisson intervals on the recorded
+  counts, and the rank intervals from redrawing those counts.
+* **Missing ethnicity**: stops with no recorded ethnic group are excluded
+  from every ratio. The *allocation range* reports the ratio under the two
+  extreme allocations of those stops, which bound every other allocation.
+* **Missing returns**: months a force did not submit are missing, never
+  zero, and counts are never annualised. Coverage is reported beside every
+  comparison.
+
+The package does not combine these into one number, because they answer
+different questions.
+
+## Bounds under unknown ethnicity
+
+```{r sensitivity}
+x <- btg_get_data()
+s <- btg_sensitivity(x)
+head(s[c("force_label", "unknown_share", "ratio", "ratio_min", "ratio_max", "parity_direction")])
+table(s$parity_direction, useNA = "ifany")
+```
+
+`ratio_min` counts every unknown-ethnicity stop as White and `ratio_max`
+counts every one as Black; allocating them in the same proportions as the
+recorded stops would leave the ratio unchanged. `parity_direction` says
+whether the whole range sits above or below 1, or whether the side of parity
+depends on the unknown stops. The range can be wide where a group's resident
+population is small, and that is the finding, not a defect.
+
+```{r sensitivity-chart, fig.alt = "Recorded Black to White ratios for the ten highest forces in 2025 with Poisson intervals and bounds under unknown ethnicity on a log axis."}
+btg_plot_sensitivity(x)
+```
+
+The same question for a comparison close to parity:
+
+```{r sensitivity-asian, fig.alt = "Asian to White ratios closest to parity in 2024 with intervals and bounds."}
+y <- btg_get_data("force_ethnicity_year")
+btg_plot_sensitivity(y, year = 2024, group = "Asian", ranking = "closest")
+```
+
+## How certain is a rank?
+
+A league-table position is far less certain than the ratio behind it. The
+rank interval redraws each eligible force's counts from Poisson distributions
+with the recorded counts as means and re-ranks every draw; the seed is fixed
+and the caller's random number state is restored.
+
+```{r ranks}
+r <- btg_rank_stability(x, draws = 500)
+head(r[c("force_label", "ratio", "rank", "rank_lower", "rank_upper", "prob_top")], 12)
+```
+
+`rank_best` and `rank_worst` in `btg_sensitivity()` answer the other
+question: how far every force's unknown stops could move the rank if they
+were allocated for or against it.
+
+```{r rank-bounds}
+head(s[s$eligible, c("force_label", "rank", "rank_best", "rank_worst")], 8)
+```
+
+## Across every year and group
+
+For a study rather than a single chart, run the same functions over the full
+force table. `btg_sensitivity()` returns one row per force, year and group,
+with ranks and bounds within each year and group.
+
+```{r every}
+all <- btg_sensitivity(y)
+settled <- all[all$eligible, ]
+with(settled, table(group, parity_direction))
+aggregate(unknown_share ~ year, data = all[all$group == "Black", ], FUN = median)
+```
+
+Rank stability over several years and groups is one call; keep `draws`
+modest for exploratory work and raise it for a final table.
+
+```{r every-ranks}
+stable <- btg_rank_stability(btg_get_data("force_ethnicity_year", years = 2023:2025, groups = "Black"), draws = 300)
+aggregate(cbind(width = rank_upper - rank_lower) ~ year, data = stable, FUN = median)
+```
+
+## Change over time, with coverage attached
+
+`btg_change()` compares each area's ratio in two years, with an interval on
+the ratio of ratios and the coverage of both years. A change between a
+complete year and an incomplete one is not a change in policing.
+
+```{r change}
+ch <- btg_change(btg_get_data("force_ethnicity_year", groups = "Black"))
+table(ch$change_direction, useNA = "ifany")
+head(ch[ch$change_direction %in% c("higher", "lower"),
+        c("force_label", "ratio_from", "ratio_to", "change", "change_lower", "change_upper", "comparable_coverage")])
+```
+
+```{r change-chart, fig.alt = "Dumbbell chart of the ten largest changes in Black to White ratios between 2024 and 2025."}
+btg_plot_change(y)
+```
+
+And for one force across every year, with the incomplete final year marked:
+
+```{r trend, fig.alt = "Metropolitan Police stop-rate ratios by group and year with Poisson intervals."}
+btg_plot_trend(btg_get_data("force_ethnicity_year", force = "metropolitan"))
+```
+
+## Reproduce and share
+
+Every chart carries its table and a saved view. The view pins the release,
+its checksums, the selection and the settings; it contains no code.
+
+```{r views}
+p <- btg_plot_sensitivity(y, year = 2024, group = "Asian", ranking = "closest")
+path <- tempfile(fileext = ".json")
+btg_save_view(p, path)
+replay <- btg_from_view(path)
+stopifnot(identical(btg_figure_data(replay), btg_figure_data(p)))
+unlink(path)
+```
+
+`btg_export()` writes a dataset to CSV with a JSON sidecar recording the
+release, checksums, selection, citation and limitations, so that a file sent
+on still says where its numbers came from.
+
+```{r export}
+csv <- tempfile(fileext = ".csv")
+files <- btg_export(btg_get_data("force_ethnicity_year", years = 2025, groups = "Black"), csv)
+basename(files)
+unlink(files)
+```
+
+## What these tools do not do
+
+They do not adjust for who is present in an area, impute missing returns,
+forecast populations past Census 2021, or reconcile officer-defined with
+self-reported ethnicity. They do not say whether a disparity is
+discriminatory. They make the evidence, and its limits, explicit enough to
+argue about.

@@ -79,3 +79,67 @@ v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
 Sources: [Police.uk](https://data.police.uk/about/) and [ONS Census
 2021](https://www.nomisweb.co.uk/sources/census_2021), via the dashboard's population
 preparation. Package code is MIT-licensed; that does not replace source-data terms.
+
+## Derived tables
+
+These functions compute from the bundled datasets; they add nothing to a
+release and carry `dataset` and `release` attributes naming their evidence.
+
+### `btg_sensitivity()`
+
+One row per area, year and group of a comparison dataset.
+
+| Column | Meaning |
+|---|---|
+| unknown_share | Unknown-ethnicity stops as a share of all records |
+| ratio, ci_lower, ci_upper | The recorded ratio and its Poisson interval, as in the dataset |
+| ratio_min | The ratio if every unknown-ethnicity stop were counted as White |
+| ratio_max | The ratio if every unknown-ethnicity stop were counted in the compared group |
+| parity_direction | `above` or `below` when the whole range is on one side of 1; `sensitive` when the side depends on the unknown stops; missing where the ratio is withheld |
+| rank_best, rank_worst | Force rows: the rank if every force's unknown stops were allocated in this force's favour, or against it, among the forces eligible in the recorded data |
+
+Any allocation of the unknown stops between the groups gives a ratio inside
+the range; allocating them in the recorded proportions leaves it unchanged.
+Bounds are withheld wherever the recorded ratio is withheld.
+
+### `btg_rank_stability()`
+
+One row per dashboard-eligible force, year and group. `rank_lower` and
+`rank_upper` are the 2.5th and 97.5th percentiles of the rank across seeded
+Poisson redraws of the group and White counts; `prob_top` is the share of
+draws in which the force ranks within the top `top`. The attributes `draws`,
+`seed` and `top` record the settings. This is sampling variability only.
+
+### `btg_change()`
+
+One row per area and group: `ratio_from`, `ratio_to`, `change` (later
+divided by earlier), `change_lower`, `change_upper` (treating the four counts
+as independent Poisson counts), `change_direction` (`higher`, `lower`,
+`unclear`), the months each year is covered in the source, the coverage
+status of both years for forces, and `comparable_coverage`, which is `TRUE`
+only when both years are covered in full by supplied or unverified returns.
+
+### `btg_figure_data()` of a trend chart
+
+One row per period and series: `period` (year or `YYYY-MM`), `series`
+(group, `White` for rates, or `England and Wales`), `value`, `lower`, `upper`
+(ratios only), `complete` and `months_in_source`. A period is incomplete when
+the source month does not cover it in full or, for forces, when returns are
+missing.
+
+### `btg_profile()`
+
+A list for one area and year: `comparisons` (one row per group with the
+columns above plus rank, `n_eligible`, `rank_lower`, `rank_upper` and
+`prob_top` for forces), `stability`, `change`, `coverage` (status, monthly
+counts and the month table), `section60`, `national` (the national year row
+and the outcome-linked search rates by group), `statements` and `caveats`.
+
+## Notes on this release
+
+The catalogue lists an `Unknown` group for `national_month_ethnicity` and
+`hit_rate_ethnicity_year`, but the bundled tables of this release carry no
+`Unknown` rows: stops with no recorded ethnicity were not present in the
+dashboard's national monthly and outcome aggregates. `section60_force_year`
+does carry `Unknown` rows. Officer-defined `Mixed` counts are small
+everywhere, because the police classification rarely records that group.

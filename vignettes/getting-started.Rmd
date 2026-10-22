@@ -17,6 +17,13 @@ dashboard's force ranking chart for any year and group, and links that carry a
 chart to and from the dashboard website. The package includes all the data used
 in this tutorial; running it needs no network connection or dashboard session.
 
+This tutorial covers the data and the ranking chart. Two companion vignettes
+go further: `vignette("robustness", package = "BlackThriveSS")` shows how to
+test what a disparity estimate rests on (bounds under unknown ethnicity, rank
+intervals, change with coverage), and `vignette("briefing", package =
+"BlackThriveSS")` shows how to brief one force or council, including a
+one-call HTML briefing.
+
 ## Install and discover
 
 Before CRAN publication, use the supplied installation bundle or a source
@@ -192,6 +199,19 @@ stopifnot(identical(btg_figure_data(btg_from_url(btg_dashboard_url(closest, form
 the snapshot. A link selects a view; the website recomputes its numbers from
 its current release, while the chart in R stays pinned to the snapshot. Set
 `options(BlackThriveSS.dashboard_url = ...)` to link to another deployment.
+
+## Go further
+
+Trends, change, robustness and briefings each have one function:
+
+```{r further, fig.alt="Metropolitan Police stop-rate ratios by group and year."}
+btg_plot_trend(btg_get_data("force_ethnicity_year", force = "metropolitan"))
+head(btg_sensitivity(x)[c("force_label", "ratio", "ratio_min", "ratio_max", "parity_direction")], 3)
+head(btg_change(btg_get_data("force_ethnicity_year", groups = "Black"))[c("force_label", "change", "change_direction")], 3)
+```
+
+`btg_profile()` gathers all of this for one area as plain statements, and
+`btg_report()` renders it as an HTML briefing; see the briefing vignette.
 
 ## Cite and interpret responsibly
 

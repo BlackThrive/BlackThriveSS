@@ -1,0 +1,69 @@
+url: https://blackthrive.github.io/BlackThriveSS/
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#0B2545"
+    base_font: {google: "Inter"}
+    heading_font: {google: "Inter"}
+
+home:
+  title: Reproducible stop and search evidence for England and Wales
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+
+articles:
+- title: Guides
+  navbar: ~
+  contents:
+  - getting-started
+  - robustness
+  - briefing
+
+reference:
+- title: Data
+  desc: Fixed, checksummed datasets with provenance and validation.
+  contents:
+  - btg_datasets
+  - btg_releases
+  - btg_get_data
+  - btg_metadata
+  - btg_coverage
+  - btg_validate
+  - btg_citation
+  - btg_export
+  - btg_glossary
+- title: Charts
+  desc: Editable ggplots that carry their table and a replayable view.
+  contents:
+  - btg_plot_disparity
+  - btg_plot_sensitivity
+  - btg_plot_trend
+  - btg_plot_change
+  - btg_figure_data
+  - btg_theme
+  - btg_colours
+  - btg_group_colours
+- title: Robustness and change
+  desc: What a comparison rests on, with sampling and assumptions kept apart.
+  contents:
+  - btg_sensitivity
+  - btg_rank_stability
+  - btg_change
+- title: Briefings
+  desc: Plain statements and an HTML briefing for one force or council.
+  contents:
+  - btg_profile
+  - btg_report
+- title: Saved views and the dashboard
+  contents:
+  - btg_save_view
+  - btg_from_view
+  - btg_dashboard_url
+  - btg_from_url
+  - btg_dashboard_base
+- title: Package
+  contents:
+  - BlackThriveSS-package

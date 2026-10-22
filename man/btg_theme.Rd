@@ -13,7 +13,7 @@ btg_theme(base_size = 12)
 A ggplot2 theme object.
 }
 \description{
-A quiet theme built on \code{\link[ggplot2:ggtheme]{ggplot2::theme_minimal()}}: a recessive hairline
+A quiet theme built on \code{\link[ggplot2:theme_minimal]{ggplot2::theme_minimal()}}: a recessive hairline
 grid, no minor grid or tick marks, titles aligned with the plot edge, muted
 axis text and the legend above the plot. \code{\link[=btg_plot_disparity]{btg_plot_disparity()}} applies it,
 and it can be added to any other ggplot.

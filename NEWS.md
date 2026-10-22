@@ -1,7 +1,37 @@
 # BlackThriveSS (development version)
 
-* The package now records its repository and issue tracker at
-  <https://github.com/BlackThrive/BlackThriveSS> in `DESCRIPTION`.
+* Robustness analysis. `btg_sensitivity()` bounds every ratio under the two
+  extreme allocations of stops with no recorded ethnicity and reports
+  `parity_direction` and the best and worst rank each force could hold;
+  `btg_rank_stability()` gives seeded rank intervals and top-n probabilities
+  from Poisson redraws of the recorded counts, leaving the caller's random
+  number state untouched; `btg_plot_sensitivity()` draws the ranking chart's
+  forces with their sampling interval and allocation range on a log axis.
+  Sampling variability and assumption ranges are never combined.
+* Time. `btg_plot_trend()` draws a force's or council's ratios or rates over
+  the years, national monthly stops or shares, national totals and rates,
+  outcome-linked search rates and Section 60 searches, with incomplete
+  periods marked and never annualised; `btg_change()` compares two years with
+  an interval and the coverage of both; `btg_plot_change()` is a dumbbell
+  chart of the largest changes. `btg_group_colours()` gives every group a
+  fixed colour.
+* Briefings. `btg_profile()` gathers the evidence for one force or council
+  as plain statements that carry their qualifications, with the tables behind
+  them; `btg_report()` renders a self-contained HTML briefing from the
+  installed R Markdown template "BlackThriveSS briefing", which the editors
+  also list under new R Markdown templates.
+* Sharing. `btg_export()` writes a dataset to CSV with a JSON provenance
+  sidecar; `btg_glossary()` defines every term the package uses.
+* Saved views gain schema 3, which carries a dataset selection and a chart's
+  settings, so trend and change charts replay like the ranking charts; the
+  sensitivity chart replays through schema 2. Earlier views are unchanged.
+  The default year for comparisons is now the latest year the source covers
+  in full for every dataset, including councils.
+* Two new vignettes, "How robust is a disparity estimate?" and "Brief a force
+  or council", and a pkgdown site configuration.
+* Help pages are now generated with roxygen2 8.1; the package help page lists
+  the repository and issue tracker at
+  <https://github.com/BlackThrive/BlackThriveSS>, which `DESCRIPTION` records.
 
 # BlackThriveSS 0.0.3
 

@@ -18,8 +18,10 @@ Reproduce a chart from a pinned view file
 \details{
 Unknown releases, checksums, fields or chart versions fail explicitly.
 Files cannot trigger downloads or execute code. Views written by earlier
-package versions (schema 1) replay unchanged. A dashboard link is not a
-view file; use \code{\link[=btg_from_url]{btg_from_url()}} for links.
+package versions (schema 1) replay unchanged. A view names its chart, so
+a view saved from \code{\link[=btg_plot_sensitivity]{btg_plot_sensitivity()}}, \code{\link[=btg_plot_trend]{btg_plot_trend()}} or
+\code{\link[=btg_plot_change]{btg_plot_change()}} replays that chart with its settings. A dashboard
+link is not a view file; use \code{\link[=btg_from_url]{btg_from_url()}} for links.
 }
 \examples{
 file <- system.file("examples", "disparity-2025.json", package = "BlackThriveSS")

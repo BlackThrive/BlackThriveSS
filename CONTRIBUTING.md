@@ -30,6 +30,18 @@ the additional tools above are for maintainers.
 * For a new chart algorithm, increment `chart_version` and preserve replay for
   existing supported versions, or fail explicitly. Do not silently reinterpret
   a saved specification.
+* A new chart attaches `btg_figure_data` and a `btg_view` built with
+  `.new_view()` (schema 3), and registers its settings in `.view_settings` and
+  its drawing call in `.draw_view()` in `R/view.R`. Settings are passed as
+  arguments and never evaluated. The force ranking charts keep schema 2.
+* Groups keep the colours in `btg_group_colours()` in every chart; reference
+  and de-emphasis colours come from `btg_colours()`. Do not assign colours by
+  rank or value.
+* Statements written by `btg_profile()` must carry their qualification in the
+  same sentence: the interval with the ratio, the coverage with a change, the
+  allocation range with the unknown share. The briefing template in
+  `inst/rmarkdown/templates/briefing` draws only from the profile and the
+  exported chart functions.
 * Keep sampling intervals separate from assumption uncertainty. Do not infer
   discrimination from the descriptive ratio.
 

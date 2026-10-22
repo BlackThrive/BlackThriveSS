@@ -1,0 +1,129 @@
+---
+title: "Brief a force or council"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Brief a force or council}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 10, fig.height = 7)
+library(BlackThriveSS)
+```
+
+This vignette is for people who need to say something accurate about stop
+and search in one place: a police force area or a council. It needs no
+statistics beyond reading the statements the package writes, and nothing
+here requires a network connection.
+
+## One call for the evidence
+
+```{r profile}
+p <- btg_profile(force = "metropolitan", draws = 500)
+p
+```
+
+Each statement carries its own qualification: the interval, the rank and
+how far sampling alone could move it, how far the stops with no recorded
+ethnicity could move the ratio, whether both years of a change were covered
+in full. The tables behind the statements are in the object:
+
+```{r tables}
+p$comparisons[c("group", "ratio", "ci_lower", "ci_upper", "rank", "n_eligible", "rank_lower", "rank_upper", "parity_direction")]
+p$change[c("group", "ratio_from", "ratio_to", "change", "change_direction", "comparable_coverage")]
+p$coverage[c("status", "months_supplied", "months_missing")]
+```
+
+A council profile works the same way, without ranks or coverage, because
+council counts depend on published stop coordinates:
+
+```{r council}
+btg_profile(council = "E09000022", draws = 500)$statements[1:3]
+```
+
+## The charts a briefing needs
+
+The ranking chart with the area highlighted, as on the dashboard:
+
+```{r ranking, fig.alt = "Black to White stop-rate ratios for the ten highest forces in 2025 with the Metropolitan Police highlighted."}
+year <- btg_get_data("force_ethnicity_year", years = 2025)
+btg_plot_disparity(year, highlight = "metropolitan")
+```
+
+The same comparisons with their uncertainty shown honestly:
+
+```{r robust, fig.alt = "Recorded ratios with sampling intervals and bounds under unknown ethnicity, Metropolitan Police highlighted."}
+btg_plot_sensitivity(year, highlight = "metropolitan")
+```
+
+How the area's ratios have moved, with incomplete periods marked:
+
+```{r trend, fig.alt = "Metropolitan Police stop-rate ratios by group and year."}
+met <- btg_get_data("force_ethnicity_year", force = "metropolitan")
+btg_plot_trend(met)
+```
+
+Rates per 1,000 residents with one group emphasised and the rest as context:
+
+```{r rates, fig.alt = "Recorded stops per 1,000 residents by group for the Metropolitan Police, Black emphasised."}
+btg_plot_trend(met, measure = "rate", highlight = "Black")
+```
+
+National context: the share of recorded stops by group, month by month, and
+the outcome-linked search rate by group.
+
+```{r national, fig.alt = "Share of recorded stops by ethnic group across England and Wales by month."}
+btg_plot_trend(btg_get_data("national_month_ethnicity"), measure = "share")
+btg_plot_trend(btg_get_data("hit_rate_ethnicity_year"))
+```
+
+## A complete briefing in one file
+
+`btg_report()` renders a self-contained HTML briefing from the package's
+installed R Markdown template: the statements, the charts above, the tables
+behind them, monthly coverage, the methods and their limits, and the code
+and citations that reproduce every figure. It needs the rmarkdown package
+and Pandoc, which RStudio and Positron include.
+
+```{r report, eval = FALSE}
+btg_report(force = "metropolitan", file = "metropolitan-2025.html")
+btg_report(council = "E09000022", year = 2024, file = "lambeth-2024.html")
+```
+
+The template is also listed in those editors under *New R Markdown, From
+Template* as "BlackThriveSS briefing", for anyone who wants to add their own
+sections.
+
+## Taking numbers out of R
+
+`btg_export()` writes a dataset to CSV with a JSON sidecar that records the
+release, checksums, selection, citation and limitations:
+
+```{r export}
+csv <- tempfile(fileext = ".csv")
+files <- btg_export(btg_get_data(force = "metropolitan"), csv)
+basename(files)
+unlink(files)
+```
+
+And every term the package uses has one definition:
+
+```{r glossary}
+g <- btg_glossary()
+g[g$term %in% c("ratio", "allocation range", "coverage"), ]
+```
+
+## Saying it right
+
+A few rules that the statements follow and that are worth keeping in any
+briefing built on them:
+
+* Say *recorded stops per 1,000 residents*, not the chance of being stopped.
+  Residents stand in for the people present in an area.
+* Give the interval and the allocation range with the ratio, and the
+  coverage with any change.
+* Ranks move a long way under sampling alone; quote the rank interval.
+* A ratio describes recorded stops relative to population. It does not,
+  by itself, show discrimination, and it does not separate recording
+  practice, who is present and policing decisions.

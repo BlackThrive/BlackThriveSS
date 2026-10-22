@@ -1,0 +1,167 @@
+---
+title: "Stop and search evidence briefing"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: default
+    self_contained: true
+params:
+  force: "metropolitan"
+  council: null
+  year: null
+  release: null
+  draws: 2000
+  seed: 1
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE,
+                      fig.width = 10, fig.height = 6.5, dpi = 96, fig.align = "left")
+if (!isNamespaceLoaded("BlackThriveSS")) library(BlackThriveSS)
+profile <- btg_profile(force = params$force, council = params$council, year = params$year,
+                       release = params$release, draws = params$draws, seed = params$seed)
+is_force <- identical(profile$area$level, "force")
+area_arg <- if (is_force) list(force = profile$area$id) else list(council = profile$area$id)
+dataset <- if (is_force) "force_ethnicity_year" else "council_ethnicity_year"
+area_data <- do.call(btg_get_data, c(list(dataset = dataset, release = profile$release), area_arg))
+year_data <- btg_get_data(dataset, years = profile$year, release = profile$release)
+all_years <- btg_get_data(dataset, release = profile$release)
+fmt <- function(x, digits = 1) format(round(x, digits), nsmall = digits, big.mark = ",", trim = TRUE)
+```
+
+# `r profile$area$label`, `r profile$year`
+
+This briefing is built entirely from fixed, checksummed public data bundled
+with the BlackThriveSS package: release `r profile$release`, Police.uk source
+month `r profile$source_month`, and Census 2021 resident populations. Every
+chart and table can be reproduced in R from the code at the end.
+
+## Headline findings
+
+```{r statements, results = "asis"}
+cat(paste0("- ", profile$statements), sep = "\n")
+```
+
+## Comparisons with White residents
+
+```{r comparisons}
+tab <- profile$comparisons
+show <- data.frame(
+  Group = tab$group,
+  `Recorded stops` = format(tab$group_stops, big.mark = ","),
+  `Per 1,000 residents` = fmt(tab$group_rate),
+  `White per 1,000` = fmt(tab$white_rate),
+  Ratio = ifelse(is.finite(tab$ratio), paste0(fmt(tab$ratio), "x"), "n/a"),
+  `95% interval` = ifelse(is.finite(tab$ci_lower), paste0(fmt(tab$ci_lower), "x to ", fmt(tab$ci_upper), "x"), ""),
+  `Range under unknown ethnicity` = ifelse(is.finite(tab$ratio_min), paste0(fmt(tab$ratio_min), "x to ", fmt(tab$ratio_max), "x"), ""),
+  check.names = FALSE, stringsAsFactors = FALSE)
+if (is_force) {
+  show$Rank <- ifelse(tab$eligible, paste0(tab$rank, " of ", tab$n_eligible), "not displayed")
+  if (!is.null(tab$rank_lower)) show$`Rank interval (sampling)` <- ifelse(is.na(tab$rank_lower), "", paste(tab$rank_lower, "to", tab$rank_upper))
+  show$`Rank range (unknown ethnicity)` <- ifelse(is.na(tab$rank_best), "", paste(tab$rank_best, "to", tab$rank_worst))
+}
+knitr::kable(show, align = c("l", rep("r", ncol(show) - 1)))
+```
+
+The interval reflects sampling variability on the recorded counts. The range
+under unknown ethnicity is what the ratio would be if every stop with no
+recorded ethnicity were counted as White (lower end) or as the compared group
+(upper end); any allocation lies between them.
+
+```{r ranking, eval = is_force, fig.alt = "Ranking of forces by Black to White stop-rate ratio with this force highlighted."}
+if (is_force && any(year_data$data$eligible[year_data$data$group == "Black"])) {
+  btg_plot_disparity(year_data, year = profile$year, group = "Black", highlight = profile$area$id)
+}
+```
+
+```{r robustness, eval = is_force, fig.alt = "Recorded ratios with sampling intervals and bounds under unknown ethnicity."}
+if (is_force && any(year_data$data$eligible[year_data$data$group == "Black"])) {
+  btg_plot_sensitivity(year_data, year = profile$year, group = "Black", highlight = profile$area$id)
+}
+```
+
+## Over time
+
+```{r trend, fig.alt = "Stop-rate ratios by group and year for this area."}
+btg_plot_trend(area_data)
+```
+
+```{r trend-rate, fig.alt = "Recorded stops per 1,000 residents by group and year for this area."}
+btg_plot_trend(area_data, measure = "rate", highlight = "Black")
+```
+
+```{r change}
+if (!is.null(profile$change)) {
+  ch <- profile$change
+  knitr::kable(data.frame(
+    Group = ch$group, From = ch$year_from, To = ch$year_to,
+    `Earlier ratio` = ifelse(is.finite(ch$ratio_from), paste0(fmt(ch$ratio_from), "x"), "n/a"),
+    `Later ratio` = ifelse(is.finite(ch$ratio_to), paste0(fmt(ch$ratio_to), "x"), "n/a"),
+    Change = ifelse(is.finite(ch$change), sprintf("%+.0f%%", 100 * (ch$change - 1)), ""),
+    `95% interval` = ifelse(is.finite(ch$change_lower), paste0(fmt(ch$change_lower, 2), "x to ", fmt(ch$change_upper, 2), "x"), ""),
+    `Both years covered in full` = ifelse(ch$comparable_coverage, "yes", "no"),
+    check.names = FALSE, stringsAsFactors = FALSE), align = c("l", rep("r", 7)))
+}
+```
+
+```{r section60, eval = is_force, fig.alt = "Section 60 searches by group and year for this force."}
+s60 <- tryCatch(btg_get_data("section60_force_year", force = profile$area$id, release = profile$release),
+                error = function(e) NULL)
+if (!is.null(s60)) btg_plot_trend(s60)
+```
+
+## Reporting coverage
+
+```{r coverage, eval = is_force}
+if (is_force) {
+  months <- profile$coverage$months
+  knitr::kable(data.frame(
+    Month = format(as.Date(paste0(months$month, "-01")), "%B %Y"),
+    Status = months$status,
+    `Recorded stops` = ifelse(is.na(months$records), "", format(months$records, big.mark = ",")),
+    check.names = FALSE), align = c("l", "l", "r"))
+}
+```
+
+`r if (is_force) "A supplied month is a reported submission, not proof that every event was recorded. Missing months are missing, not zero; an unverified month lies outside the window the dashboard checks." else "Council counts are located by published stop coordinates, which some forces withhold, so they undercount and carry no monthly coverage table."`
+
+## National context
+
+```{r national, fig.alt = "Share of recorded stops by ethnic group across England and Wales by month."}
+btg_plot_trend(btg_get_data("national_month_ethnicity", release = profile$release), measure = "share")
+```
+
+```{r hit}
+hit <- profile$national$hit_rate
+knitr::kable(data.frame(Group = hit$group,
+                        `Searches with a known outcome` = format(hit$hit_total, big.mark = ","),
+                        `Outcome linked to object of search` = paste0(fmt(hit$hit_rate), "%"),
+                        check.names = FALSE), align = c("l", "r", "r"))
+```
+
+## How to read this briefing
+
+```{r caveats, results = "asis"}
+cat(paste0("- ", profile$caveats), sep = "\n")
+```
+
+## Reproduce it
+
+```{r reproduce, echo = TRUE, eval = FALSE, code = c(
+  "library(BlackThriveSS)",
+  sprintf("profile <- btg_profile(%s = \"%s\", year = %d, release = \"%s\")",
+          profile$area$level, profile$area$id, profile$year, profile$release),
+  "profile$statements",
+  sprintf("area <- btg_get_data(\"%s\", %s = \"%s\", release = \"%s\")", dataset, profile$area$level, profile$area$id, profile$release),
+  "btg_plot_trend(area)",
+  if (is_force) sprintf("btg_plot_sensitivity(btg_get_data(\"%s\", years = %d, release = \"%s\"), highlight = \"%s\")", dataset, profile$year, profile$release, profile$area$id) else NULL,
+  "btg_validate(area)")}
+```
+
+```{r citation, results = "asis"}
+cat("Data citation: ", btg_citation(area_data), "\n\n", sep = "")
+cat("Package citation: ", paste(format(utils::citation("BlackThriveSS"), style = "text"), collapse = " "), "\n\n", sep = "")
+checks <- btg_validate(area_data)
+cat("Validation of the bundled release: ", if (all(checks$passed)) "all checks passed" else "some checks failed", " (", nrow(checks), " checks).\n", sep = "")
+```

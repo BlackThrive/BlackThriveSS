@@ -1,0 +1,295 @@
+# A structured evidence profile for one force or council: the numbers behind
+# a briefing, with plain statements that carry their own qualifications, and
+# an HTML briefing rendered from the installed R Markdown template.
+
+.fmt <- function(x, digits = 1) {
+  format(round(x, digits), nsmall = digits, big.mark = ",", trim = TRUE, scientific = FALSE)
+}
+.fmt_count <- function(x) format(x, big.mark = ",", trim = TRUE, scientific = FALSE)
+.ordinal <- function(n) {
+  suffix <- ifelse(n %% 100 %in% 11:13, "th",
+                   c("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")[n %% 10 + 1])
+  paste0(n, suffix)
+}
+.pick_year <- function(x, year) {
+  if (is.null(year)) return(.default_chart_year(x))
+  if (!is.numeric(year) || length(year) != 1L || is.na(year) || !year %in% x$data$year) {
+    stop("year must be one calendar year the dataset holds.", call. = FALSE)
+  }
+  as.integer(year)
+}
+.month_name <- function(ym) format(as.Date(paste0(ym, "-01")), "%B")
+
+.profile_caveats <- c(
+  "Rates divide recorded stop and search events by Census 2021 resident populations. They are event rates, not the probability that an individual is stopped, and residents are a proxy for the people present in an area.",
+  "Ethnicity is as perceived by the officer; Census ethnicity is self-reported. The two classifications differ, and stops with no recorded ethnicity are excluded from the ratio but shown separately.",
+  "Intervals describe sampling variability on the recorded counts only. They do not capture missing monthly returns, classification differences or the choice of denominator.",
+  "A ratio, rank or change is descriptive. It does not establish discrimination, and it does not separate recording practice, who is present in an area and policing decisions.",
+  "Supplied returns are not proof of complete recording. Missing months are shown as missing, never as zero, and counts for incomplete periods are not annualised.")
+
+#' Build an evidence profile for one force or council
+#'
+#' Gathers, for one area and one year, everything the package can say with
+#' its bundled evidence: each group's recorded stops, rate per 1,000 residents
+#' and ratio to White residents with its interval; the force's rank among
+#' eligible forces, how much sampling variability moves that rank
+#' ([btg_rank_stability()]) and how far the allocation of unknown-ethnicity
+#' stops could move the ratio ([btg_sensitivity()]); the change since the
+#' previous year ([btg_change()]); monthly reporting coverage; Section 60
+#' searches; and national context. Each finding is also written as a plain
+#' statement that carries its own qualification, ready for a briefing.
+#'
+#' @param force A Police.uk force identifier such as `"metropolitan"`, or
+#' @param council an ONS local-authority code such as `"E09000022"`. Name
+#'   one of the two.
+#' @param year The calendar year to profile. `NULL` uses the latest year the
+#'   source covers in full.
+#' @param release A value from [btg_releases()]; `NULL` uses the default
+#'   catalogue release.
+#' @param draws,seed Simulation settings passed to [btg_rank_stability()].
+#' @return A list of class `btg_profile` with `area`, `year`, `release`,
+#'   `source_month`, `comparisons` (one row per group), `stability` (forces
+#'   only), `change`, `coverage` (forces only), `section60` (forces only),
+#'   `national`, `statements` and `caveats`. Printing it shows the statements.
+#' @details Ranks, rank intervals and allocation bounds are computed against
+#'   every force in the release, not only the profiled one. Councils carry no
+#'   rank, eligibility or coverage, as in the dataset, and their counts depend
+#'   on published stop coordinates.
+#' @export
+#' @examples
+#' p <- btg_profile(force = "metropolitan", draws = 500)
+#' p
+#' p$comparisons[c("group", "ratio", "rank", "rank_lower", "rank_upper", "parity_direction")]
+btg_profile <- function(force = NULL, council = NULL, year = NULL, release = NULL,
+                        draws = 2000L, seed = 1L) {
+  if (is.null(force) == is.null(council)) stop("Name one force or one council.", call. = FALSE)
+  level <- if (is.null(force)) "council" else "force"
+  if (identical(level, "force")) {
+    .scalar_string(force, "force")
+    x <- btg_get_data("force_ethnicity_year", force = force, release = release)
+  } else {
+    .scalar_string(council, "council")
+    x <- btg_get_data("council_ethnicity_year", council = council, release = release)
+  }
+  year <- .pick_year(x, year)
+  release <- x$metadata$release
+  source_month <- x$metadata$source$latest_month
+  id <- x$data[[level]][1]
+  label <- x$data[[paste0(level, "_label")]][1]
+  area <- list(level = level, id = id, label = label,
+               pfa_code = if (identical(level, "force")) x$data$pfa_code[1] else NA_character_)
+  rows <- x$data[x$data$year == year, ]
+  rows <- rows[order(match(rows$group, c("Black", "Asian", "Mixed", "Other"))), ]
+  every <- btg_get_data(x$selection$dataset, years = year, release = release)
+  sens <- btg_sensitivity(every)
+  sens <- sens[sens[[level]] == id, ]
+  sens <- sens[match(rows$group, sens$group), ]
+  comparisons <- data.frame(
+    group = rows$group, group_stops = rows$group_stops, white_stops = rows$white_stops,
+    group_population = rows$group_population, white_population = rows$white_population,
+    group_rate = rows$group_rate, white_rate = rows$white_rate,
+    ratio = rows$ratio, ci_lower = rows$ci_lower, ci_upper = rows$ci_upper,
+    ratio_min = sens$ratio_min, ratio_max = sens$ratio_max, parity_direction = sens$parity_direction,
+    unknown_ethnicity_stops = rows$unknown_ethnicity_stops, total_records = rows$total_records,
+    unknown_share = sens$unknown_share, stringsAsFactors = FALSE)
+  stability <- NULL
+  if (identical(level, "force")) {
+    comparisons$eligible <- rows$eligible
+    comparisons$rank <- rows$rank
+    comparisons$rank_best <- sens$rank_best
+    comparisons$rank_worst <- sens$rank_worst
+    eligible_counts <- tapply(every$data$eligible, every$data$group, sum)
+    comparisons$n_eligible <- as.integer(eligible_counts[comparisons$group])
+    if (any(every$data$eligible)) {
+      stability <- btg_rank_stability(every, draws = draws, seed = seed)
+      mine <- stability[stability$force == id, ]
+      m <- match(comparisons$group, mine$group)
+      comparisons$rank_lower <- mine$rank_lower[m]
+      comparisons$rank_upper <- mine$rank_upper[m]
+      comparisons$prob_top <- mine$prob_top[m]
+    }
+  }
+  change <- if (year > min(x$data$year)) btg_change(x, from = year - 1L, to = year) else NULL
+  if (!is.null(change)) change <- change[match(rows$group, change$group), ]
+  coverage <- NULL
+  if (identical(level, "force")) {
+    months <- x$coverage[substr(x$coverage$month, 1, 4) == year, ]
+    coverage <- list(status = rows$coverage_status[1], months_supplied = rows$months_supplied[1],
+                     months_missing = rows$months_missing[1], months_unverified = rows$months_unverified[1],
+                     months_in_source = rows$months_in_source[1], months = months)
+  }
+  section60 <- NULL
+  if (identical(level, "force")) {
+    s60 <- tryCatch(btg_get_data("section60_force_year", force = id, years = year, release = release)$data,
+                    error = function(e) NULL)
+    if (!is.null(s60)) section60 <- s60[c("group", "s60_stops")]
+  }
+  national_year <- btg_get_data("national_year", years = year, release = release)$data
+  hit <- btg_get_data("hit_rate_ethnicity_year", years = year, release = release)$data
+  national <- list(year = national_year, hit_rate = hit[c("group", "hit_yes", "hit_total", "hit_rate")])
+  statements <- .profile_statements(area, year, source_month, comparisons, change, coverage, section60, national)
+  structure(list(area = area, year = year, release = release, source_month = source_month,
+                 comparisons = comparisons, stability = stability, change = change,
+                 coverage = coverage, section60 = section60, national = national,
+                 statements = statements, caveats = .profile_caveats),
+            class = "btg_profile")
+}
+
+.profile_statements <- function(area, year, source_month, comparisons, change, coverage, section60, national) {
+  out <- character()
+  force <- identical(area$level, "force")
+  months_in_source <- if (as.integer(substr(source_month, 1, 4)) == year) as.integer(substr(source_month, 6, 7)) else 12L
+  period <- if (months_in_source < 12L) {
+    sprintf("the first %d months of %d (to %s)", months_in_source, year, .month_name(source_month))
+  } else as.character(year)
+  if (force && !is.null(coverage)) {
+    out <- c(out, switch(coverage$status,
+      all_months_supplied = sprintf("%s supplied stop and search returns for all 12 months of %d.", area$label, year),
+      partial_year = {
+        missing <- coverage$months[coverage$months$status == "missing", "month"]
+        sprintf("%s supplied returns for %d of 12 months of %d; %s missing (%s). Counts for the year cover the supplied months only and are not annualised.",
+                area$label, coverage$months_supplied, year, if (length(missing) == 1L) "one month is" else paste(length(missing), "months are"),
+                paste(.month_name(missing), collapse = ", "))
+      },
+      no_months_supplied = sprintf("%s has no supplied returns for %d in this release; its counts for the year are missing, not zero.", area$label, year),
+      unverified = sprintf("Monthly submissions for %d lie outside the window the dashboard verifies, so %s's counts are as published and their completeness is unverified.", year, area$label)))
+  }
+  if (!force) {
+    out <- c(out, sprintf("%s's counts are located by published stop coordinates, which some forces withhold, so they undercount and carry no rank or display rule.", area$label))
+  }
+  for (i in seq_len(nrow(comparisons))) {
+    r <- comparisons[i, ]
+    if (!is.finite(r$ratio)) {
+      if (is.na(r$group_stops)) next
+      out <- c(out, sprintf("No resident-based %s:White comparison is available for %s in %s.", r$group, area$label, period))
+      next
+    }
+    if (r$group_stops == 0) {
+      out <- c(out, sprintf("No stops of %s people were recorded under officer-defined ethnicity in %s; White residents were stopped at %s per 1,000.",
+                            r$group, period, .fmt(r$white_rate)))
+    } else {
+      sentence <- sprintf("Recorded stops of %s people in %s: %s per 1,000 %s residents, %sx the rate for White residents (%s per 1,000)",
+                          r$group, period, .fmt(r$group_rate), r$group, .fmt(r$ratio), .fmt(r$white_rate))
+      if (is.finite(r$ci_lower)) sentence <- sprintf("%s, 95%% interval %sx to %sx", sentence, .fmt(r$ci_lower), .fmt(r$ci_upper))
+      sentence <- sprintf("%s, from %s and %s recorded stops.", sentence, .fmt_count(r$group_stops), .fmt_count(r$white_stops))
+      out <- c(out, sentence)
+    }
+    if (force && isTRUE(r$eligible) && !is.na(r$rank)) {
+      rank_sentence <- sprintf("That %s:White ratio ranks %s of %d forces with an eligible comparison", r$group, .ordinal(r$rank), r$n_eligible)
+      if (!is.null(r$rank_lower) && !is.na(r$rank_lower)) {
+        rank_sentence <- sprintf("%s; sampling variability alone puts the rank between %d and %d", rank_sentence, r$rank_lower, r$rank_upper)
+      }
+      out <- c(out, paste0(rank_sentence, "."))
+    } else if (force && !is.na(r$group_stops)) {
+      out <- c(out, sprintf("The %s:White comparison does not meet the dashboard's display rule (a positive ratio from at least 200 stops with known ethnicity and comparable resident populations), so it carries no rank.", r$group))
+    }
+    if (is.finite(r$ratio_min) && is.finite(r$ratio_max) && r$unknown_ethnicity_stops > 0 && r$group_stops > 0) {
+      out <- c(out, sprintf("%s of the %s recorded stops in %s (%s%%) have no recorded ethnicity. Counting every one of them as White would put the %s:White ratio at %sx; counting every one as %s would put it at %sx. %s",
+                            .fmt_count(r$unknown_ethnicity_stops), .fmt_count(r$total_records), period, .fmt(100 * r$unknown_share),
+                            r$group, .fmt(r$ratio_min), r$group, .fmt(r$ratio_max),
+                            switch(r$parity_direction,
+                                   above = "The ratio stays above parity under every allocation.",
+                                   below = "The ratio stays below parity under every allocation.",
+                                   sensitive = "Which side of parity the ratio falls on depends on those stops.")))
+    }
+    if (!is.null(change)) {
+      ch <- change[i, ]
+      if (is.finite(ch$change)) {
+        direction <- if (ch$change >= 1) "higher" else "lower"
+        pct <- .fmt(100 * abs(ch$change - 1), 0)
+        sentence <- sprintf("Compared with %d, the %s:White ratio in %d was %s%% %s", ch$year_from, r$group, ch$year_to, pct, direction)
+        if (is.finite(ch$change_lower)) {
+          sentence <- sprintf("%s (95%% interval %sx to %sx the earlier ratio%s)", sentence, .fmt(ch$change_lower, 2), .fmt(ch$change_upper, 2),
+                              if (identical(ch$change_direction, "unclear")) ", which includes no change" else "")
+        }
+        sentence <- if (isTRUE(ch$comparable_coverage)) paste0(sentence, "; both years are covered in full.") else
+          paste0(sentence, "; returns do not cover both years in full, so this comparison is indicative only.")
+        out <- c(out, sentence)
+      }
+    }
+  }
+  if (force && !is.null(section60) && nrow(section60)) {
+    total <- sum(section60$s60_stops, na.rm = TRUE)
+    black <- section60$s60_stops[section60$group == "Black"]
+    sentence <- sprintf("%s recorded %s searches under Section 60 in %s", area$label, .fmt_count(total), period)
+    if (length(black) == 1L && total > 0) sentence <- sprintf("%s, %s%% of them of Black people", sentence, .fmt(100 * black / total, 0))
+    out <- c(out, paste0(sentence, "."))
+  }
+  ny <- national$year
+  if (nrow(ny) == 1L) {
+    hit <- national$hit_rate
+    black_hit <- hit$hit_rate[hit$group == "Black"]
+    white_hit <- hit$hit_rate[hit$group == "White"]
+    sentence <- sprintf("Across England and Wales, %s stops were recorded in %s; %s%% led to an arrest", .fmt_count(ny$stops), period, .fmt(ny$arrest_rate))
+    if (length(black_hit) == 1L && length(white_hit) == 1L) {
+      sentence <- sprintf("%s, and the share of searches whose outcome was linked to what was searched for was %s%% for Black people and %s%% for White people", sentence, .fmt(black_hit), .fmt(white_hit))
+    }
+    out <- c(out, paste0(sentence, "."))
+  }
+  out
+}
+
+#' @export
+print.btg_profile <- function(x, ...) {
+  cat("BlackThriveSS evidence profile: ", x$area$label, ", ", x$year, "\n",
+      "Release ", x$release, " (source month ", x$source_month, ")\n\n", sep = "")
+  for (s in x$statements) cat(strwrap(s, width = 78, prefix = "  ", initial = "* "), sep = "\n")
+  cat("\nTables: $comparisons, $change, $coverage, $section60, $national; qualifications: $caveats\n")
+  invisible(x)
+}
+
+#' Render an HTML briefing for one force or council
+#'
+#' Writes a self-contained HTML briefing from the package's installed
+#' R Markdown template: the headline statements of [btg_profile()], the
+#' ranking, robustness, trend and change charts for the area, the tables
+#' behind them, reporting coverage, the methods and their limits, and the
+#' citation and release identifiers needed to reproduce every figure.
+#'
+#' @inheritParams btg_profile
+#' @param file Path of the HTML file to write.
+#' @param overwrite Whether to replace an existing file.
+#' @return The path of the written file, invisibly.
+#' @details Rendering needs the `rmarkdown` package and Pandoc, which
+#'   RStudio and Positron supply; the function stops with a clear message
+#'   when they are missing. The template is also available in those editors
+#'   as the R Markdown template "BlackThriveSS briefing" for editing.
+#' @export
+#' @examples
+#' \donttest{
+#' if (requireNamespace("rmarkdown", quietly = TRUE) && rmarkdown::pandoc_available("2.0")) {
+#'   path <- tempfile(fileext = ".html")
+#'   btg_report(force = "metropolitan", file = path, draws = 500)
+#'   unlink(path)
+#' }
+#' }
+btg_report <- function(force = NULL, council = NULL, year = NULL, release = NULL, file,
+                       overwrite = FALSE, draws = 2000L, seed = 1L) {
+  .scalar_string(file, "file")
+  if (!is.logical(overwrite) || length(overwrite) != 1L || is.na(overwrite)) {
+    stop("overwrite must be TRUE or FALSE.", call. = FALSE)
+  }
+  if (file.exists(file) && !overwrite) stop("File exists; use overwrite = TRUE.", call. = FALSE)
+  if (!requireNamespace("rmarkdown", quietly = TRUE)) {
+    stop("Install the rmarkdown package to render briefings.", call. = FALSE)
+  }
+  if (!rmarkdown::pandoc_available("2.0")) {
+    stop("Pandoc 2.0 or later is needed to render briefings; RStudio and Positron include it, or set RSTUDIO_PANDOC.", call. = FALSE)
+  }
+  if (is.null(force) == is.null(council)) stop("Name one force or one council.", call. = FALSE)
+  template <- system.file("rmarkdown", "templates", "briefing", "skeleton", "skeleton.Rmd",
+                          package = "BlackThriveSS")
+  if (!nzchar(template)) stop("The briefing template is missing from this installation.", call. = FALSE)
+  work <- tempfile("btg-briefing-")
+  dir.create(work)
+  on.exit(unlink(work, recursive = TRUE), add = TRUE)
+  input <- file.path(work, "briefing.Rmd")
+  file.copy(template, input)
+  output <- rmarkdown::render(
+    input, output_file = "briefing.html", output_dir = work, quiet = TRUE,
+    envir = new.env(parent = asNamespace("BlackThriveSS")),
+    params = list(force = force, council = council, year = year, release = release,
+                  draws = draws, seed = seed))
+  if (!file.copy(output, file, overwrite = TRUE)) stop("Could not write ", file, ".", call. = FALSE)
+  invisible(file)
+}

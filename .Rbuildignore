@@ -14,3 +14,6 @@
 ^release-tools$
 ^BlackThriveSS_.*[.]tar[.]gz$
 ^BlackThriveSS[.]Rcheck$
+^_pkgdown[.]yml$
+^docs$
+^pkgdown$

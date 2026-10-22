@@ -20,9 +20,9 @@ The file path, invisibly.
 Save the evidence specification for a reproducible chart
 }
 \details{
-Saves release identifiers, SHA-256 checksums, selection, year,
-group, highlighted force and chart version. User-added ggplot styling is
-not serialised. Numerical replay is guaranteed for supported versions;
+Saves release identifiers, SHA-256 checksums, the dataset
+selection, the chart's settings and its chart version. User-added ggplot
+styling is not serialised. Numerical replay is guaranteed for supported versions;
 pixel identity requires the same fonts, graphics dependencies and
 rendering settings. No R code is stored or run.
 }
