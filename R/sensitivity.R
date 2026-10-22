@@ -343,3 +343,66 @@ btg_plot_sensitivity <- function(x = btg_get_data(), n = 10L,
     highlight = if (is.null(highlight)) NA_character_ else highlight)
   p
 }
+
+#' Summarise robustness across every year and group
+#'
+#' One row per year and group of a force-level comparison dataset: how many
+#' forces have counts, how many meet the display rule, how many of those keep
+#' their side of parity under every allocation of unknown-ethnicity stops,
+#' how large the unknown share typically is, how wide the sampling rank
+#' intervals are and how many forces have full-year returns. It is the table
+#' a study of robustness starts from, built from [btg_sensitivity()] and
+#' [btg_rank_stability()].
+#'
+#' @inheritParams btg_rank_stability
+#' @param certain The `prob_top` at or above which a force's place in the
+#'   top `top` is counted as settled.
+#' @return A data frame with `year`, `group`, `forces` (with counts),
+#'   `eligible`, `above`, `below`, `sensitive`, `median_unknown_share`,
+#'   `max_unknown_share`, `median_rank_interval` (upper minus lower),
+#'   `settled_top` (forces whose `prob_top` is at least `certain`),
+#'   `full_year_returns` (forces with all twelve months supplied) and
+#'   `months_in_source`. The attributes `draws`, `seed`, `top`, `certain`,
+#'   `dataset` and `release` record the settings and evidence.
+#' @export
+#' @examples
+#' y <- btg_get_data("force_ethnicity_year", years = 2024:2025, groups = c("Black", "Asian"))
+#' btg_robustness_summary(y, draws = 300)
+btg_robustness_summary <- function(x, draws = 2000L, seed = 1L, top = 10L, certain = 0.9) {
+  if (!is.numeric(certain) || length(certain) != 1L || is.na(certain) || certain < 0 || certain > 1) {
+    stop("certain must be a probability between 0 and 1.", call. = FALSE)
+  }
+  s <- btg_sensitivity(x)
+  if (!"eligible" %in% names(s)) stop("Robustness summaries apply to force-level comparison datasets.", call. = FALSE)
+  r <- if (any(s$eligible)) btg_rank_stability(x, draws = draws, seed = seed, top = top) else NULL
+  months <- if ("months_in_source" %in% names(x$data)) x$data$months_in_source else .months_in_source(x, x$data$year)
+  keys <- unique(s[c("year", "group")])
+  rows <- lapply(seq_len(nrow(keys)), function(i) {
+    block <- s[s$year == keys$year[i] & s$group == keys$group[i], ]
+    eligible <- block[block$eligible, ]
+    ranks <- if (!is.null(r)) r[r$year == keys$year[i] & r$group == keys$group[i], ] else NULL
+    data.frame(
+      year = keys$year[i], group = keys$group[i],
+      forces = sum(!is.na(block$group_stops)), eligible = nrow(eligible),
+      above = sum(eligible$parity_direction %in% "above"),
+      below = sum(eligible$parity_direction %in% "below"),
+      sensitive = sum(eligible$parity_direction %in% "sensitive"),
+      median_unknown_share = stats::median(block$unknown_share, na.rm = TRUE),
+      max_unknown_share = if (any(!is.na(block$unknown_share))) max(block$unknown_share, na.rm = TRUE) else NA_real_,
+      median_rank_interval = if (!is.null(ranks) && nrow(ranks)) stats::median(ranks$rank_upper - ranks$rank_lower) else NA_real_,
+      settled_top = if (!is.null(ranks) && nrow(ranks)) sum(ranks$prob_top >= certain) else 0L,
+      full_year_returns = sum(block$coverage_status == "all_months_supplied"),
+      months_in_source = months[match(keys$year[i], x$data$year)],
+      stringsAsFactors = FALSE)
+  })
+  out <- do.call(rbind, rows)
+  out <- out[order(out$year, out$group), ]
+  rownames(out) <- NULL
+  attr(out, "draws") <- draws
+  attr(out, "seed") <- seed
+  attr(out, "top") <- top
+  attr(out, "certain") <- certain
+  attr(out, "dataset") <- x$selection$dataset
+  attr(out, "release") <- x$metadata$release
+  out
+}

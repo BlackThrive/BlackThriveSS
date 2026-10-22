@@ -90,8 +90,13 @@ r <- btg_rank_stability(x)     # rank_lower, rank_upper, prob_top from seeded Po
 ch <- btg_change(btg_get_data("force_ethnicity_year", groups = "Black"))   # change, interval, coverage
 ```
 
+`btg_robustness_summary()` reduces all of this to one row per year and
+group, and `btg_source_status()` checks the live Police.uk availability feed
+for months published since the snapshot and for force-months added or
+withdrawn inside its verified window, which is the starting point for an
+audit of revisions across releases.
 `vignette("robustness", package = "BlackThriveSS")` works through all of
-them across every year and group.
+them.
 
 ## Brief one force or council
 

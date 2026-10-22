@@ -100,6 +100,35 @@ stable <- btg_rank_stability(btg_get_data("force_ethnicity_year", years = 2023:2
 aggregate(cbind(width = rank_upper - rank_lower) ~ year, data = stable, FUN = median)
 ```
 
+`btg_robustness_summary()` puts the counts a study needs in one table: one
+row per year and group, with the number of forces, how many meet the
+display rule, how many of those keep their side of parity under every
+allocation, the unknown share, the typical width of a rank interval, how
+many top-ten places are settled and how many forces have full-year returns.
+
+```{r summary}
+btg_robustness_summary(btg_get_data("force_ethnicity_year", years = 2023:2025), draws = 300)
+```
+
+## Has the source moved on?
+
+The snapshot is fixed, but Police.uk keeps publishing. `btg_source_status()`
+reads the source's availability feed, which lists for each month the forces
+whose stop and search data are present, and reports newer months and any
+force-month inside the snapshot's verified window that has since been added
+or withdrawn. It is the package's only use of the network and returns `NULL`
+with a message when the feed cannot be read, so it is not run here.
+
+```{r source, eval = FALSE}
+status <- btg_source_status()
+status
+status$changes
+```
+
+A late addition or a withdrawal is a reason to build a new release, never
+to edit this one; the proposal's audit of revisions across releases starts
+from exactly this comparison.
+
 ## Change over time, with coverage attached
 
 `btg_change()` compares each area's ratio in two years, with an interval on

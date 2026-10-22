@@ -22,6 +22,12 @@
   also list under new R Markdown templates.
 * Sharing. `btg_export()` writes a dataset to CSV with a JSON provenance
   sidecar; `btg_glossary()` defines every term the package uses.
+* Auditing the source. `btg_source_status()` reads the Police.uk
+  availability feed and reports months published since the snapshot and any
+  force-month inside the verified window that has been added or withdrawn;
+  it is the package's only use of the network and fails quietly with a
+  message. `btg_robustness_summary()` gives one row per year and group with
+  the counts a study of robustness starts from.
 * Saved views gain schema 3, which carries a dataset selection and a chart's
   settings, so trend and change charts replay like the ranking charts; the
   sensitivity chart replays through schema 2. Earlier views are unchanged.

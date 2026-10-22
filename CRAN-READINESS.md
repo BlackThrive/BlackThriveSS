@@ -6,7 +6,11 @@ dataset and a six-dataset catalogue from the same dashboard snapshot), the
 force ranking chart for any year and group, saved views, and the URL round
 trip with the dashboard website, plus, since 0.0.3: robustness analysis
 (`btg_sensitivity()`, `btg_rank_stability()`, `btg_plot_sensitivity()`),
-trends and change (`btg_plot_trend()`, `btg_change()`, `btg_plot_change()`),
+`btg_robustness_summary()`), trends and change (`btg_plot_trend()`,
+`btg_change()`, `btg_plot_change()`), a live-source check
+(`btg_source_status()`, the package's only network use, which fails
+quietly and whose network test runs only when
+`BLACKTHRIVESS_NETWORK_TESTS=true`),
 profiles and HTML briefings (`btg_profile()`, `btg_report()`), exports and
 the glossary, schema 3 saved views, two further vignettes and a pkgdown
 configuration. The dashboard button is deferred. No CRAN submission or

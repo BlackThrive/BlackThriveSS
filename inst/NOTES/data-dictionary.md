@@ -110,6 +110,24 @@ Poisson redraws of the group and White counts; `prob_top` is the share of
 draws in which the force ranks within the top `top`. The attributes `draws`,
 `seed` and `top` record the settings. This is sampling variability only.
 
+### `btg_robustness_summary()`
+
+One row per year and group of a force-level dataset: `forces` (with
+counts), `eligible`, `above`, `below`, `sensitive` (eligible forces by
+`parity_direction`), `median_unknown_share`, `max_unknown_share`,
+`median_rank_interval` (upper minus lower rank percentile),
+`settled_top` (forces with `prob_top` at or above `certain`),
+`full_year_returns` and `months_in_source`.
+
+### `btg_source_status()`
+
+A comparison of the bundled coverage with the live Police.uk availability
+feed: `newer_months` (months published after the snapshot and the forces
+listed), `months` (per shared month: forces listed live, forces supplied in
+the snapshot, late additions, withdrawals) and `changes` (each force-month
+whose availability differs, with its bundled status). The feed describes
+availability, not counts, and covers a rolling window of recent months.
+
 ### `btg_change()`
 
 One row per area and group: `ratio_from`, `ratio_to`, `change` (later

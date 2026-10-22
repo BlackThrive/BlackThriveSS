@@ -51,7 +51,9 @@ reference:
   contents:
   - btg_sensitivity
   - btg_rank_stability
+  - btg_robustness_summary
   - btg_change
+  - btg_source_status
 - title: Briefings
   desc: Plain statements and an HTML briefing for one force or council.
   contents:
