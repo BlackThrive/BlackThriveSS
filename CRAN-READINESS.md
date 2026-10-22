@@ -80,7 +80,7 @@ dataset through its checksum.
 | Current R and other systems | **Pending external execution.** CI is prepared for Windows/macOS/Linux, current release/devel, old release and declared R 4.1 minimum. A workflow file is not a passing result. |
 | Source-data review | Reconfirm Police.uk and ONS attributions, population construction and disclosure scope for the council table. No restricted survey records are bundled. Statistical review should distinguish faithful reproduction from sound inference. |
 | Ownership and support | Maintainer contact and Black Thrive ownership are carried from the existing project metadata. Confirm final authorship, rights, support responsibility and email availability before public submission. |
-| Public distribution | Establish the intended repository/release location, then add verified URL/BugReports fields. Preserve supported historical releases. No invented repository URLs or installation commands. |
+| Public distribution | The repository is `https://github.com/BlackThrive/BlackThriveSS` (private at creation; release 0.0.3 tagged `v0.0.3`), and `DESCRIPTION` carries matching `URL` and `BugReports` fields from 0.0.3.9000. Decide the visibility and release location, and preserve supported historical releases. |
 | Name and final scope | Check name availability immediately before submission; this document does not reserve the name. Keep the scope useful and adequately documented. |
 
 ## Package checks and submission

@@ -1,6 +1,6 @@
 Package: BlackThriveSS
 Title: Reproduce Black Thrive Stop and Search Dashboard Evidence
-Version: 0.0.3
+Version: 0.0.3.9000
 Authors@R: c(
     person("Mustapha", "Wasseja", email = "mustapha.wasseja.mohammed@gmail.com",
            role = c("aut", "cre")),
@@ -15,6 +15,8 @@ Description: Retrieve fixed, documented snapshots of public aggregate stop and
     information licensed under the Open Government Licence v3.0. Source
     documentation is available at <https://data.police.uk/about/>.
 License: MIT + file LICENSE
+URL: https://github.com/BlackThrive/BlackThriveSS
+BugReports: https://github.com/BlackThrive/BlackThriveSS/issues
 Encoding: UTF-8
 Language: en-GB
 Depends: R (>= 4.1.0)

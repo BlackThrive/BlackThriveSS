@@ -1,3 +1,8 @@
+# BlackThriveSS (development version)
+
+* The package now records its repository and issue tracker at
+  <https://github.com/BlackThrive/BlackThriveSS> in `DESCRIPTION`.
+
 # BlackThriveSS 0.0.3
 
 * A dataset catalogue. A second immutable release adds six datasets built from
