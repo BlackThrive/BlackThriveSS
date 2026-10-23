@@ -16,25 +16,23 @@ the glossary, schema 3 saved views, two further vignettes and a pkgdown
 configuration. The dashboard button is deferred. No CRAN submission or
 hosted release is created by this work.
 
-## Development checks since 0.0.3
+## Checks on 0.1.0
 
-* Ubuntu 24.04 / R 4.6.1 (current release), on the development tree before
-  these additions: `R CMD check --as-cran --no-manual` with remote incoming
-  checks disabled completed with 0 errors, 0 warnings and 1 note, the note
-  being the development version number (`0.0.3.9000`). An initial run also
-  warned that the container could not set the `en_US.UTF-8` locale, which
-  is an environment matter resolved by generating the locale.
-* The same check on the development tree with the additions is recorded in
-  `artifacts/check-summary.json` when `dev/check-release.R` is next run; see
-  the commit message for the result at the time of the change.
+* Ubuntu 24.04 / R 4.6.1: `R CMD check --as-cran` on the built 0.1.0
+  archive, with remote incoming checks disabled and `R_RD4PDF="times,hyper"`
+  because the container lacks the LaTeX `inconsolata` package: 0 errors,
+  0 warnings, 1 note (HTML Tidy not installed locally, so HTML manual
+  validation was skipped). Examples, `\donttest` examples, tests, vignette
+  rebuilds and the PDF manual are part of that run.
+* GitHub Actions on the merged 0.1.0 source: see the row below.
+* `urlchecker::url_check()` finds every URL valid; `spelling` is clean
+  against `inst/WORDLIST`; every exported function documents its return
+  value; console output is confined to print methods; `set.seed()` is used
+  only inside a helper that restores the caller's random-number state; no
+  example uses `\dontrun`; the slowest example (the briefing) renders a
+  council briefing in about three seconds.
 * Help pages are generated with roxygen2 8.1.1, which replaces the
-  `RoxygenNote` field with `Config/roxygen2/version` and adds the repository
-  links and author list to the package help page. Regenerating with an older
-  roxygen2 will flip the field back; use 8.1 or later.
-* Known inaccuracy in the catalogue release: `national_month_ethnicity` and
-  `hit_rate_ethnicity_year` list an `Unknown` group that has no rows in the
-  bundled tables. A future catalogue build should drop it from `groups`; the
-  data dictionary records it meanwhile.
+  `RoxygenNote` field with `Config/roxygen2/version`.
 
 ## Verified local results
 
@@ -105,11 +103,11 @@ dataset through its checksum.
 | Dashboard parity | `dev/verify-dashboard.R` checks source hashes, the original 42-row table and three orderings, and all 36 year-and-group tables of the catalogue against the dashboard's own functions. |
 | URL round trip | Tests cover both link forms the dashboard reads, all three orderings through the state form, legacy links with force labels, the dashboard's default year and group, and explicit failures for other pages, the expanded definition, unknown years and groups, and malformed state. The live base address is configurable and has not been fetched from this package. |
 | Historical replay | The 2025 release and schema 1 views are unchanged and replay; schema 2 views carry year, group and highlight for both force ranking charts; schema 3 views carry a dataset selection and chart settings for trend and change charts, and settings are never evaluated. |
-| Local package check | Run `dev/check-release.R`. Results and archive SHA-256 are in `artifacts/check-summary.json`; all notes require review. |
-| Current R and other systems | **Passed on GitHub Actions, 22 October 2026** (run 39811985340 on commit `3a7b890`, the 0.0.3 source plus the `URL`/`BugReports` fields and a workflow fix): Windows release, macOS release, Ubuntu release, devel, oldrel-1 and R 4.1 all completed `R CMD check --as-cran --no-manual` with status OK and no notes, with the workflow set to fail on any warning. Re-run on the exact archive intended for submission. |
+| Local package check | Passed on 23 October 2026 (see Checks on 0.1.0). Re-run `dev/check-release.R` on the exact archive intended for submission and record its SHA-256. |
+| Current R and other systems | The R-CMD-check workflow runs `R CMD check --as-cran --no-manual` on Windows release, macOS release, Ubuntu release, devel, oldrel-1 and R 4.1, failing on any warning. Confirm a green run on the exact commit intended for submission before uploading. |
 | Source-data review | Reconfirm Police.uk and ONS attributions, population construction and disclosure scope for the council table. No restricted survey records are bundled. Statistical review should distinguish faithful reproduction from sound inference. |
-| Ownership and support | `DESCRIPTION` and the citation list five authors: Mustapha Mohammed (maintainer) and, at Black Thrive Global, Sarah Hamed, Souci Frissa, Aisha Mohamed and Nathan Stanley. Sarah Hamed and Souci Frissa carry ORCID identifiers; add identifiers for the other three if they hold them. Confirm before submission that every listed author agrees to appear, and confirm rights, support responsibility and email availability. |
-| Public distribution | The repository is `https://github.com/BlackThrive/BlackThriveSS` (private at creation; release 0.0.3 tagged `v0.0.3`), and `DESCRIPTION` carries matching `URL` and `BugReports` fields from 0.0.3.9000. Decide the visibility and release location, and preserve supported historical releases. |
+| Ownership and support | `DESCRIPTION` and the citation list five authors: Mustapha Mohammed (maintainer) and, at Black Thrive Global, Sarah Hamed, Souci Frissa, Aisha Mohamed and Nathan Stanley. Sarah Hamed and Souci Frissa carry ORCID identifiers; add identifiers for the other three if they hold them. **Open:** written agreement from every listed author to appear, and the maintainer's confirmation that the submission address stays monitored, since CRAN sends the confirmation and all later correspondence there. |
+| Public distribution | The repository `https://github.com/BlackThrive/BlackThriveSS` is public, the documentation site is live at `https://blackthrive.github.io/BlackThriveSS/`, and `DESCRIPTION` carries both in `URL` with a matching `BugReports` field. Tag `v0.1.0` on the submitted commit and preserve supported historical releases. |
 | Name and final scope | Check name availability immediately before submission; this document does not reserve the name. Keep the scope useful and adequately documented. |
 
 ## Package checks and submission
@@ -119,9 +117,8 @@ R-devel. It also identifies Win-builder and R-hub as supplementary services.
 Our multi-platform matrix is a project validation choice, not a claim that CRAN
 requires every matrix cell. [CRAN submission checklist](https://cran.r-project.org/web/packages/submission_checklist.html)
 
-The workstation has R 4.5.2; a clean result there does not establish current
-R-release/devel compatibility. Verify the actual release version when running
-external checks. [Writing R Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
+The local check ran on R 4.6.1, the current release; R-devel compatibility
+is established by the GitHub Actions matrix. [Writing R Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
 
 Keep package code and bundled data rights explicit; maintain examples that work
 without network access or writes outside temporary files. Review current policies
