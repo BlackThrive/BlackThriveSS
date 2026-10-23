@@ -31,7 +31,10 @@ catalogue release.}
 A list of class \code{btg_profile} with \code{area}, \code{year}, \code{release},
 \code{source_month}, \code{comparisons} (one row per group), \code{stability} (forces
 only), \code{change}, \code{coverage} (forces only), \code{section60} (forces only),
-\code{national}, \code{statements} and \code{caveats}. Printing it shows the statements.
+\code{national}, \code{statements}, \code{topics} and \code{caveats}. Each statement is
+named by its topic (\code{coverage}, a group, \code{section60} or \code{national}), and
+\code{topics} gives the heading for each, which \code{\link[=btg_report]{btg_report()}} and the print
+method use to group the statements.
 }
 \description{
 Gathers, for one area and one year, everything the package can say with

@@ -294,6 +294,7 @@ btg_plot_sensitivity <- function(x = btg_get_data(), n = 10L,
     .coverage_note(d),
     "Ranks follow dashboard eligibility, not a measure of individual risk or causal discrimination.",
     paste("Fixed release:", x$metadata$release), sep = "\n")
+  caption <- .wrap_caption(caption)
   # Ratios are multiplicative and the allocation bands can span orders of
   # magnitude where a group's resident population is small, so the axis is
   # logarithmic with parity at its centre of attention.

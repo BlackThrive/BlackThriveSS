@@ -3,9 +3,26 @@ title: "Stop and search evidence briefing"
 output:
   html_document:
     toc: true
-    toc_float: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
     theme: default
+    css: briefing.css
+    fig_caption: true
     self_contained: true
+  word_document:
+    toc: false
+    reference_docx: briefing-reference.docx
+    fig_caption: true
+    pandoc_args: ["--columns=200"]
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    fig_caption: true
+    latex_engine: pdflatex
+    extra_dependencies: ["booktabs", "float"]
+geometry: margin=2.2cm
+fontsize: 12pt
 params:
   force: "metropolitan"
   council: null
@@ -16,14 +33,18 @@ params:
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE,
-                      fig.width = 10, fig.height = 6.5, dpi = 96)
-if (knitr::is_html_output()) {
+html <- knitr::is_html_output()
+latex <- knitr::is_latex_output()
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, dpi = 110,
+                      fig.width = if (html) 10 else 7.3, fig.height = if (html) 6.5 else 4.8,
+                      out.width = "100%")
+if (html) {
   knitr::opts_chunk$set(fig.align = "left")
 } else {
-  # alternative text is an HTML feature; Word output takes the figure alone
+  # alternative text is an HTML feature; other outputs take the figure alone
   knitr::opts_hooks$set(fig.alt = function(options) { options$fig.alt <- NULL; options })
 }
+if (latex) knitr::opts_chunk$set(fig.pos = "H")
 if (!isNamespaceLoaded("BlackThriveSS")) library(BlackThriveSS)
 profile <- btg_profile(force = params$force, council = params$council, year = params$year,
                        release = params$release, draws = params$draws, seed = params$seed)
@@ -32,56 +53,134 @@ area_arg <- if (is_force) list(force = profile$area$id) else list(council = prof
 dataset <- if (is_force) "force_ethnicity_year" else "council_ethnicity_year"
 area_data <- do.call(btg_get_data, c(list(dataset = dataset, release = profile$release), area_arg))
 year_data <- btg_get_data(dataset, years = profile$year, release = profile$release)
-all_years <- btg_get_data(dataset, release = profile$release)
 fmt <- function(x, digits = 1) format(round(x, digits), nsmall = digits, big.mark = ",", trim = TRUE)
+count <- function(x) format(x, big.mark = ",", trim = TRUE)
+ratio_text <- function(x) ifelse(is.finite(x), paste0(fmt(x), "x"), "n/a")
+interval_text <- function(lo, hi, digits = 1) ifelse(is.finite(lo), paste0(fmt(lo, digits), "x to ", fmt(hi, digits), "x"), "")
+cmp <- profile$comparisons
+black <- cmp[cmp$group == "Black", ]
+source_year <- as.integer(substr(profile$source_month, 1, 4))
+period <- if (source_year == profile$year) sprintf("January to %s %d", format(as.Date(paste0(profile$source_month, "-01")), "%B"), profile$year) else as.character(profile$year)
+previous <- if (!is.null(profile$change)) profile$change[profile$change$group == "Black", ] else NULL
+# LaTeX numbers tables and figures itself; the other outputs take the number from here.
+figure <- local({ n <- 0; function() { n <<- n + 1; if (latex) "" else sprintf("Figure %d.", n) } })
+table_n <- local({ n <- 0; function() { n <<- n + 1; if (latex) "" else sprintf("Table %d.", n) } })
+numbered <- function(prefix, text) trimws(paste(prefix, text))
+# Raw HTML is dropped by Word and PDF output, so prose with a class is written by these.
+lede <- function(text) if (html) cat('<p class="btg-lede">', text, '</p>\n', sep = "") else cat(text, "\n\n", sep = "")
+note <- function(text) if (html) cat('<p class="btg-note">', text, '</p>\n', sep = "") else cat("*", text, "*\n\n", sep = "")
 ```
 
 # `r profile$area$label`, `r profile$year`
 
-This briefing is built entirely from fixed, checksummed public data bundled
-with the BlackThriveSS package: release `r profile$release`, Police.uk source
-month `r profile$source_month`, and Census 2021 resident populations. Every
-chart and table can be reproduced in R from the code at the end.
+```{r lede, results = "asis"}
+lede(sprintf("Recorded stop and search in %s during %s, compared with the area's White residents, with the uncertainty and coverage that any reading of the numbers should carry. Every figure is built from fixed, checksummed public data bundled with the BlackThriveSS package (release %s, Police.uk source month %s, Census 2021 resident populations) and can be reproduced in R from the code at the end.",
+             profile$area$label, period, profile$release, profile$source_month))
+```
+
+## At a glance
+
+```{r glance, results = "asis"}
+cards <- list()
+if (is.finite(black$ratio)) {
+  cards[[length(cards) + 1]] <- list(label = "Black:White stop-rate ratio", value = ratio_text(black$ratio),
+    detail = if (is.finite(black$ci_lower)) paste("95% interval", interval_text(black$ci_lower, black$ci_upper)) else "")
+}
+if (is_force && isTRUE(black$eligible) && !is.na(black$rank)) {
+  cards[[length(cards) + 1]] <- list(label = "Rank among eligible forces", value = sprintf("%d of %d", black$rank, black$n_eligible),
+    detail = if (!is.null(black$rank_lower) && !is.na(black$rank_lower)) sprintf("Sampling alone: between %d and %d", black$rank_lower, black$rank_upper) else "")
+}
+if (is.finite(black$unknown_share)) {
+  cards[[length(cards) + 1]] <- list(label = "Stops with unknown ethnicity", value = paste0(fmt(100 * black$unknown_share), "%"),
+    detail = sprintf("%s of %s recorded stops", count(black$unknown_ethnicity_stops), count(black$total_records)))
+}
+if (is_force) {
+  cards[[length(cards) + 1]] <- list(label = "Monthly returns supplied", value = sprintf("%d of 12", profile$coverage$months_supplied),
+    detail = switch(profile$coverage$status, all_months_supplied = "Every month of the year",
+                    partial_year = sprintf("%d month(s) missing", profile$coverage$months_missing),
+                    no_months_supplied = "No returns in this release", unverified = "Outside the verified window"))
+}
+if (!is.null(previous) && is.finite(previous$change)) {
+  cards[[length(cards) + 1]] <- list(label = sprintf("Change since %d", previous$year_from),
+    value = sprintf("%+.0f%%", 100 * (previous$change - 1)),
+    detail = if (is.finite(previous$change_lower)) paste("Interval", interval_text(previous$change_lower, previous$change_upper, 2),
+                                                        if (isTRUE(previous$comparable_coverage)) "" else "(coverage differs)") else "")
+}
+if (html) {
+  cat('<div class="btg-cards">\n')
+  for (c in cards) cat(sprintf('<div class="btg-card"><div class="label">%s</div><div class="value">%s</div><div class="detail">%s</div></div>\n', c$label, c$value, c$detail))
+  cat('</div>\n')
+} else {
+  glance <- data.frame(Measure = vapply(cards, `[[`, "", "label"), Value = vapply(cards, `[[`, "", "value"),
+                       Detail = vapply(cards, `[[`, "", "detail"), check.names = FALSE, stringsAsFactors = FALSE)
+  print(btg_table(glance, caption = numbered(table_n(), "At a glance"), align = c("l", "r", "l")))
+}
+```
 
 ## Headline findings
 
-```{r statements, results = "asis"}
-cat(paste0("- ", profile$statements), sep = "\n")
+```{r findings, results = "asis"}
+for (i in seq_len(nrow(profile$topics))) {
+  topic <- profile$topics$topic[i]
+  lines <- unname(profile$statements[names(profile$statements) == topic])
+  # the ratio and its rank first; what the unknown stops and the previous year add second
+  paragraphs <- if (length(lines) > 2) c(paste(lines[1:2], collapse = " "), paste(lines[-(1:2)], collapse = " ")) else paste(lines, collapse = " ")
+  for (j in seq_along(paragraphs)) {
+    lead <- if (j == 1) sprintf("**%s.** ", profile$topics$heading[i]) else ""
+    if (html) {
+      cat(sprintf('<p class="btg-finding">%s%s</p>\n', sub("^\\*\\*(.*)\\*\\* $", "<strong>\\1</strong> ", lead), paragraphs[j]))
+    } else {
+      cat(lead, paragraphs[j], "\n\n", sep = "")
+    }
+  }
+}
 ```
 
 ## Comparisons with White residents
 
 ```{r comparisons}
-tab <- profile$comparisons
-show <- data.frame(
-  Group = tab$group,
-  `Recorded stops` = format(tab$group_stops, big.mark = ","),
-  `Per 1,000 residents` = fmt(tab$group_rate),
-  `White per 1,000` = fmt(tab$white_rate),
-  Ratio = ifelse(is.finite(tab$ratio), paste0(fmt(tab$ratio), "x"), "n/a"),
-  `95% interval` = ifelse(is.finite(tab$ci_lower), paste0(fmt(tab$ci_lower), "x to ", fmt(tab$ci_upper), "x"), ""),
-  `Range under unknown ethnicity` = ifelse(is.finite(tab$ratio_min), paste0(fmt(tab$ratio_min), "x to ", fmt(tab$ratio_max), "x"), ""),
+rates <- data.frame(
+  Group = cmp$group,
+  `Recorded stops` = count(cmp$group_stops),
+  `Per 1,000 residents` = fmt(cmp$group_rate),
+  `White per 1,000` = fmt(cmp$white_rate),
+  Ratio = ratio_text(cmp$ratio),
+  `95% interval` = interval_text(cmp$ci_lower, cmp$ci_upper),
   check.names = FALSE, stringsAsFactors = FALSE)
-if (is_force) {
-  show$Rank <- ifelse(tab$eligible, paste0(tab$rank, " of ", tab$n_eligible), "not displayed")
-  if (!is.null(tab$rank_lower)) show$`Rank interval (sampling)` <- ifelse(is.na(tab$rank_lower), "", paste(tab$rank_lower, "to", tab$rank_upper))
-  show$`Rank range (unknown ethnicity)` <- ifelse(is.na(tab$rank_best), "", paste(tab$rank_best, "to", tab$rank_worst))
-}
-knitr::kable(show, align = c("l", rep("r", ncol(show) - 1)))
+btg_table(rates, caption = numbered(table_n(), sprintf("Recorded stops and rates per 1,000 residents by ethnic group, %s", period)),
+          align = c("l", rep("r", 5)))
 ```
 
-The interval reflects sampling variability on the recorded counts. The range
-under unknown ethnicity is what the ratio would be if every stop with no
-recorded ethnicity were counted as White (lower end) or as the compared group
-(upper end); any allocation lies between them.
+```{r rates-note, results = "asis"}
+note("Rates divide recorded stop events by Census 2021 residents; the interval reflects sampling variability on the recorded counts only. A ratio is descriptive and does not establish discrimination.")
+```
 
-```{r ranking, eval = is_force, fig.alt = "Ranking of forces by Black to White stop-rate ratio with this force highlighted."}
+```{r robustness-table}
+robust <- data.frame(
+  Group = cmp$group,
+  `Ratio range` = interval_text(cmp$ratio_min, cmp$ratio_max),
+  `Side of parity` = ifelse(is.na(cmp$parity_direction), "", c(above = "Above", below = "Below", sensitive = "Depends")[cmp$parity_direction]),
+  check.names = FALSE, stringsAsFactors = FALSE)
+if (is_force) {
+  robust$Rank <- ifelse(cmp$eligible, sprintf("%d of %d", cmp$rank, cmp$n_eligible), "none")
+  robust$`Rank interval` <- if (!is.null(cmp$rank_lower)) ifelse(is.na(cmp$rank_lower), "", paste(cmp$rank_lower, "to", cmp$rank_upper)) else ""
+  robust$`Rank range` <- ifelse(is.na(cmp$rank_best), "", paste(cmp$rank_best, "to", cmp$rank_worst))
+}
+btg_table(robust, caption = numbered(table_n(), sprintf("How robust each comparison is, %s", period)),
+          align = c("l", "r", "l", rep("r", ncol(robust) - 3)))
+```
+
+```{r robust-note, results = "asis"}
+note("The ratio range is what the ratio would be if every stop with no recorded ethnicity were counted as White (lower end) or as the compared group (upper end); any allocation lies between them. The side of parity says whether the whole range sits above or below 1, or depends on those stops. The rank interval comes from redrawing the recorded counts (sampling); the rank range from allocating every force's unknown stops for or against this one.")
+```
+
+```{r ranking, eval = is_force, fig.cap = if (is_force) numbered(figure(), paste("Black:White stop-rate ratios for the ten highest-ranked forces, with", profile$area$label, "highlighted where it falls among them.")), fig.alt = "Ranking of forces by Black to White stop-rate ratio with this force highlighted."}
 if (is_force && any(year_data$data$eligible[year_data$data$group == "Black"])) {
   btg_plot_disparity(year_data, year = profile$year, group = "Black", highlight = profile$area$id)
 }
 ```
 
-```{r robustness, eval = is_force, fig.alt = "Recorded ratios with sampling intervals and bounds under unknown ethnicity."}
+```{r robustness, eval = is_force, fig.cap = if (is_force) numbered(figure(), "The same forces with their sampling intervals and the range of each ratio under unknown ethnicity, on a logarithmic axis."), fig.alt = "Recorded ratios with sampling intervals and bounds under unknown ethnicity."}
 if (is_force && any(year_data$data$eligible[year_data$data$group == "Black"])) {
   btg_plot_sensitivity(year_data, year = profile$year, group = "Black", highlight = profile$area$id)
 }
@@ -89,32 +188,49 @@ if (is_force && any(year_data$data$eligible[year_data$data$group == "Black"])) {
 
 ## Over time
 
-```{r trend, fig.alt = "Stop-rate ratios by group and year for this area."}
+```{r trend, fig.cap = numbered(figure(), "Stop-rate ratios compared with White residents by year, with 95% intervals; hollow markers show years the source does not cover in full."), fig.alt = "Stop-rate ratios by group and year for this area."}
 btg_plot_trend(area_data)
 ```
 
-```{r trend-rate, fig.alt = "Recorded stops per 1,000 residents by group and year for this area."}
+```{r trend-rate, fig.cap = numbered(figure(), "Recorded stops per 1,000 residents by year, Black emphasised and the other groups as context."), fig.alt = "Recorded stops per 1,000 residents by group and year for this area."}
 btg_plot_trend(area_data, measure = "rate", highlight = "Black")
 ```
 
 ```{r change}
 if (!is.null(profile$change)) {
   ch <- profile$change
-  knitr::kable(data.frame(
-    Group = ch$group, From = ch$year_from, To = ch$year_to,
-    `Earlier ratio` = ifelse(is.finite(ch$ratio_from), paste0(fmt(ch$ratio_from), "x"), "n/a"),
-    `Later ratio` = ifelse(is.finite(ch$ratio_to), paste0(fmt(ch$ratio_to), "x"), "n/a"),
+  changes <- data.frame(
+    Group = ch$group,
+    `Earlier ratio` = ratio_text(ch$ratio_from),
+    `Later ratio` = ratio_text(ch$ratio_to),
     Change = ifelse(is.finite(ch$change), sprintf("%+.0f%%", 100 * (ch$change - 1)), ""),
-    `95% interval` = ifelse(is.finite(ch$change_lower), paste0(fmt(ch$change_lower, 2), "x to ", fmt(ch$change_upper, 2), "x"), ""),
-    `Both years covered in full` = ifelse(ch$comparable_coverage, "yes", "no"),
-    check.names = FALSE, stringsAsFactors = FALSE), align = c("l", rep("r", 7)))
+    `95% interval` = interval_text(ch$change_lower, ch$change_upper, 2),
+    `Both years covered in full` = ifelse(ch$comparable_coverage, "Yes", "No"),
+    check.names = FALSE, stringsAsFactors = FALSE)
+  btg_table(changes, caption = numbered(table_n(), sprintf("Change in stop-rate ratios from %d to %d", ch$year_from[1], ch$year_to[1])),
+            align = c("l", "r", "r", "r", "r", "l"))
 }
 ```
 
-```{r section60, eval = is_force, fig.alt = "Section 60 searches by group and year for this force."}
-s60 <- tryCatch(btg_get_data("section60_force_year", force = profile$area$id, release = profile$release),
-                error = function(e) NULL)
-if (!is.null(s60)) btg_plot_trend(s60)
+```{r change-note, results = "asis"}
+if (!is.null(profile$change)) note("Change is the later ratio divided by the earlier one. A change between a fully covered year and an incomplete one is not a change in policing.")
+```
+
+```{r section60, eval = is_force}
+if (is_force && !is.null(profile$section60) && nrow(profile$section60)) {
+  s60 <- profile$section60
+  total <- sum(s60$s60_stops, na.rm = TRUE)
+  btg_table(data.frame(Group = s60$group, Searches = count(s60$s60_stops),
+                       `Share of Section 60 searches` = ifelse(total > 0, paste0(fmt(100 * s60$s60_stops / total), "%"), ""),
+                       check.names = FALSE, stringsAsFactors = FALSE),
+            caption = numbered(table_n(), sprintf("Searches under Section 60 by ethnic group, %s", period)), align = c("l", "r", "r"))
+}
+```
+
+```{r section60-trend, eval = is_force, fig.cap = if (is_force) numbered(figure(), "Section 60 searches by ethnic group and year."), fig.alt = "Section 60 searches by group and year for this force."}
+s60_years <- tryCatch(btg_get_data("section60_force_year", force = profile$area$id, release = profile$release),
+                      error = function(e) NULL)
+if (!is.null(s60_years)) btg_plot_trend(s60_years)
 ```
 
 ## Reporting coverage
@@ -122,34 +238,41 @@ if (!is.null(s60)) btg_plot_trend(s60)
 ```{r coverage, eval = is_force}
 if (is_force) {
   months <- profile$coverage$months
-  knitr::kable(data.frame(
+  btg_table(data.frame(
     Month = format(as.Date(paste0(months$month, "-01")), "%B %Y"),
-    Status = months$status,
-    `Recorded stops` = ifelse(is.na(months$records), "", format(months$records, big.mark = ",")),
-    check.names = FALSE), align = c("l", "l", "r"))
+    Status = c(supplied = "Supplied", missing = "Missing", unverified = "Unverified")[months$status],
+    `Recorded stops` = ifelse(is.na(months$records), "", count(months$records)),
+    check.names = FALSE, stringsAsFactors = FALSE),
+    caption = numbered(table_n(), sprintf("Monthly returns, %d", profile$year)), align = c("l", "l", "r"))
 }
 ```
 
-`r if (is_force) "A supplied month is a reported submission, not proof that every event was recorded. Missing months are missing, not zero; an unverified month lies outside the window the dashboard checks." else "Council counts are located by published stop coordinates, which some forces withhold, so they undercount and carry no monthly coverage table."`
+```{r coverage-note, results = "asis"}
+note(if (is_force) "A supplied month is a reported submission, not proof that every event was recorded. Missing months are missing, not zero; an unverified month lies outside the window the dashboard checks." else "Council counts are located by published stop coordinates, which some forces withhold, so they undercount and carry no monthly coverage table.")
+```
 
 ## National context
 
-```{r national, fig.alt = "Share of recorded stops by ethnic group across England and Wales by month."}
+```{r national, fig.cap = numbered(figure(), "Share of recorded stops by ethnic group across England and Wales, by month."), fig.alt = "Share of recorded stops by ethnic group across England and Wales by month."}
 btg_plot_trend(btg_get_data("national_month_ethnicity", release = profile$release), measure = "share")
 ```
 
 ```{r hit}
 hit <- profile$national$hit_rate
-knitr::kable(data.frame(Group = hit$group,
-                        `Searches with a known outcome` = format(hit$hit_total, big.mark = ","),
-                        `Outcome linked to object of search` = paste0(fmt(hit$hit_rate), "%"),
-                        check.names = FALSE), align = c("l", "r", "r"))
+btg_table(data.frame(Group = hit$group,
+                     `Searches with a known outcome` = count(hit$hit_total),
+                     `Outcome linked to object of search` = paste0(fmt(hit$hit_rate), "%"),
+                     check.names = FALSE, stringsAsFactors = FALSE),
+          caption = numbered(table_n(), sprintf("Outcome-linked search rate by ethnic group, England and Wales, %s", period)),
+          align = c("l", "r", "r"))
 ```
 
 ## How to read this briefing
 
 ```{r caveats, results = "asis"}
+if (html) cat('<div class="btg-reading">\n')
 cat(paste0("- ", profile$caveats), sep = "\n")
+if (html) cat('\n</div>\n')
 ```
 
 ## Reproduce it
@@ -166,8 +289,11 @@ cat(paste0("- ", profile$caveats), sep = "\n")
 ```
 
 ```{r citation, results = "asis"}
+checks <- btg_validate(area_data)
+if (html) cat('<div class="btg-footer">\n')
 cat("Data citation: ", btg_citation(area_data), "\n\n", sep = "")
 cat("Package citation: ", paste(format(utils::citation("BlackThriveSS"), style = "text"), collapse = " "), "\n\n", sep = "")
-checks <- btg_validate(area_data)
-cat("Validation of the bundled release: ", if (all(checks$passed)) "all checks passed" else "some checks failed", " (", nrow(checks), " checks).\n", sep = "")
+cat("Validation of the bundled release: ", if (all(checks$passed)) "all checks passed" else "some checks failed",
+    " (", nrow(checks), " checks). Rendered ", format(Sys.Date(), "%d %B %Y"), ".\n", sep = "")
+if (html) cat('</div>\n')
 ```

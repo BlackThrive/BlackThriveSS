@@ -30,9 +30,9 @@ catalogue release.}
 
 \item{file}{Path of the file to write.}
 
-\item{format}{\code{"html"} for a self-contained web page, or \code{"docx"} for a
-Word document with the same content. \code{NULL} takes the format from the
-file's extension.}
+\item{format}{\code{"html"} for a self-contained web page, \code{"docx"} for a Word
+document or \code{"pdf"} for a PDF, all with the same content. \code{NULL} takes
+the format from the file's extension.}
 
 \item{overwrite}{Whether to replace an existing file.}
 
@@ -50,9 +50,14 @@ citation and release identifiers needed to reproduce every figure.
 }
 \details{
 Rendering needs the \code{rmarkdown} package and Pandoc, which
-RStudio and Positron supply; the function stops with a clear message
-when they are missing. The template is also available in those editors
-as the R Markdown template "BlackThriveSS briefing" for editing.
+RStudio and Positron supply, and a PDF additionally needs a LaTeX
+installation such as TinyTeX (\code{tinytex::install_tinytex()}); the
+function stops with a clear message when any is missing. Tables are set
+with \code{\link[=btg_table]{btg_table()}}, Word output uses the styled reference document
+installed with the template, and PDF output uses booktabs tables. The
+template is also available in those editors as the R Markdown template
+"BlackThriveSS briefing" for editing, where Knit to HTML, Word or PDF
+gives the same three outputs.
 }
 \examples{
 \donttest{

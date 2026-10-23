@@ -16,11 +16,16 @@
   chart of the largest changes. `btg_group_colours()` gives every group a
   fixed colour.
 * Briefings. `btg_profile()` gathers the evidence for one force or council
-  as plain statements that carry their qualifications, with the tables behind
-  them; `btg_report()` renders a self-contained HTML briefing from the
-  installed R Markdown template "BlackThriveSS briefing", which the editors
-  also list under new R Markdown templates, as a self-contained web page or
-  a Word document.
+  as plain statements that carry their qualifications, grouped under topic
+  headings, with the tables behind them; `btg_report()` renders the briefing
+  from the installed R Markdown template "BlackThriveSS briefing", which the
+  editors also list under new R Markdown templates, as a self-contained web
+  page, a Word document or a PDF. The briefing opens with an at-a-glance
+  panel and headline findings by topic, numbers its tables and figures, and
+  sets tables with `btg_table()`: styled in HTML by the template's
+  stylesheet, in Word by a reference document carrying the package's fonts,
+  colours and table style, and in PDF with booktabs rules.
+* The package now lists its five authors in `DESCRIPTION` and the citation.
 * Sharing. `btg_export()` writes a dataset to CSV with a JSON provenance
   sidecar; `btg_glossary()` defines every term the package uses.
 * Auditing the source. `btg_source_status()` reads the Police.uk

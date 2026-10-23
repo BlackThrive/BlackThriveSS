@@ -59,6 +59,7 @@ reference:
   contents:
   - btg_profile
   - btg_report
+  - btg_table
 - title: Saved views and the dashboard
   contents:
   - btg_save_view

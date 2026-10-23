@@ -186,14 +186,18 @@ p                                  # plain statements, each with its qualificati
 p$comparisons                      # the numbers behind them
 btg_report(force = "metropolitan", file = "metropolitan-2025.html")
 btg_report(council = "E09000022", file = "lambeth-2025.docx")
+btg_report(force = "kent", year = 2024, file = "kent-2024.pdf")
 ```
 
-The briefing is a self-contained HTML page, or a Word document: statements,
-charts with the area highlighted, tables, monthly coverage, national
-context, how to read it, and the code and citations that reproduce every
-figure. It needs the rmarkdown package and Pandoc, which RStudio and Positron
-include. The same template appears in those editors as "BlackThriveSS
-briefing". See `vignette("briefing", package = "BlackThriveSS")`.
+The briefing is a self-contained HTML page, a Word document or a PDF: an
+at-a-glance panel, headline findings by topic, numbered tables and figures
+with the area highlighted, monthly coverage, national context, how to read
+it, and the code and citations that reproduce every figure. Tables are set
+with `btg_table()`, which also works in your own R Markdown documents. HTML
+and Word need the rmarkdown package and Pandoc, which RStudio and Positron
+include; PDF also needs a LaTeX installation such as TinyTeX. The same
+template appears in those editors as "BlackThriveSS briefing". See
+`vignette("briefing", package = "BlackThriveSS")`.
 
 ## Round-trip with the dashboard website
 

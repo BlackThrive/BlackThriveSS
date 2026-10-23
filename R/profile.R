@@ -50,7 +50,10 @@
 #' @return A list of class `btg_profile` with `area`, `year`, `release`,
 #'   `source_month`, `comparisons` (one row per group), `stability` (forces
 #'   only), `change`, `coverage` (forces only), `section60` (forces only),
-#'   `national`, `statements` and `caveats`. Printing it shows the statements.
+#'   `national`, `statements`, `topics` and `caveats`. Each statement is
+#'   named by its topic (`coverage`, a group, `section60` or `national`), and
+#'   `topics` gives the heading for each, which [btg_report()] and the print
+#'   method use to group the statements.
 #' @details Ranks, rank intervals and allocation bounds are computed against
 #'   every force in the release, not only the profiled one. Councils carry no
 #'   rank, eligibility or coverage, as in the dataset, and their counts depend
@@ -128,22 +131,27 @@ btg_profile <- function(force = NULL, council = NULL, year = NULL, release = NUL
   hit <- btg_get_data("hit_rate_ethnicity_year", years = year, release = release)$data
   national <- list(year = national_year, hit_rate = hit[c("group", "hit_yes", "hit_total", "hit_rate")])
   statements <- .profile_statements(area, year, source_month, comparisons, change, coverage, section60, national)
+  topics <- unique(names(statements))
   structure(list(area = area, year = year, release = release, source_month = source_month,
                  comparisons = comparisons, stability = stability, change = change,
                  coverage = coverage, section60 = section60, national = national,
-                 statements = statements, caveats = .profile_caveats),
+                 statements = statements,
+                 topics = data.frame(topic = topics, heading = .statement_headings(topics, level),
+                                     stringsAsFactors = FALSE),
+                 caveats = .profile_caveats),
             class = "btg_profile")
 }
 
 .profile_statements <- function(area, year, source_month, comparisons, change, coverage, section60, national) {
   out <- character()
+  add <- function(topic, text) out <<- c(out, stats::setNames(text, topic))
   force <- identical(area$level, "force")
   months_in_source <- if (as.integer(substr(source_month, 1, 4)) == year) as.integer(substr(source_month, 6, 7)) else 12L
   period <- if (months_in_source < 12L) {
     sprintf("the first %d months of %d (to %s)", months_in_source, year, .month_name(source_month))
   } else as.character(year)
   if (force && !is.null(coverage)) {
-    out <- c(out, switch(coverage$status,
+    add("coverage", switch(coverage$status,
       all_months_supplied = sprintf("%s supplied stop and search returns for all 12 months of %d.", area$label, year),
       partial_year = {
         missing <- coverage$months[coverage$months$status == "missing", "month"]
@@ -155,36 +163,36 @@ btg_profile <- function(force = NULL, council = NULL, year = NULL, release = NUL
       unverified = sprintf("Monthly submissions for %d lie outside the window the dashboard verifies, so %s's counts are as published and their completeness is unverified.", year, area$label)))
   }
   if (!force) {
-    out <- c(out, sprintf("%s's counts are located by published stop coordinates, which some forces withhold, so they undercount and carry no rank or display rule.", area$label))
+    add("coverage", sprintf("%s's counts are located by published stop coordinates, which some forces withhold, so they undercount and carry no rank or display rule.", area$label))
   }
   for (i in seq_len(nrow(comparisons))) {
     r <- comparisons[i, ]
     if (!is.finite(r$ratio)) {
       if (is.na(r$group_stops)) next
-      out <- c(out, sprintf("No resident-based %s:White comparison is available for %s in %s.", r$group, area$label, period))
+      add(r$group, sprintf("No resident-based %s:White comparison is available for %s in %s.", r$group, area$label, period))
       next
     }
     if (r$group_stops == 0) {
-      out <- c(out, sprintf("No stops of %s people were recorded under officer-defined ethnicity in %s; White residents were stopped at %s per 1,000.",
-                            r$group, period, .fmt(r$white_rate)))
+      add(r$group, sprintf("No stops of %s people were recorded under officer-defined ethnicity in %s; White residents were stopped at %s per 1,000.",
+                           r$group, period, .fmt(r$white_rate)))
     } else {
       sentence <- sprintf("Recorded stops of %s people in %s: %s per 1,000 %s residents, %sx the rate for White residents (%s per 1,000)",
                           r$group, period, .fmt(r$group_rate), r$group, .fmt(r$ratio), .fmt(r$white_rate))
       if (is.finite(r$ci_lower)) sentence <- sprintf("%s, 95%% interval %sx to %sx", sentence, .fmt(r$ci_lower), .fmt(r$ci_upper))
       sentence <- sprintf("%s, from %s and %s recorded stops.", sentence, .fmt_count(r$group_stops), .fmt_count(r$white_stops))
-      out <- c(out, sentence)
+      add(r$group, sentence)
     }
     if (force && isTRUE(r$eligible) && !is.na(r$rank)) {
       rank_sentence <- sprintf("That %s:White ratio ranks %s of %d forces with an eligible comparison", r$group, .ordinal(r$rank), r$n_eligible)
       if (!is.null(r$rank_lower) && !is.na(r$rank_lower)) {
         rank_sentence <- sprintf("%s; sampling variability alone puts the rank between %d and %d", rank_sentence, r$rank_lower, r$rank_upper)
       }
-      out <- c(out, paste0(rank_sentence, "."))
+      add(r$group, paste0(rank_sentence, "."))
     } else if (force && !is.na(r$group_stops)) {
-      out <- c(out, sprintf("The %s:White comparison does not meet the dashboard's display rule (a positive ratio from at least 200 stops with known ethnicity and comparable resident populations), so it carries no rank.", r$group))
+      add(r$group, sprintf("The %s:White comparison does not meet the dashboard's display rule (a positive ratio from at least 200 stops with known ethnicity and comparable resident populations), so it carries no rank.", r$group))
     }
     if (is.finite(r$ratio_min) && is.finite(r$ratio_max) && r$unknown_ethnicity_stops > 0 && r$group_stops > 0) {
-      out <- c(out, sprintf("%s of the %s recorded stops in %s (%s%%) have no recorded ethnicity. Counting every one of them as White would put the %s:White ratio at %sx; counting every one as %s would put it at %sx. %s",
+      add(r$group, sprintf("%s of the %s recorded stops in %s (%s%%) have no recorded ethnicity. Counting every one of them as White would put the %s:White ratio at %sx; counting every one as %s would put it at %sx. %s",
                             .fmt_count(r$unknown_ethnicity_stops), .fmt_count(r$total_records), period, .fmt(100 * r$unknown_share),
                             r$group, .fmt(r$ratio_min), r$group, .fmt(r$ratio_max),
                             switch(r$parity_direction,
@@ -204,7 +212,7 @@ btg_profile <- function(force = NULL, council = NULL, year = NULL, release = NUL
         }
         sentence <- if (isTRUE(ch$comparable_coverage)) paste0(sentence, "; both years are covered in full.") else
           paste0(sentence, "; returns do not cover both years in full, so this comparison is indicative only.")
-        out <- c(out, sentence)
+        add(r$group, sentence)
       }
     }
   }
@@ -213,7 +221,7 @@ btg_profile <- function(force = NULL, council = NULL, year = NULL, release = NUL
     black <- section60$s60_stops[section60$group == "Black"]
     sentence <- sprintf("%s recorded %s searches under Section 60 in %s", area$label, .fmt_count(total), period)
     if (length(black) == 1L && total > 0) sentence <- sprintf("%s, %s%% of them of Black people", sentence, .fmt(100 * black / total, 0))
-    out <- c(out, paste0(sentence, "."))
+    add("section60", paste0(sentence, "."))
   }
   ny <- national$year
   if (nrow(ny) == 1L) {
@@ -224,16 +232,34 @@ btg_profile <- function(force = NULL, council = NULL, year = NULL, release = NUL
     if (length(black_hit) == 1L && length(white_hit) == 1L) {
       sentence <- sprintf("%s, and the share of searches whose outcome was linked to what was searched for was %s%% for Black people and %s%% for White people", sentence, .fmt(black_hit), .fmt(white_hit))
     }
-    out <- c(out, paste0(sentence, "."))
+    add("national", paste0(sentence, "."))
   }
   out
+}
+
+# Headings for the topics that name a profile's statements.
+.statement_headings <- function(topics, level = "force") {
+  groups <- c(Black = "Black people compared with White residents",
+              Asian = "Asian people compared with White residents",
+              Mixed = "Mixed people compared with White residents",
+              Other = "People of other ethnic groups compared with White residents")
+  fixed <- c(coverage = if (identical(level, "force")) "Reporting coverage" else "About council counts",
+             section60 = "Section 60 searches", national = "National context")
+  headings <- c(fixed, groups)
+  unname(headings[topics])
 }
 
 #' @export
 print.btg_profile <- function(x, ...) {
   cat("BlackThriveSS evidence profile: ", x$area$label, ", ", x$year, "\n",
-      "Release ", x$release, " (source month ", x$source_month, ")\n\n", sep = "")
-  for (s in x$statements) cat(strwrap(s, width = 78, prefix = "  ", initial = "* "), sep = "\n")
+      "Release ", x$release, " (source month ", x$source_month, ")\n", sep = "")
+  topics <- unique(names(x$statements))
+  for (topic in topics) {
+    cat("\n", .statement_headings(topic, x$area$level), "\n", sep = "")
+    for (s in x$statements[names(x$statements) == topic]) {
+      cat(strwrap(s, width = 78, prefix = "  ", initial = "* "), sep = "\n")
+    }
+  }
   cat("\nTables: $comparisons, $change, $coverage, $section60, $national; qualifications: $caveats\n")
   invisible(x)
 }
@@ -248,15 +274,24 @@ print.btg_profile <- function(x, ...) {
 #'
 #' @inheritParams btg_profile
 #' @param file Path of the file to write.
-#' @param format `"html"` for a self-contained web page, or `"docx"` for a
-#'   Word document with the same content. `NULL` takes the format from the
-#'   file's extension.
+#' @param format `"html"` for a self-contained web page, `"docx"` for a Word
+#'   document or `"pdf"` for a PDF, all with the same content. `NULL` takes
+#'   the format from the file's extension.
 #' @param overwrite Whether to replace an existing file.
 #' @return The path of the written file, invisibly.
 #' @details Rendering needs the `rmarkdown` package and Pandoc, which
-#'   RStudio and Positron supply; the function stops with a clear message
-#'   when they are missing. The template is also available in those editors
-#'   as the R Markdown template "BlackThriveSS briefing" for editing.
+#'   RStudio and Positron supply, and a PDF additionally needs a LaTeX
+#'   installation such as TinyTeX (`tinytex::install_tinytex()`); the
+#'   function stops with a clear message when any is missing. Paragraphs are
+#'   justified and the body text is 12-point Calibri in HTML and Word; the
+#'   PDF uses Calibri too, through XeLaTeX, when the machine has that font or
+#'   its open counterpart Carlito, and LaTeX's default face otherwise. Tables
+#'   are set with [btg_table()], Word output uses the styled reference
+#'   document installed with the template, and PDF output uses booktabs
+#'   tables. The
+#'   template is also available in those editors as the R Markdown template
+#'   "BlackThriveSS briefing" for editing, where Knit to HTML, Word or PDF
+#'   gives the same three outputs.
 #' @export
 #' @examples
 #' \donttest{
@@ -269,9 +304,10 @@ print.btg_profile <- function(x, ...) {
 btg_report <- function(force = NULL, council = NULL, year = NULL, release = NULL, file,
                        format = NULL, overwrite = FALSE, draws = 2000L, seed = 1L) {
   .scalar_string(file, "file")
-  format <- format %||% if (grepl("[.]docx$", file, ignore.case = TRUE)) "docx" else "html"
-  if (!is.character(format) || length(format) != 1L || !format %in% c("html", "docx")) {
-    stop("format must be html or docx.", call. = FALSE)
+  format <- format %||% if (grepl("[.]docx$", file, ignore.case = TRUE)) "docx" else
+    if (grepl("[.]pdf$", file, ignore.case = TRUE)) "pdf" else "html"
+  if (!is.character(format) || length(format) != 1L || !format %in% c("html", "docx", "pdf")) {
+    stop("format must be html, docx or pdf.", call. = FALSE)
   }
   if (!is.logical(overwrite) || length(overwrite) != 1L || is.na(overwrite)) {
     stop("overwrite must be TRUE or FALSE.", call. = FALSE)
@@ -283,24 +319,86 @@ btg_report <- function(force = NULL, council = NULL, year = NULL, release = NULL
   if (!rmarkdown::pandoc_available("2.0")) {
     stop("Pandoc 2.0 or later is needed to render briefings; RStudio and Positron include it, or set RSTUDIO_PANDOC.", call. = FALSE)
   }
+  if (identical(format, "pdf") && !.latex_available()) {
+    stop("A LaTeX installation is needed for PDF briefings. Install TinyTeX with tinytex::install_tinytex(), or choose html or docx.", call. = FALSE)
+  }
   if (is.null(force) == is.null(council)) stop("Name one force or one council.", call. = FALSE)
-  template <- system.file("rmarkdown", "templates", "briefing", "skeleton", "skeleton.Rmd",
-                          package = "BlackThriveSS")
-  if (!nzchar(template)) stop("The briefing template is missing from this installation.", call. = FALSE)
+  skeleton <- system.file("rmarkdown", "templates", "briefing", "skeleton", package = "BlackThriveSS")
+  if (!nzchar(skeleton) || !file.exists(file.path(skeleton, "skeleton.Rmd"))) {
+    stop("The briefing template is missing from this installation.", call. = FALSE)
+  }
   work <- tempfile("btg-briefing-")
   dir.create(work)
   on.exit(unlink(work, recursive = TRUE), add = TRUE)
-  input <- file.path(work, "briefing.Rmd")
-  file.copy(template, input)
-  output_format <- if (identical(format, "docx")) {
-    rmarkdown::word_document(toc = TRUE, fig_width = 7.5, fig_height = 5)
-  } else NULL
+  # the template's stylesheet and Word reference document travel with it
+  file.copy(list.files(skeleton, full.names = TRUE), work)
+  input <- file.path(work, "skeleton.Rmd")
+  output_format <- switch(format, html = "html_document", docx = "word_document", pdf = "pdf_document")
+  output_options <- if (identical(format, "pdf")) .pdf_font_options() else NULL
   output <- rmarkdown::render(
-    input, output_format = output_format, output_file = paste0("briefing.", format),
-    output_dir = work, quiet = TRUE,
+    input, output_format = output_format, output_options = output_options,
+    output_file = paste0("briefing.", format), output_dir = work, quiet = TRUE,
     envir = new.env(parent = asNamespace("BlackThriveSS")),
     params = list(force = force, council = council, year = year, release = release,
                   draws = draws, seed = seed))
   if (!file.copy(output, file, overwrite = TRUE)) stop("Could not write ", file, ".", call. = FALSE)
   invisible(file)
+}
+
+# Body text in Calibri, as in the HTML and Word briefings, when XeLaTeX and the
+# font (or Carlito, its metric-compatible open counterpart) are available.
+.pdf_font_options <- function() {
+  if (!nzchar(Sys.which("xelatex"))) return(NULL)
+  font <- if (.Platform$OS.type == "windows") "Calibri" else {
+    fc <- Sys.which("fc-list")
+    if (!nzchar(fc)) return(NULL)
+    families <- tryCatch(suppressWarnings(system2(fc, c(":", "family"), stdout = TRUE, stderr = FALSE)),
+                         error = function(e) character())
+    if (any(grepl("^Calibri", families))) "Calibri" else if (any(grepl("^Carlito", families))) "Carlito" else NULL
+  }
+  if (is.null(font)) return(NULL)
+  list(latex_engine = "xelatex", pandoc_args = c("-V", paste0("mainfont=", font)))
+}
+
+.latex_available <- function() {
+  nzchar(Sys.which("pdflatex")) || nzchar(Sys.which("xelatex")) ||
+    (requireNamespace("tinytex", quietly = TRUE) && isTRUE(tinytex::is_tinytex()))
+}
+
+#' Set a table for a briefing or report
+#'
+#' Formats a data frame for the document being knitted, in the style the
+#' package's briefings use: an HTML table that the briefing stylesheet lays
+#' out, a Word table that takes the reference document's table style, or a
+#' booktabs table in PDF. Numeric columns are right-aligned and text columns
+#' left-aligned unless `align` says otherwise. Outside a knitting session it
+#' returns a plain Markdown table.
+#'
+#' @param x A data frame.
+#' @param caption Optional caption.
+#' @param align Optional alignment string or vector as [knitr::kable()] takes
+#'   it, one letter per column.
+#' @param digits Number of decimal places for numeric columns.
+#' @return A `knitr_kable` object, printed by knitr into the document; in PDF
+#'   the table is set one size smaller than the text.
+#' @export
+#' @examples
+#' btg_table(head(btg_get_data("national_year")$data[c("year", "stops", "arrest_rate")]),
+#'           caption = "National totals")
+btg_table <- function(x, caption = NULL, align = NULL, digits = 1) {
+  if (!is.data.frame(x)) stop("x must be a data frame.", call. = FALSE)
+  if (!requireNamespace("knitr", quietly = TRUE)) stop("Install the knitr package to set tables.", call. = FALSE)
+  align <- align %||% ifelse(vapply(x, is.numeric, logical(1)), "r", "l")
+  if (knitr::is_latex_output()) {
+    table <- knitr::kable(x, format = "latex", caption = caption, align = align, digits = digits,
+                          booktabs = TRUE, linesep = "", escape = TRUE, position = "H")
+    # one size smaller than the text, still a kable so that knitr and print() treat it as one
+    structure(paste0("\\begingroup\\small\n", paste(table, collapse = "\n"), "\n\\endgroup\n"),
+              format = "latex", class = "knitr_kable")
+  } else if (knitr::is_html_output()) {
+    knitr::kable(x, format = "html", caption = caption, align = align, digits = digits,
+                 escape = TRUE, table.attr = "class=\"btg-table\"")
+  } else {
+    knitr::kable(x, format = "pipe", caption = caption, align = align, digits = digits)
+  }
 }

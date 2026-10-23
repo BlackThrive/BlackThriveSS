@@ -48,6 +48,12 @@ utils::globalVariables(c("ratio", "axis_label", "value_label", "fill_label",
   list(rows = rows, year = as.integer(year), group = group, n_eligible = sum(rows$eligible))
 }
 
+# Caption lines wrapped so that they fit a figure drawn at report width.
+.wrap_caption <- function(caption, width = 100) {
+  lines <- unlist(strsplit(caption, "\n", fixed = TRUE))
+  paste(unlist(lapply(lines, strwrap, width = width)), collapse = "\n")
+}
+
 # The caption line that explains the asterisks on a chart's displayed forces.
 .coverage_note <- function(d) {
   partial <- sum(d$coverage_status != "all_months_supplied")
@@ -143,6 +149,7 @@ btg_plot_disparity <- function(x = btg_get_data(), n = 10L,
     .coverage_note(d),
     "Ranks follow dashboard eligibility, not a measure of individual risk or causal discrimination.",
     paste("Fixed release:", x$metadata$release), sep = "\n")
+  caption <- .wrap_caption(caption)
   upper <- max(1.35, max(plotted$label_x) * 1.16)
   p <- ggplot2::ggplot(plotted, ggplot2::aes(x = ratio, y = axis_label)) +
     ggplot2::geom_col(ggplot2::aes(fill = fill_label), width = 0.62) +

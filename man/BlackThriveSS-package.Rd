@@ -22,11 +22,15 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Mustapha Wasseja \email{mustapha.wasseja.mohammed@gmail.com}
+\strong{Maintainer}: Mustapha Mohammed \email{mustapha.wasseja.mohammed@gmail.com}
 
 Authors:
 \itemize{
-  \item Mustapha Wasseja \email{mustapha.wasseja.mohammed@gmail.com}
+  \item Mustapha Mohammed \email{mustapha.wasseja.mohammed@gmail.com}
+  \item Sarah (affiliation: Black Thrive Global)
+  \item Souci (affiliation: Black Thrive Global)
+  \item Aisha Mohammed (affiliation: Black Thrive Global)
+  \item Nathan Stanley (affiliation: Black Thrive Global)
 }
 
 Other contributors:

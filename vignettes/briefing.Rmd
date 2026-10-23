@@ -89,10 +89,21 @@ and Pandoc, which RStudio and Positron include.
 ```{r report, eval = FALSE}
 btg_report(force = "metropolitan", file = "metropolitan-2025.html")
 btg_report(council = "E09000022", year = 2024, file = "lambeth-2024.docx")
+btg_report(force = "kent", year = 2024, file = "kent-2024.pdf")
 ```
 
 A `.docx` file name, or `format = "docx"`, gives the same briefing as a
-Word document for people who need to edit it or paste from it.
+Word document for people who need to edit it or paste from it, styled by a
+reference document installed with the template; `.pdf` gives a PDF where a
+LaTeX installation such as TinyTeX is available. The briefing opens with an
+at-a-glance panel and the findings grouped by topic, and numbers its tables
+and figures. `btg_table()` sets any data frame in the same style inside your
+own R Markdown document, whichever of the three formats you knit to:
+
+```{r table}
+btg_table(head(btg_get_data("national_year")$data[c("year", "stops", "arrest_rate", "hit_rate")]),
+          caption = "National totals by year")
+```
 
 The template is also listed in those editors under *New R Markdown, From
 Template* as "BlackThriveSS briefing", for anyone who wants to add their own

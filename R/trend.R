@@ -211,6 +211,7 @@ btg_plot_trend <- function(x, measure = NULL, highlight = NULL) {
     if (identical(measure, "ratio")) "Vertical lines are 95% Poisson intervals on the recorded counts; they exclude reporting and classification uncertainty." else NULL,
     "Recorded events are not unique people, and a ratio or rate does not establish discrimination.",
     paste("Fixed release:", x$metadata$release), sep = "\n")
+  caption <- .wrap_caption(caption)
   area <- attr(table, "area")
   periods <- range(table$period)
   description <- sub(" [(].*$", "", measures[[measure]])
@@ -427,6 +428,7 @@ btg_plot_change <- function(x, from = NULL, to = NULL, group = NULL, n = 10L,
     if (any(!rows$comparable_coverage)) "* Returns do not cover both years in full; fewer months lower counts but not, under uniform reporting, the ratio." else "Every displayed force has full-year returns in both years.",
     "A change in recorded stops relative to fixed populations does not by itself show a change in policing or establish discrimination.",
     paste("Fixed release:", x$metadata$release), sep = "\n")
+  caption <- .wrap_caption(caption)
   upper <- max(plotted$label_x) * 1.18
   p <- ggplot2::ggplot(plotted, ggplot2::aes(y = axis_label)) +
     ggplot2::geom_vline(xintercept = 1, colour = col[["secondary"]], linewidth = 0.5) +

@@ -1,0 +1,94 @@
+/* BlackThriveSS briefing: the package's colours and a quiet, readable layout. */
+:root {
+  --ink: #0B2545;
+  --text: #1B2430;
+  --secondary: #5C677D;
+  --muted: #8A93A6;
+  --grid: #E4E6EB;
+  --soft: #F5F6F8;
+  --amber: #E69F00;
+  --surface: #FFFFFF;
+}
+body {
+  font-family: Calibri, Carlito, "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  background: var(--surface);
+  font-size: 16px; /* 12pt */
+  line-height: 1.55;
+}
+/* block-style paragraphs, as in a Word document set with Ctrl+J */
+p, li, .btg-finding, .btg-lede { text-align: justify; text-justify: inter-word; hyphens: auto; }
+p.caption, .btg-card, .btg-footer, table.btg-table caption { text-align: left; hyphens: none; }
+.main-container { max-width: 1000px; }
+h1.title {
+  color: var(--ink);
+  font-size: 2.2rem; /* about 26pt */
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-top: 1.2rem;
+  margin-bottom: 0.2rem;
+}
+h1, h2, h3, h4 { color: var(--ink); font-weight: 650; line-height: 1.25; }
+h1 { font-size: 1.55rem; margin-top: 2.4rem; }   /* about 18pt */
+h2 { font-size: 1.25rem; margin-top: 2.2rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--grid); } /* about 15pt */
+h3 { font-size: 1rem; margin-top: 1.5rem; }   /* 12pt */
+p, li { max-width: 76ch; }
+a { color: #0F5FA8; }
+.btg-lede { font-size: 1.08rem; color: var(--secondary); max-width: 80ch; margin-bottom: 1.4rem; }
+.btg-cards { display: flex; flex-wrap: wrap; gap: 12px; margin: 1rem 0 1.6rem; }
+.btg-card {
+  flex: 1 1 150px;
+  background: var(--soft);
+  border-left: 4px solid var(--amber);
+  border-radius: 6px;
+  padding: 12px 14px 10px;
+}
+.btg-card .label { font-size: 0.78rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+.btg-card .value { font-size: 1.65rem; font-weight: 700; color: var(--ink); line-height: 1.15; margin: 0.15rem 0 0.2rem; }
+.btg-card .detail { font-size: 0.86rem; color: var(--secondary); line-height: 1.35; }
+.btg-finding { margin: 0 0 1rem; max-width: 80ch; }
+.btg-finding strong { color: var(--ink); }
+table.btg-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.4rem 0 1.6rem;
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+}
+table.btg-table caption {
+  caption-side: top;
+  text-align: left;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0 0 0.5rem;
+}
+table.btg-table thead th {
+  background: var(--ink);
+  color: #FFFFFF;
+  font-weight: 600;
+  padding: 8px 10px;
+  border: 0;
+  vertical-align: bottom;
+}
+table.btg-table th, table.btg-table td { text-align: left; }
+table.btg-table th[style*="right"], table.btg-table td[style*="right"] { text-align: right; }
+table.btg-table tbody td { padding: 7px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+table.btg-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+table.btg-table tbody tr:last-child td { border-bottom: 2px solid var(--ink); }
+.btg-note { color: var(--secondary); font-size: 0.9rem; max-width: 80ch; margin-top: -0.8rem; margin-bottom: 1.6rem; }
+p.caption { color: var(--muted); font-size: 0.86rem; margin-top: -0.4rem; margin-bottom: 1.6rem; max-width: none; }
+.figure { margin-bottom: 1rem; }
+img { max-width: 100%; height: auto; }
+.btg-reading { background: var(--soft); border-left: 4px solid var(--grid); border-radius: 6px; padding: 0.9rem 1.1rem 0.4rem; margin: 1rem 0 1.6rem; }
+.btg-reading li { margin-bottom: 0.5rem; }
+pre, code { font-size: 0.86rem; }
+pre { background: var(--soft); border: 1px solid var(--grid); border-radius: 6px; }
+.btg-footer { color: var(--muted); font-size: 0.86rem; border-top: 1px solid var(--grid); margin-top: 2.5rem; padding-top: 1rem; max-width: none; }
+#TOC { font-size: 0.9rem; }
+.tocify .tocify-item a { color: var(--secondary); }
+.tocify .tocify-item.active a { color: var(--ink); font-weight: 600; }
+@media print {
+  .btg-card { break-inside: avoid; }
+  table.btg-table { break-inside: avoid; }
+}
