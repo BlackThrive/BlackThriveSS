@@ -839,8 +839,8 @@ so that a file sent on still says where its numbers came from.</p>
 <code class="sourceCode R"><span><span class="va">csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span></span>
 <span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_export.html">btg_export</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"force_ethnicity_year"</span>, years <span class="op">=</span> <span class="fl">2025</span>, groups <span class="op">=</span> <span class="st">"Black"</span><span class="op">)</span>, <span class="va">csv</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "file1cbb548ed442.csv"          "file1cbb548ed442.json"        </span></span>
-<span><span class="co">#&gt; [3] "file1cbb548ed442-coverage.csv"</span></span>
+<span><span class="co">#&gt; [1] "file1d8b61d2c66f.csv"          "file1d8b61d2c66f.json"        </span></span>
+<span><span class="co">#&gt; [3] "file1d8b61d2c66f-coverage.csv"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
