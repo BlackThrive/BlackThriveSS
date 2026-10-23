@@ -253,3 +253,7 @@
 .navbar .dropdown-toggle::after { color: rgba(255, 255, 255, 0.82); }
 .navbar .navbar-nav .dropdown-menu { --bs-dropdown-link-active-bg: var(--btg-navy); }
 .navbar .fa, .navbar .fab, .navbar .fas { color: rgba(255, 255, 255, 0.85); }
+
+/* Wide tables in articles and reference pages scroll sideways instead of overflowing the column */
+main table { display: block; overflow-x: auto; max-width: 100%; }
+main table.btg-table-inline { display: table; }

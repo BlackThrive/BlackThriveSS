@@ -1,4 +1,4 @@
-# BlackThriveSS <img src="man/figures/logo.png" align="right" height="139" alt="" />
+# BlackThriveSS <img src="https://blackthrive.github.io/BlackThriveSS/reference/figures/logo.png" align="right" height="139" alt="" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/BlackThrive/BlackThriveSS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/BlackThrive/BlackThriveSS/actions/workflows/R-CMD-check.yaml)
@@ -44,7 +44,7 @@ btg_sensitivity(x)                                    # bounds under unknown eth
 btg_report(force = "metropolitan", file = "metropolitan-2025.docx")   # a Word briefing
 ```
 
-<img src="man/figures/home-ranking.png" alt="Bar chart of the ten highest Black to White stop-rate ratios by police force in 2025, with intervals and coverage marks" width="100%">
+<img src="https://blackthrive.github.io/BlackThriveSS/reference/figures/home-ranking.png" alt="Bar chart of the ten highest Black to White stop-rate ratios by police force in 2025, with intervals and coverage marks" width="100%">
 
 ## What it gives you
 
@@ -57,7 +57,7 @@ btg_report(force = "metropolitan", file = "metropolitan-2025.docx")   # a Word b
 | **A briefing in one call** | Plain statements that carry their qualifications, and a styled HTML, Word or PDF briefing with numbered tables and page-width figures: `btg_profile()`, `btg_report()`, `btg_table()`. |
 | **Replay and share** | Saved views that replay a chart exactly, links that round-trip to the dashboard website, and exports with a provenance sidecar: `btg_save_view()`, `btg_from_view()`, `btg_dashboard_url()`, `btg_from_url()`, `btg_export()`. |
 
-<img src="man/figures/home-sensitivity.png" alt="Chart of ten forces showing the sampling interval and the range of each ratio under every allocation of unknown-ethnicity stops" width="100%">
+<img src="https://blackthrive.github.io/BlackThriveSS/reference/figures/home-sensitivity.png" alt="Chart of ten forces showing the sampling interval and the range of each ratio under every allocation of unknown-ethnicity stops" width="100%">
 
 ## Learn more
 

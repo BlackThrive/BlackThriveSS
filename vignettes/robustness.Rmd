@@ -1,5 +1,7 @@
 ---
 title: "How robust is a disparity estimate?"
+author: "Mustapha Mohammed, Sarah Hamed, Souci Frissa, Aisha Mohamed and Nathan Stanley, Black Thrive Global"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{How robust is a disparity estimate?}
@@ -10,6 +12,11 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 10, fig.height = 7)
 library(BlackThriveSS)
+# Data frames returned by a chunk render as tables in the vignette and on the website.
+library(knitr)
+registerS3method("knit_print", "data.frame", function(x, ...) {
+  asis_output(paste(c("", kable(x, row.names = FALSE), ""), collapse = "\n"))
+})
 ```
 
 A stop-rate ratio is a simple number built on several choices and on data

@@ -1,5 +1,7 @@
 ---
 title: "Reproduce and validate a dashboard chart"
+author: "Mustapha Mohammed, Sarah Hamed, Souci Frissa, Aisha Mohamed and Nathan Stanley, Black Thrive Global"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Reproduce and validate a dashboard chart}
@@ -7,8 +9,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 10, fig.height = 7)
+# Data frames returned by a chunk render as tables in the vignette and on the website.
+library(knitr)
+registerS3method("knit_print", "data.frame", function(x, ...) {
+  asis_output(paste(c("", kable(x, row.names = FALSE), ""), collapse = "\n"))
+})
 ```
 
 BlackThriveSS makes a fixed set of public dashboard evidence available in R: a
@@ -33,9 +40,12 @@ Start by listing what is in the box:
 
 ```{r discover}
 library(BlackThriveSS)
-btg_datasets()
+btg_datasets()[c("dataset", "level", "from", "to", "groups", "coverage")]
 btg_releases()
 ```
+
+Each row of `btg_datasets()` also carries the dataset's title and the release
+it belongs to.
 
 ## Load the evidence
 
