@@ -16,6 +16,17 @@ the glossary, schema 3 saved views, two further vignettes and a pkgdown
 configuration. The dashboard button is deferred. No CRAN submission or
 hosted release is created by this work.
 
+## Submission record
+
+* 23 October 2026, 13:38 UTC: `BlackThriveSS_0.1.0.tar.gz` (SHA-256
+  `1c9c7cb71c773d1836deea41c03621d75e947830c88028751c325a6a24181422`), built from commit `6ab7379`
+  and tagged `v0.1.0`, was uploaded through CRAN's submission form with the
+  text of `cran-comments.md` (submission id 359973). The final
+  `R CMD check --as-cran` on that exact archive, with the online incoming
+  checks enabled, reported 0 errors, 0 warnings and 2 notes: "New
+  submission" and the local absence of HTML Tidy. The maintainer must
+  confirm the submission from the email CRAN sends.
+
 ## Checks on 0.1.0
 
 * Ubuntu 24.04 / R 4.6.1: `R CMD check --as-cran` on the built 0.1.0
