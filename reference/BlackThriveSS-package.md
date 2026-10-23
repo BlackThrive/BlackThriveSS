@@ -24,6 +24,8 @@ The installed tutorial is available through
 
 Useful links:
 
+- <https://blackthrive.github.io/BlackThriveSS/>
+
 - <https://github.com/BlackThrive/BlackThriveSS>
 
 - Report bugs at <https://github.com/BlackThrive/BlackThriveSS/issues>

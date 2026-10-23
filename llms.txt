@@ -24,11 +24,17 @@ dashboard](https://bgtresearch-stop-search-dashboard.share.connect.posit.cloud/)
 
 ## What it gives you
 
+[Data](https://blackthrive.github.io/BlackThriveSS/reference/btg_get_data.md)
+
 ### Data that stays put
 
 Seven datasets, pinned to a named release with SHA-256 checksums,
 monthly reporting coverage and a ready-made citation. A chart made today
 matches the same chart made next year.
+
+Browse the datasets
+
+[Charts](https://blackthrive.github.io/BlackThriveSS/reference/btg_plot_disparity.md)
 
 ### The dashboard’s charts, editable
 
@@ -36,11 +42,20 @@ Recreate the force ranking for any year and group as an ordinary ggplot,
 with intervals, coverage marks and a highlighted force. Every chart
 carries its own table.
 
+See the ranking chart
+
+[Robustness](https://blackthrive.github.io/BlackThriveSS/articles/robustness.md)
+
 ### Robustness, kept honest
 
 Sampling intervals, bounds under every allocation of unknown ethnicity
 and rank intervals are reported side by side and never combined, so a
 reader can see what a comparison rests on.
+
+Read the robustness guide
+
+[Over
+time](https://blackthrive.github.io/BlackThriveSS/reference/btg_plot_trend.md)
 
 ### Nine years of change
 
@@ -48,17 +63,27 @@ Ratios and rates over time for any force or council, national monthly
 series and Section 60 searches, with incomplete periods marked and
 nothing annualised.
 
+Chart a trend
+
+[Briefings](https://blackthrive.github.io/BlackThriveSS/articles/briefing.md)
+
 ### A briefing in one call
 
 Plain statements that carry their own qualifications, and a styled HTML,
 Word or PDF briefing for one force or council, with numbered tables,
 page-width figures and the code to reproduce them.
 
+Brief a force or council
+
+[Sharing](https://blackthrive.github.io/BlackThriveSS/reference/btg_save_view.md)
+
 ### Replay and share
 
 Saved views replay a chart with identical numbers. Links round-trip to
 the dashboard website. Exports carry a provenance sidecar so a CSV still
 says where its numbers came from.
+
+Save and replay a view
 
 ## See it
 
@@ -136,6 +161,18 @@ documents every call.
 Tidy data frames with provenance, documented calculations behind every
 number, and views and exports that let someone else reproduce a result
 exactly.
+
+### Policy and scrutiny
+
+One call writes the evidence for an area as careful plain statements,
+with the methods and their limits attached, ready for a scrutiny panel
+or a consultation response.
+
+### Community organisations
+
+Charts with your force or council highlighted, a glossary with one
+definition per term, and a link that opens the same view on the
+dashboard website.
 
 ### Policy and scrutiny
 

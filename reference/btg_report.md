@@ -97,7 +97,7 @@ gives the same three outputs.
 # \donttest{
 if (requireNamespace("rmarkdown", quietly = TRUE) && rmarkdown::pandoc_available("2.0")) {
   path <- tempfile(fileext = ".html")
-  btg_report(force = "metropolitan", file = path, draws = 500)
+  btg_report(council = "E09000022", file = path, draws = 200)   # Lambeth
   unlink(path)
 }
 # }
