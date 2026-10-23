@@ -29,7 +29,8 @@
   resolution in Word, and carry only their coverage note inside the image
   because the briefing states sources and qualifications itself;
   `options(BlackThriveSS.caption = "short")` does the same for any chart.
-* The package now lists its five authors in `DESCRIPTION` and the citation.
+* The package now lists its five authors, with ORCID identifiers where held,
+  in `DESCRIPTION` and the citation.
 * Sharing. `btg_export()` writes a dataset to CSV with a JSON provenance
   sidecar; `btg_glossary()` defines every term the package uses.
 * Auditing the source. `btg_source_status()` reads the Police.uk

@@ -27,9 +27,9 @@ Useful links:
 Authors:
 \itemize{
   \item Mustapha Mohammed \email{mustapha.wasseja.mohammed@gmail.com}
-  \item Sarah (affiliation: Black Thrive Global)
-  \item Souci (affiliation: Black Thrive Global)
-  \item Aisha Mohammed (affiliation: Black Thrive Global)
+  \item Sarah Hamed (\href{https://orcid.org/0000-0001-8547-8772}{ORCID}) (affiliation: Black Thrive Global)
+  \item Souci Frissa (\href{https://orcid.org/0000-0001-8346-8909}{ORCID}) (affiliation: Black Thrive Global)
+  \item Aisha Mohamed (affiliation: Black Thrive Global)
   \item Nathan Stanley (affiliation: Black Thrive Global)
 }
 

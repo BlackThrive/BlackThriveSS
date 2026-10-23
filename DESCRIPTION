@@ -4,9 +4,11 @@ Version: 0.0.3.9000
 Authors@R: c(
     person("Mustapha", "Mohammed", email = "mustapha.wasseja.mohammed@gmail.com",
            role = c("aut", "cre")),
-    person("Sarah", role = "aut", comment = c(affiliation = "Black Thrive Global")),
-    person("Souci", role = "aut", comment = c(affiliation = "Black Thrive Global")),
-    person("Aisha", "Mohammed", role = "aut", comment = c(affiliation = "Black Thrive Global")),
+    person("Sarah", "Hamed", role = "aut",
+           comment = c(ORCID = "0000-0001-8547-8772", affiliation = "Black Thrive Global")),
+    person("Souci", "Frissa", role = "aut",
+           comment = c(ORCID = "0000-0001-8346-8909", affiliation = "Black Thrive Global")),
+    person("Aisha", "Mohamed", role = "aut", comment = c(affiliation = "Black Thrive Global")),
     person("Nathan", "Stanley", role = "aut", comment = c(affiliation = "Black Thrive Global")),
     person("Black Thrive Global", role = c("cph", "fnd")))
 Description: Retrieve fixed, documented snapshots of public aggregate stop and
