@@ -14,8 +14,11 @@ p
 #> BlackThriveSS evidence profile: Metropolitan Police, 2025
 #> Release dashboard-2026-07-catalogue-bacf49c2a48d (source month 2026-07)
 #> 
+#> Reporting coverage
 #> * Metropolitan Police supplied stop and search returns for all 12 months of
 #>   2025.
+#> 
+#> Black people compared with White residents
 #> * Recorded stops of Black people in 2025: 47.2 per 1,000 Black residents,
 #>   4.6x the rate for White residents (10.3 per 1,000), 95% interval 4.5x to
 #>   4.6x, from 56,116 and 48,798 recorded stops.
@@ -27,6 +30,8 @@ p
 #>   stays above parity under every allocation.
 #> * Compared with 2024, the Black:White ratio in 2025 was 10% higher (95%
 #>   interval 1.08x to 1.12x the earlier ratio); both years are covered in full.
+#> 
+#> Asian people compared with White residents
 #> * Recorded stops of Asian people in 2025: 10.8 per 1,000 Asian residents,
 #>   1.0x the rate for White residents (10.3 per 1,000), 95% interval 1.0x to
 #>   1.1x, from 19,557 and 48,798 recorded stops.
@@ -38,11 +43,15 @@ p
 #>   of parity the ratio falls on depends on those stops.
 #> * Compared with 2024, the Asian:White ratio in 2025 was 6% higher (95%
 #>   interval 1.03x to 1.09x the earlier ratio); both years are covered in full.
+#> 
+#> Mixed people compared with White residents
 #> * No stops of Mixed people were recorded under officer-defined ethnicity in
 #>   2025; White residents were stopped at 10.3 per 1,000.
 #> * The Mixed:White comparison does not meet the dashboard's display rule (a
 #>   positive ratio from at least 200 stops with known ethnicity and comparable
 #>   resident populations), so it carries no rank.
+#> 
+#> People of other ethnic groups compared with White residents
 #> * Recorded stops of Other people in 2025: 9.6 per 1,000 Other residents, 0.9x
 #>   the rate for White residents (10.3 per 1,000), 95% interval 0.9x to 1.0x,
 #>   from 5,341 and 48,798 recorded stops.
@@ -54,8 +63,12 @@ p
 #>   of parity the ratio falls on depends on those stops.
 #> * Compared with 2024, the Other:White ratio in 2025 was 16% higher (95%
 #>   interval 1.11x to 1.21x the earlier ratio); both years are covered in full.
+#> 
+#> Section 60 searches
 #> * Metropolitan Police recorded 3,024 searches under Section 60 in 2025, 73%
 #>   of them of Black people.
+#> 
+#> National context
 #> * Across England and Wales, 505,586 stops were recorded in 2025; 14.7% led to
 #>   an arrest, and the share of searches whose outcome was linked to what was
 #>   searched for was 47.7% for Black people and 49.1% for White people.
@@ -104,9 +117,12 @@ council counts depend on published stop coordinates:
 ``` r
 
 btg_profile(council = "E09000022", draws = 500)$statements[1:3]
-#> [1] "Lambeth's counts are located by published stop coordinates, which some forces withhold, so they undercount and carry no rank or display rule."                                                                                                                 
-#> [2] "Recorded stops of Black people in 2025: 62.7 per 1,000 Black residents, 7.3x the rate for White residents (8.6 per 1,000), 95% interval 6.9x to 7.7x, from 4,773 and 1,501 recorded stops."                                                                    
-#> [3] "321 of the 6,993 recorded stops in 2025 (4.6%) have no recorded ethnicity. Counting every one of them as White would put the Black:White ratio at 6.0x; counting every one as Black would put it at 7.8x. The ratio stays above parity under every allocation."
+#>                                                                                                                                                                                                                                                         coverage 
+#>                                                                                                                  "Lambeth's counts are located by published stop coordinates, which some forces withhold, so they undercount and carry no rank or display rule." 
+#>                                                                                                                                                                                                                                                            Black 
+#>                                                                     "Recorded stops of Black people in 2025: 62.7 per 1,000 Black residents, 7.3x the rate for White residents (8.6 per 1,000), 95% interval 6.9x to 7.7x, from 4,773 and 1,501 recorded stops." 
+#>                                                                                                                                                                                                                                                            Black 
+#> "321 of the 6,993 recorded stops in 2025 (4.6%) have no recorded ethnicity. Counting every one of them as White would put the Black:White ratio at 6.0x; counting every one as Black would put it at 7.8x. The ratio stays above parity under every allocation."
 ```
 
 ## The charts a briefing needs
@@ -188,10 +204,35 @@ and Pandoc, which RStudio and Positron include.
 
 btg_report(force = "metropolitan", file = "metropolitan-2025.html")
 btg_report(council = "E09000022", year = 2024, file = "lambeth-2024.docx")
+btg_report(force = "kent", year = 2024, file = "kent-2024.pdf")
 ```
 
 A `.docx` file name, or `format = "docx"`, gives the same briefing as a
-Word document for people who need to edit it or paste from it.
+Word document for people who need to edit it or paste from it, styled by
+a reference document installed with the template; `.pdf` gives a PDF
+where a LaTeX installation such as TinyTeX is available. The briefing
+opens with an at-a-glance panel and the findings grouped by topic, and
+numbers its tables and figures.
+[`btg_table()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_table.md)
+sets any data frame in the same style inside your own R Markdown
+document, whichever of the three formats you knit to:
+
+``` r
+
+btg_table(head(btg_get_data("national_year")$data[c("year", "stops", "arrest_rate", "hit_rate")]),
+          caption = "National totals by year")
+```
+
+| year |  stops | arrest_rate | hit_rate |
+|-----:|-------:|------------:|---------:|
+| 2018 | 319569 |        15.7 |     53.6 |
+| 2019 | 524424 |        12.8 |     47.4 |
+| 2020 | 676628 |        11.4 |     40.2 |
+| 2021 | 541523 |        12.2 |     42.8 |
+| 2022 | 477044 |        12.8 |     43.7 |
+| 2023 | 449005 |        14.0 |     44.5 |
+
+National totals by year {.table .btg-table}
 
 The template is also listed in those editors under *New R Markdown, From
 Template* as “BlackThriveSS briefing”, for anyone who wants to add their
@@ -208,8 +249,8 @@ checksums, selection, citation and limitations:
 csv <- tempfile(fileext = ".csv")
 files <- btg_export(btg_get_data(force = "metropolitan"), csv)
 basename(files)
-#> [1] "file1d557e18579d.csv"          "file1d557e18579d.json"        
-#> [3] "file1d557e18579d-coverage.csv"
+#> [1] "file1e0a45720ec3.csv"          "file1e0a45720ec3.json"        
+#> [3] "file1e0a45720ec3-coverage.csv"
 unlink(files)
 ```
 

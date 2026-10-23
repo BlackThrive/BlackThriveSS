@@ -30,11 +30,21 @@ Useful links:
 
 ## Author
 
-**Maintainer**: Mustapha Wasseja <mustapha.wasseja.mohammed@gmail.com>
+**Maintainer**: Mustapha Mohammed <mustapha.wasseja.mohammed@gmail.com>
 
 Authors:
 
-- Mustapha Wasseja <mustapha.wasseja.mohammed@gmail.com>
+- Mustapha Mohammed <mustapha.wasseja.mohammed@gmail.com>
+
+- Sarah Hamed ([ORCID](https://orcid.org/0000-0001-8547-8772))
+  (affiliation: Black Thrive Global)
+
+- Souci Frissa ([ORCID](https://orcid.org/0000-0001-8346-8909))
+  (affiliation: Black Thrive Global)
+
+- Aisha Mohamed (affiliation: Black Thrive Global)
+
+- Nathan Stanley (affiliation: Black Thrive Global)
 
 Other contributors:
 

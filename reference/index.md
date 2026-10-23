@@ -67,6 +67,8 @@ Plain statements and an HTML briefing for one force or council.
   : Build an evidence profile for one force or council
 - [`btg_report()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_report.md)
   : Render an HTML briefing for one force or council
+- [`btg_table()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_table.md)
+  : Set a table for a briefing or report
 
 ## Saved views and the dashboard
 

@@ -111,7 +111,10 @@ catalogue release.</p></dd>
     <p>A list of class <code>btg_profile</code> with <code>area</code>, <code>year</code>, <code>release</code>,
 <code>source_month</code>, <code>comparisons</code> (one row per group), <code>stability</code> (forces
 only), <code>change</code>, <code>coverage</code> (forces only), <code>section60</code> (forces only),
-<code>national</code>, <code>statements</code> and <code>caveats</code>. Printing it shows the statements.</p>
+<code>national</code>, <code>statements</code>, <code>topics</code> and <code>caveats</code>. Each statement is
+named by its topic (<code>coverage</code>, a group, <code>section60</code> or <code>national</code>), and
+<code>topics</code> gives the heading for each, which <code><a href="btg_report.html">btg_report()</a></code> and the print
+method use to group the statements.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -128,8 +131,11 @@ on published stop coordinates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> BlackThriveSS evidence profile: Metropolitan Police, 2025</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Release dashboard-2026-07-catalogue-bacf49c2a48d (source month 2026-07)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reporting coverage</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Metropolitan Police supplied stop and search returns for all 12 months of</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2025.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Black people compared with White residents</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Recorded stops of Black people in 2025: 47.2 per 1,000 Black residents,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   4.6x the rate for White residents (10.3 per 1,000), 95% interval 4.5x to</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   4.6x, from 56,116 and 48,798 recorded stops.</span>
@@ -141,6 +147,8 @@ on published stop coordinates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   stays above parity under every allocation.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Compared with 2024, the Black:White ratio in 2025 was 10% higher (95%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   interval 1.08x to 1.12x the earlier ratio); both years are covered in full.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Asian people compared with White residents</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Recorded stops of Asian people in 2025: 10.8 per 1,000 Asian residents,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1.0x the rate for White residents (10.3 per 1,000), 95% interval 1.0x to</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1.1x, from 19,557 and 48,798 recorded stops.</span>
@@ -152,11 +160,15 @@ on published stop coordinates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   of parity the ratio falls on depends on those stops.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Compared with 2024, the Asian:White ratio in 2025 was 6% higher (95%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   interval 1.03x to 1.09x the earlier ratio); both years are covered in full.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mixed people compared with White residents</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * No stops of Mixed people were recorded under officer-defined ethnicity in</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2025; White residents were stopped at 10.3 per 1,000.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * The Mixed:White comparison does not meet the dashboard's display rule (a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   positive ratio from at least 200 stops with known ethnicity and comparable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   resident populations), so it carries no rank.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> People of other ethnic groups compared with White residents</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Recorded stops of Other people in 2025: 9.6 per 1,000 Other residents, 0.9x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   the rate for White residents (10.3 per 1,000), 95% interval 0.9x to 1.0x,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   from 5,341 and 48,798 recorded stops.</span>
@@ -168,8 +180,12 @@ on published stop coordinates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   of parity the ratio falls on depends on those stops.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Compared with 2024, the Other:White ratio in 2025 was 16% higher (95%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   interval 1.11x to 1.21x the earlier ratio); both years are covered in full.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Section 60 searches</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Metropolitan Police recorded 3,024 searches under Section 60 in 2025, 73%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   of them of Black people.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> National context</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Across England and Wales, 505,586 stops were recorded in 2025; 14.7% led to</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   an arrest, and the share of searches whose outcome was linked to what was</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   searched for was 47.7% for Black people and 49.1% for White people.</span>
@@ -188,7 +204,7 @@ on published stop coordinates.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Mustapha Wasseja, Black Thrive Global.</p>
+  <p>Developed by Mustapha Mohammed, Sarah Hamed, Souci Frissa, Aisha Mohamed, Nathan Stanley, <a href="https://blackthrive.org" class="external-link">Black Thrive Global</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -81,8 +81,11 @@ nothing here requires a network connection.</p>
 <span><span class="co">#&gt; BlackThriveSS evidence profile: Metropolitan Police, 2025</span></span>
 <span><span class="co">#&gt; Release dashboard-2026-07-catalogue-bacf49c2a48d (source month 2026-07)</span></span>
 <span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Reporting coverage</span></span>
 <span><span class="co">#&gt; * Metropolitan Police supplied stop and search returns for all 12 months of</span></span>
 <span><span class="co">#&gt;   2025.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Black people compared with White residents</span></span>
 <span><span class="co">#&gt; * Recorded stops of Black people in 2025: 47.2 per 1,000 Black residents,</span></span>
 <span><span class="co">#&gt;   4.6x the rate for White residents (10.3 per 1,000), 95% interval 4.5x to</span></span>
 <span><span class="co">#&gt;   4.6x, from 56,116 and 48,798 recorded stops.</span></span>
@@ -94,6 +97,8 @@ nothing here requires a network connection.</p>
 <span><span class="co">#&gt;   stays above parity under every allocation.</span></span>
 <span><span class="co">#&gt; * Compared with 2024, the Black:White ratio in 2025 was 10% higher (95%</span></span>
 <span><span class="co">#&gt;   interval 1.08x to 1.12x the earlier ratio); both years are covered in full.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Asian people compared with White residents</span></span>
 <span><span class="co">#&gt; * Recorded stops of Asian people in 2025: 10.8 per 1,000 Asian residents,</span></span>
 <span><span class="co">#&gt;   1.0x the rate for White residents (10.3 per 1,000), 95% interval 1.0x to</span></span>
 <span><span class="co">#&gt;   1.1x, from 19,557 and 48,798 recorded stops.</span></span>
@@ -105,11 +110,15 @@ nothing here requires a network connection.</p>
 <span><span class="co">#&gt;   of parity the ratio falls on depends on those stops.</span></span>
 <span><span class="co">#&gt; * Compared with 2024, the Asian:White ratio in 2025 was 6% higher (95%</span></span>
 <span><span class="co">#&gt;   interval 1.03x to 1.09x the earlier ratio); both years are covered in full.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Mixed people compared with White residents</span></span>
 <span><span class="co">#&gt; * No stops of Mixed people were recorded under officer-defined ethnicity in</span></span>
 <span><span class="co">#&gt;   2025; White residents were stopped at 10.3 per 1,000.</span></span>
 <span><span class="co">#&gt; * The Mixed:White comparison does not meet the dashboard's display rule (a</span></span>
 <span><span class="co">#&gt;   positive ratio from at least 200 stops with known ethnicity and comparable</span></span>
 <span><span class="co">#&gt;   resident populations), so it carries no rank.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; People of other ethnic groups compared with White residents</span></span>
 <span><span class="co">#&gt; * Recorded stops of Other people in 2025: 9.6 per 1,000 Other residents, 0.9x</span></span>
 <span><span class="co">#&gt;   the rate for White residents (10.3 per 1,000), 95% interval 0.9x to 1.0x,</span></span>
 <span><span class="co">#&gt;   from 5,341 and 48,798 recorded stops.</span></span>
@@ -121,8 +130,12 @@ nothing here requires a network connection.</p>
 <span><span class="co">#&gt;   of parity the ratio falls on depends on those stops.</span></span>
 <span><span class="co">#&gt; * Compared with 2024, the Other:White ratio in 2025 was 16% higher (95%</span></span>
 <span><span class="co">#&gt;   interval 1.11x to 1.21x the earlier ratio); both years are covered in full.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Section 60 searches</span></span>
 <span><span class="co">#&gt; * Metropolitan Police recorded 3,024 searches under Section 60 in 2025, 73%</span></span>
 <span><span class="co">#&gt;   of them of Black people.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; National context</span></span>
 <span><span class="co">#&gt; * Across England and Wales, 505,586 stops were recorded in 2025; 14.7% led to</span></span>
 <span><span class="co">#&gt;   an arrest, and the share of searches whose outcome was linked to what was</span></span>
 <span><span class="co">#&gt;   searched for was 47.7% for Black people and 49.1% for White people.</span></span>
@@ -164,9 +177,12 @@ object:</p>
 because council counts depend on published stop coordinates:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_profile.html">btg_profile</a></span><span class="op">(</span>council <span class="op">=</span> <span class="st">"E09000022"</span>, draws <span class="op">=</span> <span class="fl">500</span><span class="op">)</span><span class="op">$</span><span class="va">statements</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "Lambeth's counts are located by published stop coordinates, which some forces withhold, so they undercount and carry no rank or display rule."                                                                                                                 </span></span>
-<span><span class="co">#&gt; [2] "Recorded stops of Black people in 2025: 62.7 per 1,000 Black residents, 7.3x the rate for White residents (8.6 per 1,000), 95% interval 6.9x to 7.7x, from 4,773 and 1,501 recorded stops."                                                                    </span></span>
-<span><span class="co">#&gt; [3] "321 of the 6,993 recorded stops in 2025 (4.6%) have no recorded ethnicity. Counting every one of them as White would put the Black:White ratio at 6.0x; counting every one as Black would put it at 7.8x. The ratio stays above parity under every allocation."</span></span></code></pre></div>
+<span><span class="co">#&gt;                                                                                                                                                                                                                                                         coverage </span></span>
+<span><span class="co">#&gt;                                                                                                                  "Lambeth's counts are located by published stop coordinates, which some forces withhold, so they undercount and carry no rank or display rule." </span></span>
+<span><span class="co">#&gt;                                                                                                                                                                                                                                                            Black </span></span>
+<span><span class="co">#&gt;                                                                     "Recorded stops of Black people in 2025: 62.7 per 1,000 Black residents, 7.3x the rate for White residents (8.6 per 1,000), 95% interval 6.9x to 7.7x, from 4,773 and 1,501 recorded stops." </span></span>
+<span><span class="co">#&gt;                                                                                                                                                                                                                                                            Black </span></span>
+<span><span class="co">#&gt; "321 of the 6,993 recorded stops in 2025 (4.6%) have no recorded ethnicity. Counting every one of them as White would put the Black:White ratio at 6.0x; counting every one as Black would put it at 7.8x. The ratio stays above parity under every allocation."</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="the-charts-a-briefing-needs">The charts a briefing needs<a class="anchor" aria-label="anchor" href="#the-charts-a-briefing-needs"></a>
@@ -210,10 +226,125 @@ the rmarkdown package and Pandoc, which RStudio and Positron
 include.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_report.html">btg_report</a></span><span class="op">(</span>force <span class="op">=</span> <span class="st">"metropolitan"</span>, file <span class="op">=</span> <span class="st">"metropolitan-2025.html"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/btg_report.html">btg_report</a></span><span class="op">(</span>council <span class="op">=</span> <span class="st">"E09000022"</span>, year <span class="op">=</span> <span class="fl">2024</span>, file <span class="op">=</span> <span class="st">"lambeth-2024.docx"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/btg_report.html">btg_report</a></span><span class="op">(</span>council <span class="op">=</span> <span class="st">"E09000022"</span>, year <span class="op">=</span> <span class="fl">2024</span>, file <span class="op">=</span> <span class="st">"lambeth-2024.docx"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/btg_report.html">btg_report</a></span><span class="op">(</span>force <span class="op">=</span> <span class="st">"kent"</span>, year <span class="op">=</span> <span class="fl">2024</span>, file <span class="op">=</span> <span class="st">"kent-2024.pdf"</span><span class="op">)</span></span></code></pre></div>
 <p>A <code>.docx</code> file name, or <code>format = "docx"</code>,
 gives the same briefing as a Word document for people who need to edit
-it or paste from it.</p>
+it or paste from it, styled by a reference document installed with the
+template; <code>.pdf</code> gives a PDF where a LaTeX installation such
+as TinyTeX is available. The briefing opens with an at-a-glance panel
+and the findings grouped by topic, and numbers its tables and figures.
+<code><a href="../reference/btg_table.html">btg_table()</a></code> sets any data frame in the same style inside
+your own R Markdown document, whichever of the three formats you knit
+to:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_table.html">btg_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"national_year"</span><span class="op">)</span><span class="op">$</span><span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"stops"</span>, <span class="st">"arrest_rate"</span>, <span class="st">"hit_rate"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>          caption <span class="op">=</span> <span class="st">"National totals by year"</span><span class="op">)</span></span></code></pre></div>
+<table class="table btg-table">
+<caption>
+National totals by year
+</caption>
+<thead><tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:right;">
+stops
+</th>
+<th style="text-align:right;">
+arrest_rate
+</th>
+<th style="text-align:right;">
+hit_rate
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+319569
+</td>
+<td style="text-align:right;">
+15.7
+</td>
+<td style="text-align:right;">
+53.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+524424
+</td>
+<td style="text-align:right;">
+12.8
+</td>
+<td style="text-align:right;">
+47.4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2020
+</td>
+<td style="text-align:right;">
+676628
+</td>
+<td style="text-align:right;">
+11.4
+</td>
+<td style="text-align:right;">
+40.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2021
+</td>
+<td style="text-align:right;">
+541523
+</td>
+<td style="text-align:right;">
+12.2
+</td>
+<td style="text-align:right;">
+42.8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2022
+</td>
+<td style="text-align:right;">
+477044
+</td>
+<td style="text-align:right;">
+12.8
+</td>
+<td style="text-align:right;">
+43.7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2023
+</td>
+<td style="text-align:right;">
+449005
+</td>
+<td style="text-align:right;">
+14.0
+</td>
+<td style="text-align:right;">
+44.5
+</td>
+</tr>
+</tbody>
+</table>
 <p>The template is also listed in those editors under <em>New R
 Markdown, From Template</em> as “BlackThriveSS briefing”, for anyone who
 wants to add their own sections.</p>
@@ -224,15 +355,15 @@ wants to add their own sections.</p>
 <p><code><a href="../reference/btg_export.html">btg_export()</a></code> writes a dataset to CSV with a JSON sidecar
 that records the release, checksums, selection, citation and
 limitations:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span></span>
 <span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_export.html">btg_export</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span>force <span class="op">=</span> <span class="st">"metropolitan"</span><span class="op">)</span>, <span class="va">csv</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "file1d557e18579d.csv"          "file1d557e18579d.json"        </span></span>
-<span><span class="co">#&gt; [3] "file1d557e18579d-coverage.csv"</span></span>
+<span><span class="co">#&gt; [1] "file1e0a45720ec3.csv"          "file1e0a45720ec3.json"        </span></span>
+<span><span class="co">#&gt; [3] "file1e0a45720ec3-coverage.csv"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span></span></code></pre></div>
 <p>And every term the package uses has one definition:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_glossary.html">btg_glossary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">g</span><span class="op">[</span><span class="va">g</span><span class="op">$</span><span class="va">term</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ratio"</span>, <span class="st">"allocation range"</span>, <span class="st">"coverage"</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="co">#&gt;                term</span></span>
@@ -269,7 +400,7 @@ practice, who is present and policing decisions.</li>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Mustapha Wasseja, Black Thrive Global.</p>
+  <p>Developed by Mustapha Mohammed, Sarah Hamed, Souci Frissa, Aisha Mohamed, Nathan Stanley, <a href="https://blackthrive.org" class="external-link">Black Thrive Global</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

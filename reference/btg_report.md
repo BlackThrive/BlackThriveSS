@@ -52,9 +52,9 @@ btg_report(
 
 - format:
 
-  `"html"` for a self-contained web page, or `"docx"` for a Word
-  document with the same content. `NULL` takes the format from the
-  file's extension.
+  `"html"` for a self-contained web page, `"docx"` for a Word document
+  or `"pdf"` for a PDF, all with the same content. `NULL` takes the
+  format from the file's extension.
 
 - overwrite:
 
@@ -72,9 +72,24 @@ The path of the written file, invisibly.
 ## Details
 
 Rendering needs the `rmarkdown` package and Pandoc, which RStudio and
-Positron supply; the function stops with a clear message when they are
-missing. The template is also available in those editors as the R
-Markdown template "BlackThriveSS briefing" for editing.
+Positron supply, and a PDF additionally needs a LaTeX installation such
+as TinyTeX
+([`tinytex::install_tinytex()`](https://rdrr.io/pkg/tinytex/man/install_tinytex.html));
+the function stops with a clear message when any is missing. Paragraphs
+are justified and the body text is 12-point Calibri in HTML and Word;
+the PDF uses Calibri too, through XeLaTeX, when the machine has that
+font or its open counterpart Carlito, and LaTeX's default face
+otherwise. Tables are set with
+[`btg_table()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_table.md),
+Word output uses the styled reference document installed with the
+template, and PDF output uses booktabs tables. Charts in a briefing
+carry only their coverage note, because the briefing states the sources
+and qualifications itself; the option `BlackThriveSS.caption = "short"`
+does the same for any chart. Figures are drawn at page width, as vector
+graphics in PDF and at print resolution in Word, on A4 pages. The
+template is also available in those editors as the R Markdown template
+"BlackThriveSS briefing" for editing, where Knit to HTML, Word or PDF
+gives the same three outputs.
 
 ## Examples
 

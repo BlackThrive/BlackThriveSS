@@ -379,15 +379,15 @@ citation("BlackThriveSS")
 #> Please cite the package and identify the data release using
 #> btg_citation(x).
 #> 
-#>   Wasseja M (2026). _BlackThriveSS: Reproduce Black Thrive Stop and
-#>   Search Dashboard Evidence_. R package version 0.0.3.9000 ; Black
-#>   Thrive Global.
+#>   Mohammed M, Hamed S, Frissa S, Mohamed A, Stanley N (2026).
+#>   _BlackThriveSS: Reproduce Black Thrive Stop and Search Dashboard
+#>   Evidence_. R package version 0.0.3.9000 ; Black Thrive Global.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
 #>     title = {BlackThriveSS: Reproduce Black Thrive Stop and Search Dashboard Evidence},
-#>     author = {Mustapha Wasseja},
+#>     author = {Mustapha Mohammed and Sarah Hamed and Souci Frissa and Aisha Mohamed and Nathan Stanley},
 #>     year = {2026},
 #>     note = {R package version 0.0.3.9000 ; Black Thrive Global},
 #>   }

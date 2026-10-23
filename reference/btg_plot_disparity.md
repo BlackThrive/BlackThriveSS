@@ -69,7 +69,12 @@ displayed force the bars keep the ordinary fill and the caption says so.
 A highlighted force is drawn only if it falls within the `n` displayed
 forces, as on the dashboard. Counts are not annualised. Display
 eligibility does not imply complete or comparable exposure, or establish
-discrimination.
+discrimination. The caption states the sources and qualifications; in a
+document that states them itself,
+`options(BlackThriveSS.caption = "short")` keeps only the coverage note,
+as
+[`btg_report()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_report.md)
+does.
 
 ## Examples
 

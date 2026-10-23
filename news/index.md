@@ -30,12 +30,26 @@
 - Briefings.
   [`btg_profile()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_profile.md)
   gathers the evidence for one force or council as plain statements that
-  carry their qualifications, with the tables behind them;
+  carry their qualifications, grouped under topic headings, with the
+  tables behind them;
   [`btg_report()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_report.md)
-  renders a self-contained HTML briefing from the installed R Markdown
-  template “BlackThriveSS briefing”, which the editors also list under
-  new R Markdown templates, as a self-contained web page or a Word
-  document.
+  renders the briefing from the installed R Markdown template
+  “BlackThriveSS briefing”, which the editors also list under new R
+  Markdown templates, as a self-contained web page, a Word document or a
+  PDF. The briefing opens with an at-a-glance panel and headline
+  findings by topic, numbers its tables and figures, and sets tables
+  with
+  [`btg_table()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_table.md):
+  styled in HTML by the template’s stylesheet, in Word by a reference
+  document carrying the package’s fonts, colours and table style, and in
+  PDF with booktabs rules. Figures fill the text width of A4 pages, as
+  vector graphics in PDF and at print resolution in Word, and carry only
+  their coverage note inside the image because the briefing states
+  sources and qualifications itself;
+  `options(BlackThriveSS.caption = "short")` does the same for any
+  chart.
+- The package now lists its five authors, with ORCID identifiers where
+  held, in `DESCRIPTION` and the citation.
 - Sharing.
   [`btg_export()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_export.md)
   writes a dataset to CSV with a JSON provenance sidecar;

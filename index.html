@@ -77,7 +77,7 @@
 <span>  build_vignettes <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/BlackThrive/BlackThriveSS" class="external-link">BlackThriveSS</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://blackthrive.github.io/BlackThriveSS/">BlackThriveSS</a></span><span class="op">)</span></span></code></pre></div>
 <p>This installs the current development version from the public repository and its required dependencies. You do not need to clone the repository, download the dashboard or create a GitHub account. BlackThriveSS is <strong>not on CRAN yet</strong>; <code>install.packages("BlackThriveSS")</code> is not an installation route at present.</p>
 <p>The <a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">remotes installer</a> skips building the tutorial here, so Pandoc and LaTeX are not needed. The package contains no compiled code; if R needs to install dependencies from source, those dependencies may require build tools. On Windows and macOS, use available CRAN binary dependencies. Restart R before updating a loaded copy of BlackThriveSS, then rerun the installation block.</p>
 <p>An offline alternative is the installation ZIP that <code>dev/build-release.R</code> writes to <code>artifacts/</code>: extract it and follow <code>START-HERE.txt</code>.</p>
@@ -87,7 +87,7 @@
 </h2>
 <p>After installation, copy this into R. It reads the bundled <strong>2025 Black:White stop-rate comparison</strong> and draws the ten highest dashboard-eligible force ratios. The data release is explicit so the example does not switch to a newer snapshot when the package is updated.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/BlackThrive/BlackThriveSS" class="external-link">BlackThriveSS</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://blackthrive.github.io/BlackThriveSS/">BlackThriveSS</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span></span>
 <span>  <span class="st">"force_disparity"</span>,</span>
@@ -119,7 +119,7 @@
 <h2 id="the-catalogue">The catalogue<a class="anchor" aria-label="anchor" href="#the-catalogue"></a>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/BlackThrive/BlackThriveSS" class="external-link">BlackThriveSS</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://blackthrive.github.io/BlackThriveSS/">BlackThriveSS</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/btg_datasets.html">btg_datasets</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#   dataset                   level    from   to   groups                      coverage</span></span>
 <span><span class="co">#   force_disparity           force    2025 2025   Black                       TRUE</span></span>
@@ -192,8 +192,9 @@
 <span><span class="va">p</span>                                  <span class="co"># plain statements, each with its qualification</span></span>
 <span><span class="va">p</span><span class="op">$</span><span class="va">comparisons</span>                      <span class="co"># the numbers behind them</span></span>
 <span><span class="fu"><a href="reference/btg_report.html">btg_report</a></span><span class="op">(</span>force <span class="op">=</span> <span class="st">"metropolitan"</span>, file <span class="op">=</span> <span class="st">"metropolitan-2025.html"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/btg_report.html">btg_report</a></span><span class="op">(</span>council <span class="op">=</span> <span class="st">"E09000022"</span>, file <span class="op">=</span> <span class="st">"lambeth-2025.docx"</span><span class="op">)</span></span></code></pre></div>
-<p>The briefing is a self-contained HTML page, or a Word document: statements, charts with the area highlighted, tables, monthly coverage, national context, how to read it, and the code and citations that reproduce every figure. It needs the rmarkdown package and Pandoc, which RStudio and Positron include. The same template appears in those editors as “BlackThriveSS briefing”. See <code><a href="articles/briefing.html">vignette("briefing", package = "BlackThriveSS")</a></code>.</p>
+<span><span class="fu"><a href="reference/btg_report.html">btg_report</a></span><span class="op">(</span>council <span class="op">=</span> <span class="st">"E09000022"</span>, file <span class="op">=</span> <span class="st">"lambeth-2025.docx"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/btg_report.html">btg_report</a></span><span class="op">(</span>force <span class="op">=</span> <span class="st">"kent"</span>, year <span class="op">=</span> <span class="fl">2024</span>, file <span class="op">=</span> <span class="st">"kent-2024.pdf"</span><span class="op">)</span></span></code></pre></div>
+<p>The briefing is a self-contained HTML page, a Word document or a PDF: an at-a-glance panel, headline findings by topic, numbered tables and figures with the area highlighted, monthly coverage, national context, how to read it, and the code and citations that reproduce every figure. Tables are set with <code><a href="reference/btg_table.html">btg_table()</a></code>, which also works in your own R Markdown documents. HTML and Word need the rmarkdown package and Pandoc, which RStudio and Positron include; PDF also needs a LaTeX installation such as TinyTeX. The same template appears in those editors as “BlackThriveSS briefing”. See <code><a href="articles/briefing.html">vignette("briefing", package = "BlackThriveSS")</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="round-trip-with-the-dashboard-website">Round-trip with the dashboard website<a class="anchor" aria-label="anchor" href="#round-trip-with-the-dashboard-website"></a>
@@ -219,7 +220,7 @@
 <span><span class="fu"><a href="reference/btg_coverage.html">btg_coverage</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>              <span class="co"># 528 monthly reporting observations</span></span>
 <span><span class="fu"><a href="reference/btg_metadata.html">btg_metadata</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">source</span>      <span class="co"># Source release, retrieval time and checksum</span></span>
 <span><span class="fu"><a href="reference/btg_citation.html">btg_citation</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
-<p>Full function help is installed: use <code><a href="https://rdrr.io/pkg/BlackThriveSS/man" class="external-link">help(package = "BlackThriveSS")</a></code> or <code><a href="reference/btg_plot_disparity.html">?btg_plot_disparity</a></code>. The <a href="vignettes/getting-started.Rmd">getting-started tutorial</a> includes discovery, chart customisation, missing returns, saved-view replay, validation and troubleshooting. The quick installation above does not build the installed HTML vignettes. In a later R session, simply run <code><a href="https://github.com/BlackThrive/BlackThriveSS" class="external-link">library(BlackThriveSS)</a></code> again; no project-specific library path is needed.</p>
+<p>Full function help is installed: use <code><a href="https://rdrr.io/pkg/BlackThriveSS/man" class="external-link">help(package = "BlackThriveSS")</a></code> or <code><a href="reference/btg_plot_disparity.html">?btg_plot_disparity</a></code>. The <a href="vignettes/getting-started.Rmd">getting-started tutorial</a> includes discovery, chart customisation, missing returns, saved-view replay, validation and troubleshooting. The quick installation above does not build the installed HTML vignettes. In a later R session, simply run <code><a href="https://blackthrive.github.io/BlackThriveSS/">library(BlackThriveSS)</a></code> again; no project-specific library path is needed.</p>
 <p>Customise the returned ggplot or inspect one force:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Recorded Black:White stop-rate comparison"</span><span class="op">)</span></span>
@@ -331,8 +332,14 @@ Rscript --vanilla dev/check-release.R</code></pre>
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Mustapha Wasseja <br><small class="roles"> Author, maintainer </small>   </li>
-<li>Black Thrive Global <br><small class="roles"> Copyright holder, funder </small>   </li>
+<li>Mustapha Mohammed <br><small class="roles"> Author, maintainer </small>   </li>
+<li>Sarah Hamed <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-8547-8772" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Souci Frissa <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-8346-8909" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Aisha Mohamed <br><small class="roles"> Author </small>   </li>
+<li>Nathan Stanley <br><small class="roles"> Author </small>   </li>
+<li>
+<a href="https://blackthrive.org" class="external-link">Black Thrive Global</a> <br><small class="roles"> Copyright holder, funder </small>   </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -343,7 +350,7 @@ Rscript --vanilla dev/check-release.R</code></pre>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Mustapha Wasseja, Black Thrive Global.</p>
+  <p>Developed by Mustapha Mohammed, Sarah Hamed, Souci Frissa, Aisha Mohamed, Nathan Stanley, <a href="https://blackthrive.org" class="external-link">Black Thrive Global</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -98,9 +98,9 @@ catalogue release.</p></dd>
 
 
 <dt id="arg-format">format<a class="anchor" aria-label="anchor" href="#arg-format"></a></dt>
-<dd><p><code>"html"</code> for a self-contained web page, or <code>"docx"</code> for a
-Word document with the same content. <code>NULL</code> takes the format from the
-file's extension.</p></dd>
+<dd><p><code>"html"</code> for a self-contained web page, <code>"docx"</code> for a Word
+document or <code>"pdf"</code> for a PDF, all with the same content. <code>NULL</code> takes
+the format from the file's extension.</p></dd>
 
 
 <dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
@@ -118,9 +118,21 @@ file's extension.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Rendering needs the <code>rmarkdown</code> package and Pandoc, which
-RStudio and Positron supply; the function stops with a clear message
-when they are missing. The template is also available in those editors
-as the R Markdown template "BlackThriveSS briefing" for editing.</p>
+RStudio and Positron supply, and a PDF additionally needs a LaTeX
+installation such as TinyTeX (<code><a href="https://rdrr.io/pkg/tinytex/man/install_tinytex.html" class="external-link">tinytex::install_tinytex()</a></code>); the
+function stops with a clear message when any is missing. Paragraphs are
+justified and the body text is 12-point Calibri in HTML and Word; the
+PDF uses Calibri too, through XeLaTeX, when the machine has that font or
+its open counterpart Carlito, and LaTeX's default face otherwise. Tables
+are set with <code><a href="btg_table.html">btg_table()</a></code>, Word output uses the styled reference
+document installed with the template, and PDF output uses booktabs
+tables. Charts in a briefing carry only their coverage note, because the
+briefing states the sources and qualifications itself; the option
+<code>BlackThriveSS.caption = "short"</code> does the same for any chart. Figures
+are drawn at page width, as vector graphics in PDF and at print
+resolution in Word, on A4 pages. The template is also available in those
+editors as the R Markdown template "BlackThriveSS briefing" for editing,
+where Knit to HTML, Word or PDF gives the same three outputs.</p>
     </div>
 
     <div class="section level2">
@@ -139,7 +151,7 @@ as the R Markdown template "BlackThriveSS briefing" for editing.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Mustapha Wasseja, Black Thrive Global.</p>
+  <p>Developed by Mustapha Mohammed, Sarah Hamed, Souci Frissa, Aisha Mohamed, Nathan Stanley, <a href="https://blackthrive.org" class="external-link">Black Thrive Global</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

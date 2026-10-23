@@ -60,8 +60,11 @@ btg_profile(
 A list of class `btg_profile` with `area`, `year`, `release`,
 `source_month`, `comparisons` (one row per group), `stability` (forces
 only), `change`, `coverage` (forces only), `section60` (forces only),
-`national`, `statements` and `caveats`. Printing it shows the
-statements.
+`national`, `statements`, `topics` and `caveats`. Each statement is
+named by its topic (`coverage`, a group, `section60` or `national`), and
+`topics` gives the heading for each, which
+[`btg_report()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_report.md)
+and the print method use to group the statements.
 
 ## Details
 
@@ -78,8 +81,11 @@ p
 #> BlackThriveSS evidence profile: Metropolitan Police, 2025
 #> Release dashboard-2026-07-catalogue-bacf49c2a48d (source month 2026-07)
 #> 
+#> Reporting coverage
 #> * Metropolitan Police supplied stop and search returns for all 12 months of
 #>   2025.
+#> 
+#> Black people compared with White residents
 #> * Recorded stops of Black people in 2025: 47.2 per 1,000 Black residents,
 #>   4.6x the rate for White residents (10.3 per 1,000), 95% interval 4.5x to
 #>   4.6x, from 56,116 and 48,798 recorded stops.
@@ -91,6 +97,8 @@ p
 #>   stays above parity under every allocation.
 #> * Compared with 2024, the Black:White ratio in 2025 was 10% higher (95%
 #>   interval 1.08x to 1.12x the earlier ratio); both years are covered in full.
+#> 
+#> Asian people compared with White residents
 #> * Recorded stops of Asian people in 2025: 10.8 per 1,000 Asian residents,
 #>   1.0x the rate for White residents (10.3 per 1,000), 95% interval 1.0x to
 #>   1.1x, from 19,557 and 48,798 recorded stops.
@@ -102,11 +110,15 @@ p
 #>   of parity the ratio falls on depends on those stops.
 #> * Compared with 2024, the Asian:White ratio in 2025 was 6% higher (95%
 #>   interval 1.03x to 1.09x the earlier ratio); both years are covered in full.
+#> 
+#> Mixed people compared with White residents
 #> * No stops of Mixed people were recorded under officer-defined ethnicity in
 #>   2025; White residents were stopped at 10.3 per 1,000.
 #> * The Mixed:White comparison does not meet the dashboard's display rule (a
 #>   positive ratio from at least 200 stops with known ethnicity and comparable
 #>   resident populations), so it carries no rank.
+#> 
+#> People of other ethnic groups compared with White residents
 #> * Recorded stops of Other people in 2025: 9.6 per 1,000 Other residents, 0.9x
 #>   the rate for White residents (10.3 per 1,000), 95% interval 0.9x to 1.0x,
 #>   from 5,341 and 48,798 recorded stops.
@@ -118,8 +130,12 @@ p
 #>   of parity the ratio falls on depends on those stops.
 #> * Compared with 2024, the Other:White ratio in 2025 was 16% higher (95%
 #>   interval 1.11x to 1.21x the earlier ratio); both years are covered in full.
+#> 
+#> Section 60 searches
 #> * Metropolitan Police recorded 3,024 searches under Section 60 in 2025, 73%
 #>   of them of Black people.
+#> 
+#> National context
 #> * Across England and Wales, 505,586 stops were recorded in 2025; 14.7% led to
 #>   an arrest, and the share of searches whose outcome was linked to what was
 #>   searched for was 47.7% for Black people and 49.1% for White people.
