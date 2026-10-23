@@ -118,7 +118,7 @@
 
 /* Gallery */
 .btg-gallery { margin-bottom: 2.5rem; }
-.btg-gallery figure { margin: 0; }
+.btg-gallery figure { margin-bottom: 0; }
 .btg-gallery img {
   width: 100%;
   height: auto;
@@ -165,3 +165,27 @@
 [data-bs-theme="dark"] .btg-stat { background: rgba(255, 255, 255, 0.06); }
 [data-bs-theme="dark"] .btg-feature { background: rgba(255, 255, 255, 0.03); }
 [data-bs-theme="dark"] .btg-feature-icon { background: var(--btg-amber); color: var(--btg-navy); }
+
+/* Navy navbar in both themes (pkgdown leaves navbar colours to the theme when the light switch is on) */
+.navbar {
+  background-color: var(--btg-navy) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  --bs-navbar-color: rgba(255, 255, 255, 0.82);
+  --bs-navbar-hover-color: #fff;
+  --bs-navbar-active-color: #fff;
+  --bs-navbar-brand-color: #fff;
+  --bs-navbar-brand-hover-color: #fff;
+  --bs-navbar-toggler-border-color: rgba(255, 255, 255, 0.25);
+  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+.navbar .navbar-brand { font-weight: 700; letter-spacing: -0.01em; }
+.navbar .nav-text { color: rgba(255, 255, 255, 0.7) !important; }
+.navbar .nav-link.active, .navbar .nav-item.active .nav-link,
+.navbar .nav-item .nav-link.active { background: rgba(255, 255, 255, 0.14); border-radius: 0.5rem; }
+.navbar .nav-link:hover { color: #fff; }
+.navbar .form-control { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.25); color: #fff; }
+.navbar .form-control::placeholder { color: rgba(255, 255, 255, 0.6); }
+.navbar .form-control:focus { background: rgba(255, 255, 255, 0.2); color: #fff; box-shadow: 0 0 0 0.2rem rgba(230, 159, 0, 0.35); }
+.navbar .dropdown-toggle::after { color: rgba(255, 255, 255, 0.82); }
+.navbar .navbar-nav .dropdown-menu { --bs-dropdown-link-active-bg: var(--btg-navy); }
+.navbar .fa, .navbar .fab, .navbar .fas { color: rgba(255, 255, 255, 0.85); }
