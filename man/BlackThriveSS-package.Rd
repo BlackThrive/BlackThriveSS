@@ -16,6 +16,7 @@ available through \code{vignette("getting-started", package = "BlackThriveSS")}.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://blackthrive.github.io/BlackThriveSS/}
   \item \url{https://github.com/BlackThrive/BlackThriveSS}
   \item Report bugs at \url{https://github.com/BlackThrive/BlackThriveSS/issues}
 }
