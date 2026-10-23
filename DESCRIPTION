@@ -25,7 +25,8 @@ Description: Retrieve fixed, documented snapshots of public aggregate stop and
     Government Licence v3.0. Source documentation is available at
     <https://data.police.uk/about/>.
 License: MIT + file LICENSE
-URL: https://github.com/BlackThrive/BlackThriveSS
+URL: https://blackthrive.github.io/BlackThriveSS/,
+    https://github.com/BlackThrive/BlackThriveSS
 BugReports: https://github.com/BlackThrive/BlackThriveSS/issues
 Encoding: UTF-8
 Language: en-GB
