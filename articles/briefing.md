@@ -249,8 +249,8 @@ checksums, selection, citation and limitations:
 csv <- tempfile(fileext = ".csv")
 files <- btg_export(btg_get_data(force = "metropolitan"), csv)
 basename(files)
-#> [1] "file1e0a45720ec3.csv"          "file1e0a45720ec3.json"        
-#> [3] "file1e0a45720ec3-coverage.csv"
+#> [1] "file1c583717b01a.csv"          "file1c583717b01a.json"        
+#> [3] "file1c583717b01a-coverage.csv"
 unlink(files)
 ```
 

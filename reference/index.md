@@ -61,7 +61,8 @@ What a comparison rests on, with sampling and assumptions kept apart.
 
 ## Briefings
 
-Plain statements and an HTML briefing for one force or council.
+Plain statements and a briefing in HTML, Word or PDF for one force or
+council.
 
 - [`btg_profile()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_profile.md)
   : Build an evidence profile for one force or council
@@ -71,6 +72,8 @@ Plain statements and an HTML briefing for one force or council.
   : Set a table for a briefing or report
 
 ## Saved views and the dashboard
+
+Replay a chart exactly, and carry it to and from the dashboard website.
 
 - [`btg_save_view()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_save_view.md)
   : Save the evidence specification for a reproducible chart

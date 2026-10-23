@@ -18,12 +18,10 @@ briefing.
 
 ## Install and discover
 
-Before CRAN publication, use the supplied installation bundle or a
-source archive and its required dependencies. The package itself is pure
-R. Source installation of some dependencies can require a compiler; on
-Windows and macOS, use available CRAN dependency binaries. Installation
-instructions accompany the release; `install.packages("BlackThriveSS")`
-is not yet a supported public route.
+BlackThriveSS is not on CRAN yet. Install the current release from
+GitHub with `remotes::install_github("BlackThrive/BlackThriveSS")`; the
+package itself is pure R, and on Windows and macOS the dependencies
+install as CRAN binaries. Start by listing what is in the box:
 
 ``` r
 
@@ -381,7 +379,8 @@ citation("BlackThriveSS")
 #> 
 #>   Mohammed M, Hamed S, Frissa S, Mohamed A, Stanley N (2026).
 #>   _BlackThriveSS: Reproduce Black Thrive Stop and Search Dashboard
-#>   Evidence_. R package version 0.0.3.9000 ; Black Thrive Global.
+#>   Evidence_. Black Thrive Global. R package version 0.1.0,
+#>   <https://blackthrive.github.io/BlackThriveSS/>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -389,16 +388,19 @@ citation("BlackThriveSS")
 #>     title = {BlackThriveSS: Reproduce Black Thrive Stop and Search Dashboard Evidence},
 #>     author = {Mustapha Mohammed and Sarah Hamed and Souci Frissa and Aisha Mohamed and Nathan Stanley},
 #>     year = {2026},
-#>     note = {R package version 0.0.3.9000 ; Black Thrive Global},
+#>     organization = {Black Thrive Global},
+#>     note = {R package version 0.1.0},
+#>     url = {https://blackthrive.github.io/BlackThriveSS/},
 #>   }
 ```
 
-The data dictionary is installed at:
+The [data
+dictionary](https://github.com/BlackThrive/BlackThriveSS/blob/main/inst/NOTES/data-dictionary.md)
+defines every column; it is also installed with the package:
 
 ``` r
 
 system.file("NOTES", "data-dictionary.md", package = "BlackThriveSS")
-#> [1] "/home/runner/work/_temp/Library/BlackThriveSS/NOTES/data-dictionary.md"
 ```
 
 Rates divide recorded group events by Census 2021 residents. These

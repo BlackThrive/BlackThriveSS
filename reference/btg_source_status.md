@@ -58,7 +58,7 @@ are not counted.
 # \donttest{
 status <- btg_source_status(timeout = 5)
 if (!is.null(status)) status
-#> Police.uk source checked 2026-10-23T11:09:09Z
+#> Police.uk source checked 2026-10-23T12:43:37Z
 #> Bundled release dashboard-2026-07-catalogue-bacf49c2a48d holds source month 2026-07; the feed lists months to 2026-08.
 #> 1 newer month(s): 2026-08 (28 forces).
 #> Across 35 month(s) both describe (2023-09 to 2026-07): 3 late addition(s) and 0 withdrawal(s); see $changes.

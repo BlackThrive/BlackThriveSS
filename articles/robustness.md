@@ -310,8 +310,8 @@ still says where its numbers came from.
 csv <- tempfile(fileext = ".csv")
 files <- btg_export(btg_get_data("force_ethnicity_year", years = 2025, groups = "Black"), csv)
 basename(files)
-#> [1] "file1e7b2b1e522b.csv"          "file1e7b2b1e522b.json"        
-#> [3] "file1e7b2b1e522b-coverage.csv"
+#> [1] "file1cca359c22be.csv"          "file1cca359c22be.json"        
+#> [3] "file1cca359c22be-coverage.csv"
 unlink(files)
 ```
 

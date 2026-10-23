@@ -69,11 +69,52 @@ require that workspace, Shiny or any restricted dataset.
 `dev/verify-dashboard.R` verifies the four source-file hashes before
 comparing results.
 
+## Verification
+
+``` r
+
+roxygen2::roxygenise()
+testthat::test_local()
+```
+
+From a shell, with R available:
+
+``` text
+Rscript --vanilla dev/verify-dashboard.R <path to the dashboard workspace>
+Rscript --vanilla dev/reproduce.R
+R CMD build .
+R CMD check --as-cran BlackThriveSS_*.tar.gz
+```
+
+`dev/verify-dashboard.R` compares the package’s tables with the
+dashboard’s own calculation functions, including all eligible ratios and
+all three ranking orders. It evaluates only the dashboard’s calculation
+functions and does not start the website or alter its data. The packaged
+tests use hand-calculated fixtures, cover missing returns, zero counts
+and excluded denominators, reject changed provenance, and exercise
+saved-view replay, bounds, rank intervals, change, trends, profiles,
+exports and the briefing. Parity validates reproduction, not the
+original data’s completeness or all of the dashboard’s statistical
+assumptions.
+
+`data-raw/build-snapshot.R` and `data-raw/build-catalogue.R` create
+content-identified releases from the dashboard files. Existing release
+directories are never overwritten, and input and output checksums are
+recorded in the manifest. Updating the source or method requires a new
+release; it must not silently change an archived chart.
+
+The [GitHub Actions
+checks](https://github.com/BlackThrive/BlackThriveSS/actions/workflows/R-CMD-check.yaml)
+cover Windows, macOS, Linux and several R versions, and the pkgdown
+workflow rebuilds the documentation site from `main`.
+
 ## Release workflow
 
 1.  Update version and NEWS, regenerate help and run tests.
-2.  Build with `dev/build-release.R`; this executes the vignette and
-    creates the source archive plus installation ZIP.
+2.  Build with `dev/build-release.R`; this executes the vignettes and
+    creates the source archive plus installation ZIP under `artifacts/`.
+    Run `dev/check-release.R` for the local check, which needs rcmdcheck
+    and, for the PDF manual, LaTeX.
 3.  In a fresh process, test `install.R` into a new writable library.
     Exercise quickstart, package citation, validation, and the installed
     vignette.
@@ -83,7 +124,7 @@ comparing results.
 5.  Run the CI matrix once a repository is established. Current R-devel
     and release checks are separate from the workstation’s installed R
     version.
-6.  Complete the release gates in `CRAN-READINESS.md` and finalise
+6.  Complete the release gates in `dev/CRAN-READINESS.md` and finalise
     `cran-comments.md`. Submission is a separate deliberate maintainer
     action.
 
