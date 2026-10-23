@@ -84,22 +84,29 @@ covered in full. The tables behind the statements are in the object:
 ``` r
 
 p$comparisons[c("group", "ratio", "ci_lower", "ci_upper", "rank", "n_eligible", "rank_lower", "rank_upper", "parity_direction")]
-#>   group     ratio  ci_lower  ci_upper rank n_eligible rank_lower rank_upper
-#> 1 Black 4.5734077 4.5182599 4.6292287   30         40         28         32
-#> 2 Asian 1.0426963 1.0255432 1.0601362   36         40         34         37
-#> 3 Mixed 0.0000000        NA        NA   NA          7         NA         NA
-#> 4 Other 0.9296962 0.9038014 0.9563329   35         39         32         36
-#>   parity_direction
-#> 1            above
-#> 2        sensitive
-#> 3        sensitive
-#> 4        sensitive
+```
+
+| group | ratio | ci_lower | ci_upper | rank | n_eligible | rank_lower | rank_upper | parity_direction |
+|:---|---:|---:|---:|---:|---:|---:|---:|:---|
+| Black | 4.5734077 | 4.5182599 | 4.6292287 | 30 | 40 | 28 | 32 | above |
+| Asian | 1.0426963 | 1.0255432 | 1.0601362 | 36 | 40 | 34 | 37 | sensitive |
+| Mixed | 0.0000000 | NA | NA | NA | 7 | NA | NA | sensitive |
+| Other | 0.9296962 | 0.9038014 | 0.9563329 | 35 | 39 | 32 | 36 | sensitive |
+
+``` r
+
 p$change[c("group", "ratio_from", "ratio_to", "change", "change_direction", "comparable_coverage")]
-#>   group ratio_from  ratio_to   change change_direction comparable_coverage
-#> 2 Black  4.1654667 4.5734077 1.097934           higher                TRUE
-#> 1 Asian  0.9840448 1.0426963 1.059602           higher                TRUE
-#> 3 Mixed  0.0000000 0.0000000      NaN             <NA>                TRUE
-#> 4 Other  0.7994619 0.9296962 1.162903           higher                TRUE
+```
+
+| group | ratio_from |  ratio_to |   change | change_direction | comparable_coverage |
+|:------|-----------:|----------:|---------:|:-----------------|:--------------------|
+| Black |  4.1654667 | 4.5734077 | 1.097934 | higher           | TRUE                |
+| Asian |  0.9840448 | 1.0426963 | 1.059602 | higher           | TRUE                |
+| Mixed |  0.0000000 | 0.0000000 |      NaN | NA               | TRUE                |
+| Other |  0.7994619 | 0.9296962 | 1.162902 | higher           | TRUE                |
+
+``` r
+
 p$coverage[c("status", "months_supplied", "months_missing")]
 #> $status
 #> [1] "all_months_supplied"
@@ -249,8 +256,8 @@ checksums, selection, citation and limitations:
 csv <- tempfile(fileext = ".csv")
 files <- btg_export(btg_get_data(force = "metropolitan"), csv)
 basename(files)
-#> [1] "file1c479e8ad2b.csv"          "file1c479e8ad2b.json"        
-#> [3] "file1c479e8ad2b-coverage.csv"
+#> [1] "file1c49336f5d23.csv"          "file1c49336f5d23.json"        
+#> [3] "file1c49336f5d23-coverage.csv"
 unlink(files)
 ```
 
@@ -260,15 +267,13 @@ And every term the package uses has one definition:
 
 g <- btg_glossary()
 g[g$term %in% c("ratio", "allocation range", "coverage"), ]
-#>                term
-#> 5             ratio
-#> 7  allocation range
-#> 10         coverage
-#>                                                                                                                                                                                        definition
-#> 5  A group's rate per 1,000 residents divided by the White rate. 1x is parity; 4x means four times the recorded rate of White residents. It is descriptive and does not establish discrimination.
-#> 7            The ratio if every stop with unknown ethnicity were counted as White (lower end) or as the compared group (upper end). Any allocation of those stops gives a ratio inside the range.
-#> 10                                Whether a force's monthly return for a month is supplied, missing or unverified. Supplied is not proof of complete recording; missing is never treated as zero.
 ```
+
+| term | definition |
+|:---|:---|
+| ratio | A group’s rate per 1,000 residents divided by the White rate. 1x is parity; 4x means four times the recorded rate of White residents. It is descriptive and does not establish discrimination. |
+| allocation range | The ratio if every stop with unknown ethnicity were counted as White (lower end) or as the compared group (upper end). Any allocation of those stops gives a ratio inside the range. |
+| coverage | Whether a force’s monthly return for a month is supplied, missing or unverified. Supplied is not proof of complete recording; missing is never treated as zero. |
 
 ## Saying it right
 

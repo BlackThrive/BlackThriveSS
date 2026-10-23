@@ -26,47 +26,32 @@ install as CRAN binaries. Start by listing what is in the box:
 ``` r
 
 library(BlackThriveSS)
-btg_datasets()
-#>                    dataset
-#> 1          force_disparity
-#> 2     force_ethnicity_year
-#> 3            national_year
-#> 4 national_month_ethnicity
-#> 5   council_ethnicity_year
-#> 6  hit_rate_ethnicity_year
-#> 7     section60_force_year
-#>                                                          title    level from
-#> 1          Black to White stop-rate comparison by police force    force 2025
-#> 2 Group to White stop-rate comparison by police force and year    force 2018
-#> 3                    National totals and outcome rates by year national 2018
-#> 4          National monthly stops by officer-defined ethnicity national 2018
-#> 5      Group to White stop-rate comparison by council and year  council 2018
-#> 6    National outcome-linked search rate by ethnicity and year national 2018
-#> 7      Section 60 searches by police force, year and ethnicity    force 2018
-#>     to                                     groups coverage
-#> 1 2025                                      Black     TRUE
-#> 2 2026                 Asian, Black, Mixed, Other     TRUE
-#> 3 2026                                               FALSE
-#> 4 2026 Asian, Black, Mixed, Other, White, Unknown    FALSE
-#> 5 2026                 Asian, Black, Mixed, Other    FALSE
-#> 6 2026 Asian, Black, Mixed, Other, White, Unknown    FALSE
-#> 7 2026 Asian, Black, Mixed, Other, White, Unknown     TRUE
-#>                                    release
-#> 1      dashboard-2026-07-2025-99a88b69f2d6
-#> 2 dashboard-2026-07-catalogue-bacf49c2a48d
-#> 3 dashboard-2026-07-catalogue-bacf49c2a48d
-#> 4 dashboard-2026-07-catalogue-bacf49c2a48d
-#> 5 dashboard-2026-07-catalogue-bacf49c2a48d
-#> 6 dashboard-2026-07-catalogue-bacf49c2a48d
-#> 7 dashboard-2026-07-catalogue-bacf49c2a48d
-btg_releases()
-#>                                    release source_month   dashboard_built_at
-#> 1      dashboard-2026-07-2025-99a88b69f2d6      2026-07 2026-09-16T07:12:19Z
-#> 2 dashboard-2026-07-catalogue-bacf49c2a48d      2026-07 2026-09-16T07:12:19Z
-#>                                                                                                                               datasets
-#> 1                                                                                                                      force_disparity
-#> 2 force_ethnicity_year, national_year, national_month_ethnicity, council_ethnicity_year, hit_rate_ethnicity_year, section60_force_year
+btg_datasets()[c("dataset", "level", "from", "to", "groups", "coverage")]
 ```
+
+| dataset | level | from | to | groups | coverage |
+|:---|:---|---:|---:|:---|:---|
+| force_disparity | force | 2025 | 2025 | Black | TRUE |
+| force_ethnicity_year | force | 2018 | 2026 | Asian, Black, Mixed, Other | TRUE |
+| national_year | national | 2018 | 2026 |  | FALSE |
+| national_month_ethnicity | national | 2018 | 2026 | Asian, Black, Mixed, Other, White, Unknown | FALSE |
+| council_ethnicity_year | council | 2018 | 2026 | Asian, Black, Mixed, Other | FALSE |
+| hit_rate_ethnicity_year | national | 2018 | 2026 | Asian, Black, Mixed, Other, White, Unknown | FALSE |
+| section60_force_year | force | 2018 | 2026 | Asian, Black, Mixed, Other, White, Unknown | TRUE |
+
+``` r
+
+btg_releases()
+```
+
+| release | source_month | dashboard_built_at | datasets |
+|:---|:---|:---|:---|
+| dashboard-2026-07-2025-99a88b69f2d6 | 2026-07 | 2026-09-16T07:12:19Z | force_disparity |
+| dashboard-2026-07-catalogue-bacf49c2a48d | 2026-07 | 2026-09-16T07:12:19Z | force_ethnicity_year, national_year, national_month_ethnicity, council_ethnicity_year, hit_rate_ethnicity_year, section60_force_year |
+
+Each row of
+[`btg_datasets()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_datasets.md)
+also carries the dataset’s title and the release it belongs to.
 
 ## Load the evidence
 
@@ -79,14 +64,16 @@ x
 #> 44 rows at force level; 40 with dashboard-eligible ratios
 #> Tables: $data and $coverage; provenance: $metadata
 head(x$data[c("force", "ratio", "months_supplied", "coverage_status")])
-#>               force    ratio months_supplied     coverage_status
-#> 1 avon-and-somerset 7.119841              12 all_months_supplied
-#> 2      bedfordshire 4.451979              12 all_months_supplied
-#> 3               btp       NA              12 all_months_supplied
-#> 4    cambridgeshire 7.573837              12 all_months_supplied
-#> 5          cheshire 6.545908              12 all_months_supplied
-#> 6    city-of-london       NA              12 all_months_supplied
 ```
+
+| force             |    ratio | months_supplied | coverage_status     |
+|:------------------|---------:|----------------:|:--------------------|
+| avon-and-somerset | 7.119841 |              12 | all_months_supplied |
+| bedfordshire      | 4.451979 |              12 | all_months_supplied |
+| btp               |       NA |              12 | all_months_supplied |
+| cambridgeshire    | 7.573837 |              12 | all_months_supplied |
+| cheshire          | 6.545908 |              12 | all_months_supplied |
+| city-of-london    |       NA |              12 | all_months_supplied |
 
 The object contains ordinary data frames in `x$data` and `x$coverage`,
 plus explicit `metadata` and `selection` lists. This snapshot has 44
@@ -104,9 +91,11 @@ release when writing a reproducible analysis:
 release <- btg_releases()$release[1]
 met <- btg_get_data(force = "metropolitan", years = 2025, release = release)
 met$data[c("black_stops", "white_stops", "black_population", "white_population", "ratio")]
-#>   black_stops white_stops black_population white_population    ratio
-#> 1       56116       48798          1188137          4725217 4.573408
 ```
+
+| black_stops | white_stops | black_population | white_population |    ratio |
+|------------:|------------:|-----------------:|-----------------:|---------:|
+|       56116 |       48798 |          1188137 |          4725217 | 4.573408 |
 
 ## Browse the catalogue
 
@@ -124,25 +113,33 @@ y
 #> 176 rows at force level; 158 with dashboard-eligible ratios
 #> Tables: $data and $coverage; provenance: $metadata
 head(y$data[c("force_label", "year", "group", "ratio", "rank", "coverage_status")])
-#>                force_label year group    ratio rank coverage_status
-#> 1        Avon and Somerset 2022 Black 5.542059   19      unverified
-#> 2             Bedfordshire 2022 Black 4.799220   25      unverified
-#> 3 British Transport Police 2022 Black       NA   NA      unverified
-#> 4           Cambridgeshire 2022 Black 5.829275   13      unverified
-#> 5                 Cheshire 2022 Black       NA   NA      unverified
-#> 6          London, City of 2022 Black       NA   NA      unverified
-btg_get_data("national_year")$data[c("year", "stops", "arrest_rate", "hit_rate")]
-#>   year  stops arrest_rate hit_rate
-#> 1 2018 319569    15.72149 53.55583
-#> 2 2019 524424    12.80929 47.37039
-#> 3 2020 676628    11.38765 40.16794
-#> 4 2021 541523    12.22386 42.84181
-#> 5 2022 477044    12.81140 43.66568
-#> 6 2023 449005    13.95909 44.48123
-#> 7 2024 471542    15.13587 48.32125
-#> 8 2025 505586    14.66833 49.67239
-#> 9 2026 275024    15.49647 50.46486
 ```
+
+| force_label              | year | group |    ratio | rank | coverage_status |
+|:-------------------------|-----:|:------|---------:|-----:|:----------------|
+| Avon and Somerset        | 2022 | Black | 5.542059 |   19 | unverified      |
+| Bedfordshire             | 2022 | Black | 4.799220 |   25 | unverified      |
+| British Transport Police | 2022 | Black |       NA |   NA | unverified      |
+| Cambridgeshire           | 2022 | Black | 5.829275 |   13 | unverified      |
+| Cheshire                 | 2022 | Black |       NA |   NA | unverified      |
+| London, City of          | 2022 | Black |       NA |   NA | unverified      |
+
+``` r
+
+btg_get_data("national_year")$data[c("year", "stops", "arrest_rate", "hit_rate")]
+```
+
+| year |  stops | arrest_rate | hit_rate |
+|-----:|-------:|------------:|---------:|
+| 2018 | 319569 |    15.72149 | 53.55583 |
+| 2019 | 524424 |    12.80929 | 47.37039 |
+| 2020 | 676628 |    11.38765 | 40.16794 |
+| 2021 | 541523 |    12.22386 | 42.84181 |
+| 2022 | 477044 |    12.81140 | 43.66568 |
+| 2023 | 449005 |    13.95909 | 44.48123 |
+| 2024 | 471542 |    15.13587 | 48.32125 |
+| 2025 | 505586 |    14.66833 | 49.67239 |
+| 2026 | 275024 |    15.49647 | 50.46486 |
 
 The 2025 Black rows of `force_ethnicity_year` reproduce
 `force_disparity` exactly. Coverage differs by year: the dashboard
@@ -155,12 +152,14 @@ months the source month covers.
 
 lambeth <- btg_get_data("council_ethnicity_year", council = "E09000022", years = 2025)
 lambeth$data[c("group", "group_stops", "white_stops", "ratio")]
-#>   group group_stops white_stops     ratio
-#> 1 Asian         273        1501 1.3790466
-#> 2 Black        4773        1501 7.2988782
-#> 3 Mixed           0        1501 0.0000000
-#> 4 Other         125        1501 0.8065571
 ```
+
+| group | group_stops | white_stops |     ratio |
+|:------|------------:|------------:|----------:|
+| Asian |         273 |        1501 | 1.3790466 |
+| Black |        4773 |        1501 | 7.2988782 |
+| Mixed |           0 |        1501 | 0.0000000 |
+| Other |         125 |        1501 | 0.8065571 |
 
 Council counts depend on stop coordinates, which some forces do not
 publish, so they undercount and carry no display rule or rank.
@@ -209,14 +208,16 @@ ggplot2::ggsave("disparity.png", p, width = 11.5, height = 7.5, dpi = 160)
 ``` r
 
 head(btg_figure_data(p)[c("force_label", "ratio", "ci_lower", "ci_upper", "coverage_status")])
-#>        force_label    ratio ci_lower  ci_upper     coverage_status
-#> 1          Norfolk 9.971068 8.538263 11.644313        partial_year
-#> 2 Devon & Cornwall 9.748324 8.430189 11.272561 all_months_supplied
-#> 3      West Mercia 9.673905 8.451227 11.073475 all_months_supplied
-#> 4           Sussex 9.461250 8.726800 10.257510 all_months_supplied
-#> 5           Surrey 8.612550 7.961842  9.316438 all_months_supplied
-#> 6           Dorset 8.217899 6.410803 10.534385 all_months_supplied
 ```
+
+| force_label      |    ratio | ci_lower |  ci_upper | coverage_status     |
+|:-----------------|---------:|---------:|----------:|:--------------------|
+| Norfolk          | 9.971068 | 8.538263 | 11.644313 | partial_year        |
+| Devon & Cornwall | 9.748324 | 8.430189 | 11.272561 | all_months_supplied |
+| West Mercia      | 9.673906 | 8.451227 | 11.073475 | all_months_supplied |
+| Sussex           | 9.461250 | 8.726800 | 10.257511 | all_months_supplied |
+| Surrey           | 8.612550 | 7.961842 |  9.316438 | all_months_supplied |
+| Dorset           | 8.217899 | 6.410803 | 10.534385 | all_months_supplied |
 
 The figure table describes the original evidence. User-added ggplot
 layers or styles do not alter that table or the saved evidence
@@ -228,34 +229,46 @@ the reproduction functions reject modified evidence or provenance.
 ``` r
 
 btg_coverage(met)
-#>           force         force_label   month   status records
-#> 1  metropolitan Metropolitan Police 2025-01 supplied   11634
-#> 2  metropolitan Metropolitan Police 2025-02 supplied   10489
-#> 3  metropolitan Metropolitan Police 2025-03 supplied   11116
-#> 4  metropolitan Metropolitan Police 2025-04 supplied   10779
-#> 5  metropolitan Metropolitan Police 2025-05 supplied   10688
-#> 6  metropolitan Metropolitan Police 2025-06 supplied   10663
-#> 7  metropolitan Metropolitan Police 2025-07 supplied   11254
-#> 8  metropolitan Metropolitan Police 2025-08 supplied   14899
-#> 9  metropolitan Metropolitan Police 2025-09 supplied   11151
-#> 10 metropolitan Metropolitan Police 2025-10 supplied   11749
-#> 11 metropolitan Metropolitan Police 2025-11 supplied   12355
-#> 12 metropolitan Metropolitan Police 2025-12 supplied   11861
+```
+
+| force        | force_label         | month   | status   | records |
+|:-------------|:--------------------|:--------|:---------|--------:|
+| metropolitan | Metropolitan Police | 2025-01 | supplied |   11634 |
+| metropolitan | Metropolitan Police | 2025-02 | supplied |   10489 |
+| metropolitan | Metropolitan Police | 2025-03 | supplied |   11116 |
+| metropolitan | Metropolitan Police | 2025-04 | supplied |   10779 |
+| metropolitan | Metropolitan Police | 2025-05 | supplied |   10688 |
+| metropolitan | Metropolitan Police | 2025-06 | supplied |   10663 |
+| metropolitan | Metropolitan Police | 2025-07 | supplied |   11254 |
+| metropolitan | Metropolitan Police | 2025-08 | supplied |   14899 |
+| metropolitan | Metropolitan Police | 2025-09 | supplied |   11151 |
+| metropolitan | Metropolitan Police | 2025-10 | supplied |   11749 |
+| metropolitan | Metropolitan Police | 2025-11 | supplied |   12355 |
+| metropolitan | Metropolitan Police | 2025-12 | supplied |   11861 |
+
+``` r
+
 checks <- btg_validate(x)
 checks[c("check", "passed")]
-#>                check passed
-#> 1  release_integrity   TRUE
-#> 2             schema   TRUE
-#> 3              types   TRUE
-#> 4               keys   TRUE
-#> 5             period   TRUE
-#> 6             counts   TRUE
-#> 7    missing_returns   TRUE
-#> 8   coverage_summary   TRUE
-#> 9     monthly_totals   TRUE
-#> 10  ethnicity_totals   TRUE
-#> 11 derived_estimates   TRUE
-#> 12     rank_encoding   TRUE
+```
+
+| check             | passed |
+|:------------------|:-------|
+| release_integrity | TRUE   |
+| schema            | TRUE   |
+| types             | TRUE   |
+| keys              | TRUE   |
+| period            | TRUE   |
+| counts            | TRUE   |
+| missing_returns   | TRUE   |
+| coverage_summary  | TRUE   |
+| monthly_totals    | TRUE   |
+| ethnicity_totals  | TRUE   |
+| derived_estimates | TRUE   |
+| rank_encoding     | TRUE   |
+
+``` r
+
 stopifnot(all(checks$passed))
 ```
 
@@ -270,10 +283,12 @@ for Greater Manchester or Gwent; their annual counts remain missing.
 
 btg_get_data(force = c("greater-manchester", "gwent"))$data[
   c("force_label", "total_records", "months_missing", "coverage_status")]
-#>          force_label total_records months_missing    coverage_status
-#> 1 Greater Manchester            NA             12 no_months_supplied
-#> 2              Gwent            NA             12 no_months_supplied
 ```
+
+| force_label        | total_records | months_missing | coverage_status    |
+|:-------------------|--------------:|---------------:|:-------------------|
+| Greater Manchester |            NA |             12 | no_months_supplied |
+| Gwent              |            NA |             12 | no_months_supplied |
 
 ## Save an exact evidence view
 
@@ -351,16 +366,24 @@ year.](getting-started_files/figure-html/further-1.png)
 ``` r
 
 head(btg_sensitivity(x)[c("force_label", "ratio", "ratio_min", "ratio_max", "parity_direction")], 3)
-#>        force_label    ratio ratio_min ratio_max parity_direction
-#> 1          Norfolk 9.971068  9.616471  13.78856            above
-#> 2 Devon & Cornwall 9.748324  9.336930  20.94084            above
-#> 3      West Mercia 9.673905  9.134508  16.13726            above
-head(btg_change(btg_get_data("force_ethnicity_year", groups = "Black"))[c("force_label", "change", "change_direction")], 3)
-#>                force_label    change change_direction
-#> 1        Avon and Somerset 1.0433035          unclear
-#> 2             Bedfordshire 0.9706147          unclear
-#> 3 British Transport Police        NA             <NA>
 ```
+
+| force_label      |    ratio | ratio_min | ratio_max | parity_direction |
+|:-----------------|---------:|----------:|----------:|:-----------------|
+| Norfolk          | 9.971068 |  9.616471 |  13.78856 | above            |
+| Devon & Cornwall | 9.748324 |  9.336930 |  20.94084 | above            |
+| West Mercia      | 9.673906 |  9.134508 |  16.13726 | above            |
+
+``` r
+
+head(btg_change(btg_get_data("force_ethnicity_year", groups = "Black"))[c("force_label", "change", "change_direction")], 3)
+```
+
+| force_label              |    change | change_direction |
+|:-------------------------|----------:|:-----------------|
+| Avon and Somerset        | 1.0433035 | unclear          |
+| Bedfordshire             | 0.9706147 | unclear          |
+| British Transport Police |        NA | NA               |
 
 [`btg_profile()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_profile.md)
 gathers all of this for one area as plain statements, and

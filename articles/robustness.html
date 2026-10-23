@@ -75,7 +75,11 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>How robust is a disparity estimate?</h1>
+                        <h4 data-toc-skip class="author">Mustapha
+Mohammed, Sarah Hamed, Souci Frissa, Aisha Mohamed and Nathan Stanley,
+Black Thrive Global</h4>
             
+            <h4 data-toc-skip class="date">23 October 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BlackThrive/BlackThriveSS/blob/main/vignettes/robustness.Rmd" class="external-link"><code>vignettes/robustness.Rmd</code></a></small>
       <div class="d-none name"><code>robustness.Rmd</code></div>
@@ -113,15 +117,77 @@ answer different questions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_sensitivity.html">btg_sensitivity</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">s</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"force_label"</span>, <span class="st">"unknown_share"</span>, <span class="st">"ratio"</span>, <span class="st">"ratio_min"</span>, <span class="st">"ratio_max"</span>, <span class="st">"parity_direction"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        force_label unknown_share    ratio ratio_min ratio_max parity_direction</span></span>
-<span><span class="co">#&gt; 1          Norfolk    0.03060758 9.971068  9.616471 13.788563            above</span></span>
-<span><span class="co">#&gt; 2 Devon &amp; Cornwall    0.03943304 9.748324  9.336930 20.940844            above</span></span>
-<span><span class="co">#&gt; 3      West Mercia    0.04433498 9.673905  9.134508 16.137257            above</span></span>
-<span><span class="co">#&gt; 4           Sussex    0.01047202 9.461250  9.338614 10.414488            above</span></span>
-<span><span class="co">#&gt; 5           Surrey    0.01692525 8.612550  8.419686  9.743609            above</span></span>
-<span><span class="co">#&gt; 6           Dorset    0.22046747 8.217899  6.250789 51.673153            above</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">s</span><span class="op">$</span><span class="va">parity_direction</span>, useNA <span class="op">=</span> <span class="st">"ifany"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">s</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"force_label"</span>, <span class="st">"unknown_share"</span>, <span class="st">"ratio"</span>, <span class="st">"ratio_min"</span>, <span class="st">"ratio_max"</span>, <span class="st">"parity_direction"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="22%">
+<col width="18%">
+<col width="11%">
+<col width="12%">
+<col width="12%">
+<col width="22%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">force_label</th>
+<th align="right">unknown_share</th>
+<th align="right">ratio</th>
+<th align="right">ratio_min</th>
+<th align="right">ratio_max</th>
+<th align="left">parity_direction</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Norfolk</td>
+<td align="right">0.0306076</td>
+<td align="right">9.971068</td>
+<td align="right">9.616471</td>
+<td align="right">13.788563</td>
+<td align="left">above</td>
+</tr>
+<tr class="even">
+<td align="left">Devon &amp; Cornwall</td>
+<td align="right">0.0394330</td>
+<td align="right">9.748324</td>
+<td align="right">9.336930</td>
+<td align="right">20.940844</td>
+<td align="left">above</td>
+</tr>
+<tr class="odd">
+<td align="left">West Mercia</td>
+<td align="right">0.0443350</td>
+<td align="right">9.673906</td>
+<td align="right">9.134508</td>
+<td align="right">16.137257</td>
+<td align="left">above</td>
+</tr>
+<tr class="even">
+<td align="left">Sussex</td>
+<td align="right">0.0104720</td>
+<td align="right">9.461250</td>
+<td align="right">9.338614</td>
+<td align="right">10.414488</td>
+<td align="left">above</td>
+</tr>
+<tr class="odd">
+<td align="left">Surrey</td>
+<td align="right">0.0169252</td>
+<td align="right">8.612550</td>
+<td align="right">8.419686</td>
+<td align="right">9.743609</td>
+<td align="left">above</td>
+</tr>
+<tr class="even">
+<td align="left">Dorset</td>
+<td align="right">0.2204675</td>
+<td align="right">8.217899</td>
+<td align="right">6.250789</td>
+<td align="right">51.673153</td>
+<td align="left">above</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">s</span><span class="op">$</span><span class="va">parity_direction</span>, useNA <span class="op">=</span> <span class="st">"ifany"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; above  &lt;NA&gt; </span></span>
 <span><span class="co">#&gt;    40     4</span></span></code></pre></div>
@@ -132,11 +198,11 @@ unchanged. <code>parity_direction</code> says whether the whole range
 sits above or below 1, or whether the side of parity depends on the
 unknown stops. The range can be wide where a group’s resident population
 is small, and that is the finding, not a defect.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_plot_sensitivity.html">btg_plot_sensitivity</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <p><img src="robustness_files/figure-html/sensitivity-chart-1.png" class="r-plt" alt="Recorded Black to White ratios for the ten highest forces in 2025 with Poisson intervals and bounds under unknown ethnicity on a log axis." width="960"></p>
 <p>The same question for a comparison close to parity:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"force_ethnicity_year"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/btg_plot_sensitivity.html">btg_plot_sensitivity</a></span><span class="op">(</span><span class="va">y</span>, year <span class="op">=</span> <span class="fl">2024</span>, group <span class="op">=</span> <span class="st">"Asian"</span>, ranking <span class="op">=</span> <span class="st">"closest"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="robustness_files/figure-html/sensitivity-asian-1.png" class="r-plt" alt="Asian to White ratios closest to parity in 2024 with intervals and bounds." width="960"></p>
@@ -148,37 +214,181 @@ is small, and that is the finding, not a defect.</p>
 The rank interval redraws each eligible force’s counts from Poisson
 distributions with the recorded counts as means and re-ranks every draw;
 the seed is fixed and the caller’s random number state is restored.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_rank_stability.html">btg_rank_stability</a></span><span class="op">(</span><span class="va">x</span>, draws <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">r</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"force_label"</span>, <span class="st">"ratio"</span>, <span class="st">"rank"</span>, <span class="st">"rank_lower"</span>, <span class="st">"rank_upper"</span>, <span class="st">"prob_top"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">12</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         force_label    ratio rank rank_lower rank_upper prob_top</span></span>
-<span><span class="co">#&gt; 1           Norfolk 9.971068    1          1          6    1.000</span></span>
-<span><span class="co">#&gt; 2  Devon &amp; Cornwall 9.748324    2          1          7    1.000</span></span>
-<span><span class="co">#&gt; 3       West Mercia 9.673905    3          1          6    1.000</span></span>
-<span><span class="co">#&gt; 4            Sussex 9.461250    4          1          6    1.000</span></span>
-<span><span class="co">#&gt; 5            Surrey 8.612550    5          3          9    0.994</span></span>
-<span><span class="co">#&gt; 6            Dorset 8.217899    6          1         18    0.704</span></span>
-<span><span class="co">#&gt; 7   Nottinghamshire 8.105919    7          5         12    0.918</span></span>
-<span><span class="co">#&gt; 8           Cumbria 8.046936    8          3         17    0.712</span></span>
-<span><span class="co">#&gt; 9      Warwickshire 7.821879    9          3         19    0.648</span></span>
-<span><span class="co">#&gt; 10          Suffolk 7.655695   10          5         17    0.546</span></span>
-<span><span class="co">#&gt; 11   Cambridgeshire 7.573837   11          6         17    0.490</span></span>
-<span><span class="co">#&gt; 12     Lincolnshire 7.518498   12          4         20    0.450</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">r</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"force_label"</span>, <span class="st">"ratio"</span>, <span class="st">"rank"</span>, <span class="st">"rank_lower"</span>, <span class="st">"rank_upper"</span>, <span class="st">"prob_top"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">force_label</th>
+<th align="right">ratio</th>
+<th align="right">rank</th>
+<th align="right">rank_lower</th>
+<th align="right">rank_upper</th>
+<th align="right">prob_top</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Norfolk</td>
+<td align="right">9.971068</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">1.000</td>
+</tr>
+<tr class="even">
+<td align="left">Devon &amp; Cornwall</td>
+<td align="right">9.748324</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">1.000</td>
+</tr>
+<tr class="odd">
+<td align="left">West Mercia</td>
+<td align="right">9.673906</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">1.000</td>
+</tr>
+<tr class="even">
+<td align="left">Sussex</td>
+<td align="right">9.461250</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">1.000</td>
+</tr>
+<tr class="odd">
+<td align="left">Surrey</td>
+<td align="right">8.612550</td>
+<td align="right">5</td>
+<td align="right">3</td>
+<td align="right">9</td>
+<td align="right">0.994</td>
+</tr>
+<tr class="even">
+<td align="left">Dorset</td>
+<td align="right">8.217899</td>
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="right">18</td>
+<td align="right">0.704</td>
+</tr>
+<tr class="odd">
+<td align="left">Nottinghamshire</td>
+<td align="right">8.105919</td>
+<td align="right">7</td>
+<td align="right">5</td>
+<td align="right">12</td>
+<td align="right">0.918</td>
+</tr>
+<tr class="even">
+<td align="left">Cumbria</td>
+<td align="right">8.046936</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="right">17</td>
+<td align="right">0.712</td>
+</tr>
+<tr class="odd">
+<td align="left">Warwickshire</td>
+<td align="right">7.821879</td>
+<td align="right">9</td>
+<td align="right">3</td>
+<td align="right">19</td>
+<td align="right">0.648</td>
+</tr>
+<tr class="even">
+<td align="left">Suffolk</td>
+<td align="right">7.655695</td>
+<td align="right">10</td>
+<td align="right">5</td>
+<td align="right">17</td>
+<td align="right">0.546</td>
+</tr>
+<tr class="odd">
+<td align="left">Cambridgeshire</td>
+<td align="right">7.573837</td>
+<td align="right">11</td>
+<td align="right">6</td>
+<td align="right">17</td>
+<td align="right">0.490</td>
+</tr>
+<tr class="even">
+<td align="left">Lincolnshire</td>
+<td align="right">7.518498</td>
+<td align="right">12</td>
+<td align="right">4</td>
+<td align="right">20</td>
+<td align="right">0.450</td>
+</tr>
+</tbody>
+</table>
 <p><code>rank_best</code> and <code>rank_worst</code> in
 <code><a href="../reference/btg_sensitivity.html">btg_sensitivity()</a></code> answer the other question: how far every
 force’s unknown stops could move the rank if they were allocated for or
 against it.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">s</span><span class="op">[</span><span class="va">s</span><span class="op">$</span><span class="va">eligible</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"force_label"</span>, <span class="st">"rank"</span>, <span class="st">"rank_best"</span>, <span class="st">"rank_worst"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">8</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        force_label rank rank_best rank_worst</span></span>
-<span><span class="co">#&gt; 1          Norfolk    1         1         25</span></span>
-<span><span class="co">#&gt; 2 Devon &amp; Cornwall    2         1         25</span></span>
-<span><span class="co">#&gt; 3      West Mercia    3         1         25</span></span>
-<span><span class="co">#&gt; 4           Sussex    4         1         25</span></span>
-<span><span class="co">#&gt; 5           Surrey    5         1         28</span></span>
-<span><span class="co">#&gt; 6           Dorset    6         1         33</span></span>
-<span><span class="co">#&gt; 7  Nottinghamshire    7         6         29</span></span>
-<span><span class="co">#&gt; 8          Cumbria    8         1         35</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">s</span><span class="op">[</span><span class="va">s</span><span class="op">$</span><span class="va">eligible</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"force_label"</span>, <span class="st">"rank"</span>, <span class="st">"rank_best"</span>, <span class="st">"rank_worst"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">8</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">force_label</th>
+<th align="right">rank</th>
+<th align="right">rank_best</th>
+<th align="right">rank_worst</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Norfolk</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">25</td>
+</tr>
+<tr class="even">
+<td align="left">Devon &amp; Cornwall</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">25</td>
+</tr>
+<tr class="odd">
+<td align="left">West Mercia</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">25</td>
+</tr>
+<tr class="even">
+<td align="left">Sussex</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">25</td>
+</tr>
+<tr class="odd">
+<td align="left">Surrey</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">28</td>
+</tr>
+<tr class="even">
+<td align="left">Dorset</td>
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="left">Nottinghamshire</td>
+<td align="right">7</td>
+<td align="right">6</td>
+<td align="right">29</td>
+</tr>
+<tr class="even">
+<td align="left">Cumbria</td>
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="right">35</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
 <h2 id="across-every-year-and-group">Across every year and group<a class="anchor" aria-label="anchor" href="#across-every-year-and-group"></a>
@@ -187,7 +397,7 @@ against it.</p>
 the full force table. <code><a href="../reference/btg_sensitivity.html">btg_sensitivity()</a></code> returns one row per
 force, year and group, with ranks and bounds within each year and
 group.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_sensitivity.html">btg_sensitivity</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
 <span><span class="va">settled</span> <span class="op">&lt;-</span> <span class="va">all</span><span class="op">[</span><span class="va">all</span><span class="op">$</span><span class="va">eligible</span>, <span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">settled</span>, <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">group</span>, <span class="va">parity_direction</span><span class="op">)</span><span class="op">)</span></span>
@@ -197,74 +407,299 @@ group.</p>
 <span><span class="co">#&gt;   Black   349     0         3</span></span>
 <span><span class="co">#&gt;   Mixed    51     4        21</span></span>
 <span><span class="co">#&gt;   Other   220     4       121</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">unknown_share</span> <span class="op">~</span> <span class="va">year</span>, data <span class="op">=</span> <span class="va">all</span><span class="op">[</span><span class="va">all</span><span class="op">$</span><span class="va">group</span> <span class="op">==</span> <span class="st">"Black"</span>, <span class="op">]</span>, FUN <span class="op">=</span> <span class="va">median</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   year unknown_share</span></span>
-<span><span class="co">#&gt; 1 2018    0.04992118</span></span>
-<span><span class="co">#&gt; 2 2019    0.05637255</span></span>
-<span><span class="co">#&gt; 3 2020    0.05107371</span></span>
-<span><span class="co">#&gt; 4 2021    0.05791267</span></span>
-<span><span class="co">#&gt; 5 2022    0.06480383</span></span>
-<span><span class="co">#&gt; 6 2023    0.06372176</span></span>
-<span><span class="co">#&gt; 7 2024    0.04906426</span></span>
-<span><span class="co">#&gt; 8 2025    0.05122450</span></span>
-<span><span class="co">#&gt; 9 2026    0.06164379</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">unknown_share</span> <span class="op">~</span> <span class="va">year</span>, data <span class="op">=</span> <span class="va">all</span><span class="op">[</span><span class="va">all</span><span class="op">$</span><span class="va">group</span> <span class="op">==</span> <span class="st">"Black"</span>, <span class="op">]</span>, FUN <span class="op">=</span> <span class="va">median</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">year</th>
+<th align="right">unknown_share</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">2018</td>
+<td align="right">0.0499212</td>
+</tr>
+<tr class="even">
+<td align="right">2019</td>
+<td align="right">0.0563725</td>
+</tr>
+<tr class="odd">
+<td align="right">2020</td>
+<td align="right">0.0510737</td>
+</tr>
+<tr class="even">
+<td align="right">2021</td>
+<td align="right">0.0579127</td>
+</tr>
+<tr class="odd">
+<td align="right">2022</td>
+<td align="right">0.0648038</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="right">0.0637218</td>
+</tr>
+<tr class="odd">
+<td align="right">2024</td>
+<td align="right">0.0490643</td>
+</tr>
+<tr class="even">
+<td align="right">2025</td>
+<td align="right">0.0512245</td>
+</tr>
+<tr class="odd">
+<td align="right">2026</td>
+<td align="right">0.0616438</td>
+</tr>
+</tbody>
+</table>
 <p>Rank stability over several years and groups is one call; keep
 <code>draws</code> modest for exploratory work and raise it for a final
 table.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stable</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_rank_stability.html">btg_rank_stability</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"force_ethnicity_year"</span>, years <span class="op">=</span> <span class="fl">2023</span><span class="op">:</span><span class="fl">2025</span>, groups <span class="op">=</span> <span class="st">"Black"</span><span class="op">)</span>, draws <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">rank_upper</span> <span class="op">-</span> <span class="va">rank_lower</span><span class="op">)</span> <span class="op">~</span> <span class="va">year</span>, data <span class="op">=</span> <span class="va">stable</span>, FUN <span class="op">=</span> <span class="va">median</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   year width</span></span>
-<span><span class="co">#&gt; 1 2023     7</span></span>
-<span><span class="co">#&gt; 2 2024     6</span></span>
-<span><span class="co">#&gt; 3 2025     7</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">rank_upper</span> <span class="op">-</span> <span class="va">rank_lower</span><span class="op">)</span> <span class="op">~</span> <span class="va">year</span>, data <span class="op">=</span> <span class="va">stable</span>, FUN <span class="op">=</span> <span class="va">median</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">year</th>
+<th align="right">width</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="right">2024</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="right">2025</td>
+<td align="right">7</td>
+</tr>
+</tbody>
+</table>
 <p><code><a href="../reference/btg_robustness_summary.html">btg_robustness_summary()</a></code> puts the counts a study needs
 in one table: one row per year and group, with the number of forces, how
 many meet the display rule, how many of those keep their side of parity
 under every allocation, the unknown share, the typical width of a rank
 interval, how many top-ten places are settled and how many forces have
 full-year returns.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_robustness_summary.html">btg_robustness_summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"force_ethnicity_year"</span>, years <span class="op">=</span> <span class="fl">2023</span><span class="op">:</span><span class="fl">2025</span><span class="op">)</span>, draws <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    year group forces eligible above below sensitive median_unknown_share</span></span>
-<span><span class="co">#&gt; 1  2023 Asian     43       40    29     1        10           0.06372176</span></span>
-<span><span class="co">#&gt; 2  2023 Black     43       40    38     0         2           0.06372176</span></span>
-<span><span class="co">#&gt; 3  2023 Mixed     43        6     4     0         2           0.06372176</span></span>
-<span><span class="co">#&gt; 4  2023 Other     43       40    29     0        11           0.06372176</span></span>
-<span><span class="co">#&gt; 5  2024 Asian     42       39    31     1         7           0.04906426</span></span>
-<span><span class="co">#&gt; 6  2024 Black     42       39    39     0         0           0.04906426</span></span>
-<span><span class="co">#&gt; 7  2024 Mixed     42        7     6     0         1           0.04906426</span></span>
-<span><span class="co">#&gt; 8  2024 Other     42       39    29     0        10           0.04906426</span></span>
-<span><span class="co">#&gt; 9  2025 Asian     42       40    32     1         7           0.05122450</span></span>
-<span><span class="co">#&gt; 10 2025 Black     42       40    40     0         0           0.05122450</span></span>
-<span><span class="co">#&gt; 11 2025 Mixed     42        7     5     0         2           0.05122450</span></span>
-<span><span class="co">#&gt; 12 2025 Other     42       39    32     0         7           0.05122450</span></span>
-<span><span class="co">#&gt;    max_unknown_share median_rank_interval settled_top full_year_returns</span></span>
-<span><span class="co">#&gt; 1          1.0000000                  9.0           7                 0</span></span>
-<span><span class="co">#&gt; 2          1.0000000                  7.0           8                 0</span></span>
-<span><span class="co">#&gt; 3          1.0000000                  0.5           6                 0</span></span>
-<span><span class="co">#&gt; 4          1.0000000                  6.0           9                 0</span></span>
-<span><span class="co">#&gt; 5          0.9990545                 10.0           7                40</span></span>
-<span><span class="co">#&gt; 6          0.9990545                  6.0           8                40</span></span>
-<span><span class="co">#&gt; 7          0.9990545                  2.0           7                40</span></span>
-<span><span class="co">#&gt; 8          0.9990545                  6.0           8                40</span></span>
-<span><span class="co">#&gt; 9          0.3182773                 10.5           8                37</span></span>
-<span><span class="co">#&gt; 10         0.3182773                  7.0           6                37</span></span>
-<span><span class="co">#&gt; 11         0.3182773                  2.0           7                37</span></span>
-<span><span class="co">#&gt; 12         0.3182773                  6.0           8                37</span></span>
-<span><span class="co">#&gt;    months_in_source</span></span>
-<span><span class="co">#&gt; 1                12</span></span>
-<span><span class="co">#&gt; 2                12</span></span>
-<span><span class="co">#&gt; 3                12</span></span>
-<span><span class="co">#&gt; 4                12</span></span>
-<span><span class="co">#&gt; 5                12</span></span>
-<span><span class="co">#&gt; 6                12</span></span>
-<span><span class="co">#&gt; 7                12</span></span>
-<span><span class="co">#&gt; 8                12</span></span>
-<span><span class="co">#&gt; 9                12</span></span>
-<span><span class="co">#&gt; 10               12</span></span>
-<span><span class="co">#&gt; 11               12</span></span>
-<span><span class="co">#&gt; 12               12</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_robustness_summary.html">btg_robustness_summary</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"force_ethnicity_year"</span>, years <span class="op">=</span> <span class="fl">2023</span><span class="op">:</span><span class="fl">2025</span><span class="op">)</span>, draws <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="3%">
+<col width="3%">
+<col width="4%">
+<col width="5%">
+<col width="3%">
+<col width="3%">
+<col width="6%">
+<col width="13%">
+<col width="11%">
+<col width="13%">
+<col width="7%">
+<col width="11%">
+<col width="10%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">year</th>
+<th align="left">group</th>
+<th align="right">forces</th>
+<th align="right">eligible</th>
+<th align="right">above</th>
+<th align="right">below</th>
+<th align="right">sensitive</th>
+<th align="right">median_unknown_share</th>
+<th align="right">max_unknown_share</th>
+<th align="right">median_rank_interval</th>
+<th align="right">settled_top</th>
+<th align="right">full_year_returns</th>
+<th align="right">months_in_source</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="left">Asian</td>
+<td align="right">43</td>
+<td align="right">40</td>
+<td align="right">29</td>
+<td align="right">1</td>
+<td align="right">10</td>
+<td align="right">0.0637218</td>
+<td align="right">1.0000000</td>
+<td align="right">9.0</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="left">Black</td>
+<td align="right">43</td>
+<td align="right">40</td>
+<td align="right">38</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.0637218</td>
+<td align="right">1.0000000</td>
+<td align="right">7.0</td>
+<td align="right">8</td>
+<td align="right">0</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="right">2023</td>
+<td align="left">Mixed</td>
+<td align="right">43</td>
+<td align="right">6</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.0637218</td>
+<td align="right">1.0000000</td>
+<td align="right">0.5</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="right">2023</td>
+<td align="left">Other</td>
+<td align="right">43</td>
+<td align="right">40</td>
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="right">11</td>
+<td align="right">0.0637218</td>
+<td align="right">1.0000000</td>
+<td align="right">6.0</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="right">2024</td>
+<td align="left">Asian</td>
+<td align="right">42</td>
+<td align="right">39</td>
+<td align="right">31</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">0.0490643</td>
+<td align="right">0.9990545</td>
+<td align="right">10.0</td>
+<td align="right">7</td>
+<td align="right">40</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="right">2024</td>
+<td align="left">Black</td>
+<td align="right">42</td>
+<td align="right">39</td>
+<td align="right">39</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.0490643</td>
+<td align="right">0.9990545</td>
+<td align="right">6.0</td>
+<td align="right">8</td>
+<td align="right">40</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="right">2024</td>
+<td align="left">Mixed</td>
+<td align="right">42</td>
+<td align="right">7</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.0490643</td>
+<td align="right">0.9990545</td>
+<td align="right">2.0</td>
+<td align="right">7</td>
+<td align="right">40</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="right">2024</td>
+<td align="left">Other</td>
+<td align="right">42</td>
+<td align="right">39</td>
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="right">10</td>
+<td align="right">0.0490643</td>
+<td align="right">0.9990545</td>
+<td align="right">6.0</td>
+<td align="right">8</td>
+<td align="right">40</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="right">2025</td>
+<td align="left">Asian</td>
+<td align="right">42</td>
+<td align="right">40</td>
+<td align="right">32</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">0.0512245</td>
+<td align="right">0.3182773</td>
+<td align="right">10.5</td>
+<td align="right">8</td>
+<td align="right">37</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="right">2025</td>
+<td align="left">Black</td>
+<td align="right">42</td>
+<td align="right">40</td>
+<td align="right">40</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.0512245</td>
+<td align="right">0.3182773</td>
+<td align="right">7.0</td>
+<td align="right">6</td>
+<td align="right">37</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="right">2025</td>
+<td align="left">Mixed</td>
+<td align="right">42</td>
+<td align="right">7</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.0512245</td>
+<td align="right">0.3182773</td>
+<td align="right">2.0</td>
+<td align="right">7</td>
+<td align="right">37</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="right">2025</td>
+<td align="left">Other</td>
+<td align="right">42</td>
+<td align="right">39</td>
+<td align="right">32</td>
+<td align="right">0</td>
+<td align="right">7</td>
+<td align="right">0.0512245</td>
+<td align="right">0.3182773</td>
+<td align="right">6.0</td>
+<td align="right">8</td>
+<td align="right">37</td>
+<td align="right">12</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
 <h2 id="has-the-source-moved-on">Has the source moved on?<a class="anchor" aria-label="anchor" href="#has-the-source-moved-on"></a>
@@ -276,7 +711,7 @@ present, and reports newer months and any force-month inside the
 snapshot’s verified window that has since been added or withdrawn. It is
 the package’s only use of the network and returns <code>NULL</code> with
 a message when the feed cannot be read, so it is not run here.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">status</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_source_status.html">btg_source_status</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">status</span></span>
 <span><span class="va">status</span><span class="op">$</span><span class="va">changes</span></span></code></pre></div>
@@ -291,34 +726,96 @@ releases starts from exactly this comparison.</p>
 with an interval on the ratio of ratios and the coverage of both years.
 A change between a complete year and an incomplete one is not a change
 in policing.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_change.html">btg_change</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"force_ethnicity_year"</span>, groups <span class="op">=</span> <span class="st">"Black"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">ch</span><span class="op">$</span><span class="va">change_direction</span>, useNA <span class="op">=</span> <span class="st">"ifany"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  higher unclear    &lt;NA&gt; </span></span>
 <span><span class="co">#&gt;       9      31       4</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ch</span><span class="op">[</span><span class="va">ch</span><span class="op">$</span><span class="va">change_direction</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"higher"</span>, <span class="st">"lower"</span><span class="op">)</span>,</span>
-<span>        <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"force_label"</span>, <span class="st">"ratio_from"</span>, <span class="st">"ratio_to"</span>, <span class="st">"change"</span>, <span class="st">"change_lower"</span>, <span class="st">"change_upper"</span>, <span class="st">"comparable_coverage"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            force_label ratio_from ratio_to   change change_lower change_upper</span></span>
-<span><span class="co">#&gt; 4       Cambridgeshire   6.011442 7.573837 1.259904     1.065722     1.489466</span></span>
-<span><span class="co">#&gt; 19       Hertfordshire   5.200155 5.731577 1.102193     1.003443     1.210662</span></span>
-<span><span class="co">#&gt; 20          Humberside   3.430921 4.495046 1.310157     1.039448     1.651369</span></span>
-<span><span class="co">#&gt; 25          Merseyside   2.364159 2.695715 1.140243     1.074713     1.209769</span></span>
-<span><span class="co">#&gt; 26 Metropolitan Police   4.165467 4.573408 1.097934     1.078518     1.117699</span></span>
-<span><span class="co">#&gt; 32     Nottinghamshire   6.678454 8.105919 1.213742     1.080109     1.363908</span></span>
-<span><span class="co">#&gt;    comparable_coverage</span></span>
-<span><span class="co">#&gt; 4                 TRUE</span></span>
-<span><span class="co">#&gt; 19                TRUE</span></span>
-<span><span class="co">#&gt; 20               FALSE</span></span>
-<span><span class="co">#&gt; 25                TRUE</span></span>
-<span><span class="co">#&gt; 26                TRUE</span></span>
-<span><span class="co">#&gt; 32                TRUE</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"force_label"</span>, <span class="st">"ratio_from"</span>, <span class="st">"ratio_to"</span>, <span class="st">"change"</span>, <span class="st">"change_lower"</span>, <span class="st">"change_upper"</span>, <span class="st">"comparable_coverage"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="21%">
+<col width="11%">
+<col width="9%">
+<col width="9%">
+<col width="13%">
+<col width="13%">
+<col width="21%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">force_label</th>
+<th align="right">ratio_from</th>
+<th align="right">ratio_to</th>
+<th align="right">change</th>
+<th align="right">change_lower</th>
+<th align="right">change_upper</th>
+<th align="left">comparable_coverage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Cambridgeshire</td>
+<td align="right">6.011442</td>
+<td align="right">7.573837</td>
+<td align="right">1.259904</td>
+<td align="right">1.065722</td>
+<td align="right">1.489466</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Hertfordshire</td>
+<td align="right">5.200155</td>
+<td align="right">5.731577</td>
+<td align="right">1.102193</td>
+<td align="right">1.003443</td>
+<td align="right">1.210662</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">Humberside</td>
+<td align="right">3.430921</td>
+<td align="right">4.495046</td>
+<td align="right">1.310157</td>
+<td align="right">1.039448</td>
+<td align="right">1.651369</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">Merseyside</td>
+<td align="right">2.364159</td>
+<td align="right">2.695715</td>
+<td align="right">1.140243</td>
+<td align="right">1.074713</td>
+<td align="right">1.209769</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">Metropolitan Police</td>
+<td align="right">4.165467</td>
+<td align="right">4.573408</td>
+<td align="right">1.097934</td>
+<td align="right">1.078518</td>
+<td align="right">1.117699</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Nottinghamshire</td>
+<td align="right">6.678454</td>
+<td align="right">8.105919</td>
+<td align="right">1.213742</td>
+<td align="right">1.080108</td>
+<td align="right">1.363908</td>
+<td align="left">TRUE</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_plot_change.html">btg_plot_change</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></code></pre></div>
 <p><img src="robustness_files/figure-html/change-chart-1.png" class="r-plt" alt="Dumbbell chart of the ten largest changes in Black to White ratios between 2024 and 2025." width="960"></p>
 <p>And for one force across every year, with the incomplete final year
 marked:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_plot_trend.html">btg_plot_trend</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"force_ethnicity_year"</span>, force <span class="op">=</span> <span class="st">"metropolitan"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="robustness_files/figure-html/trend-1.png" class="r-plt" alt="Metropolitan Police stop-rate ratios by group and year with Poisson intervals." width="960"></p>
 </div>
@@ -328,7 +825,7 @@ marked:</p>
 <p>Every chart carries its table and a saved view. The view pins the
 release, its checksums, the selection and the settings; it contains no
 code.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_plot_sensitivity.html">btg_plot_sensitivity</a></span><span class="op">(</span><span class="va">y</span>, year <span class="op">=</span> <span class="fl">2024</span>, group <span class="op">=</span> <span class="st">"Asian"</span>, ranking <span class="op">=</span> <span class="st">"closest"</span><span class="op">)</span></span>
 <span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/btg_save_view.html">btg_save_view</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">path</span><span class="op">)</span></span>
@@ -338,12 +835,12 @@ code.</p>
 <p><code><a href="../reference/btg_export.html">btg_export()</a></code> writes a dataset to CSV with a JSON sidecar
 recording the release, checksums, selection, citation and limitations,
 so that a file sent on still says where its numbers came from.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span></span>
 <span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_export.html">btg_export</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"force_ethnicity_year"</span>, years <span class="op">=</span> <span class="fl">2025</span>, groups <span class="op">=</span> <span class="st">"Black"</span><span class="op">)</span>, <span class="va">csv</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "file1cba717177d1.csv"          "file1cba717177d1.json"        </span></span>
-<span><span class="co">#&gt; [3] "file1cba717177d1-coverage.csv"</span></span>
+<span><span class="co">#&gt; [1] "file1cbb548ed442.csv"          "file1cbb548ed442.json"        </span></span>
+<span><span class="co">#&gt; [3] "file1cbb548ed442-coverage.csv"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">

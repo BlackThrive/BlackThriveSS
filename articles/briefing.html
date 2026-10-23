@@ -75,7 +75,11 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Brief a force or council</h1>
+                        <h4 data-toc-skip class="author">Mustapha
+Mohammed, Sarah Hamed, Souci Frissa, Aisha Mohamed and Nathan Stanley,
+Black Thrive Global</h4>
             
+            <h4 data-toc-skip class="date">23 October 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/BlackThrive/BlackThriveSS/blob/main/vignettes/briefing.Rmd" class="external-link"><code>vignettes/briefing.Rmd</code></a></small>
       <div class="d-none name"><code>briefing.Rmd</code></div>
@@ -162,24 +166,133 @@ recorded ethnicity could move the ratio, whether both years of a change
 were covered in full. The tables behind the statements are in the
 object:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="va">comparisons</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"ratio"</span>, <span class="st">"ci_lower"</span>, <span class="st">"ci_upper"</span>, <span class="st">"rank"</span>, <span class="st">"n_eligible"</span>, <span class="st">"rank_lower"</span>, <span class="st">"rank_upper"</span>, <span class="st">"parity_direction"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="co">#&gt;   group     ratio  ci_lower  ci_upper rank n_eligible rank_lower rank_upper</span></span>
-<span><span class="co">#&gt; 1 Black 4.5734077 4.5182599 4.6292287   30         40         28         32</span></span>
-<span><span class="co">#&gt; 2 Asian 1.0426963 1.0255432 1.0601362   36         40         34         37</span></span>
-<span><span class="co">#&gt; 3 Mixed 0.0000000        NA        NA   NA          7         NA         NA</span></span>
-<span><span class="co">#&gt; 4 Other 0.9296962 0.9038014 0.9563329   35         39         32         36</span></span>
-<span><span class="co">#&gt;   parity_direction</span></span>
-<span><span class="co">#&gt; 1            above</span></span>
-<span><span class="co">#&gt; 2        sensitive</span></span>
-<span><span class="co">#&gt; 3        sensitive</span></span>
-<span><span class="co">#&gt; 4        sensitive</span></span>
-<span><span class="va">p</span><span class="op">$</span><span class="va">change</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"ratio_from"</span>, <span class="st">"ratio_to"</span>, <span class="st">"change"</span>, <span class="st">"change_direction"</span>, <span class="st">"comparable_coverage"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="co">#&gt;   group ratio_from  ratio_to   change change_direction comparable_coverage</span></span>
-<span><span class="co">#&gt; 2 Black  4.1654667 4.5734077 1.097934           higher                TRUE</span></span>
-<span><span class="co">#&gt; 1 Asian  0.9840448 1.0426963 1.059602           higher                TRUE</span></span>
-<span><span class="co">#&gt; 3 Mixed  0.0000000 0.0000000      NaN             &lt;NA&gt;                TRUE</span></span>
-<span><span class="co">#&gt; 4 Other  0.7994619 0.9296962 1.162903           higher                TRUE</span></span>
-<span><span class="va">p</span><span class="op">$</span><span class="va">coverage</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"status"</span>, <span class="st">"months_supplied"</span>, <span class="st">"months_missing"</span><span class="op">)</span><span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="va">comparisons</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"ratio"</span>, <span class="st">"ci_lower"</span>, <span class="st">"ci_upper"</span>, <span class="st">"rank"</span>, <span class="st">"n_eligible"</span>, <span class="st">"rank_lower"</span>, <span class="st">"rank_upper"</span>, <span class="st">"parity_direction"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="6%">
+<col width="10%">
+<col width="10%">
+<col width="10%">
+<col width="5%">
+<col width="12%">
+<col width="12%">
+<col width="12%">
+<col width="18%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">group</th>
+<th align="right">ratio</th>
+<th align="right">ci_lower</th>
+<th align="right">ci_upper</th>
+<th align="right">rank</th>
+<th align="right">n_eligible</th>
+<th align="right">rank_lower</th>
+<th align="right">rank_upper</th>
+<th align="left">parity_direction</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Black</td>
+<td align="right">4.5734077</td>
+<td align="right">4.5182599</td>
+<td align="right">4.6292287</td>
+<td align="right">30</td>
+<td align="right">40</td>
+<td align="right">28</td>
+<td align="right">32</td>
+<td align="left">above</td>
+</tr>
+<tr class="even">
+<td align="left">Asian</td>
+<td align="right">1.0426963</td>
+<td align="right">1.0255432</td>
+<td align="right">1.0601362</td>
+<td align="right">36</td>
+<td align="right">40</td>
+<td align="right">34</td>
+<td align="right">37</td>
+<td align="left">sensitive</td>
+</tr>
+<tr class="odd">
+<td align="left">Mixed</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">7</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">sensitive</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">0.9296962</td>
+<td align="right">0.9038014</td>
+<td align="right">0.9563329</td>
+<td align="right">35</td>
+<td align="right">39</td>
+<td align="right">32</td>
+<td align="right">36</td>
+<td align="left">sensitive</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="va">change</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"ratio_from"</span>, <span class="st">"ratio_to"</span>, <span class="st">"change"</span>, <span class="st">"change_direction"</span>, <span class="st">"comparable_coverage"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="8%">
+<col width="15%">
+<col width="13%">
+<col width="12%">
+<col width="23%">
+<col width="27%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">group</th>
+<th align="right">ratio_from</th>
+<th align="right">ratio_to</th>
+<th align="right">change</th>
+<th align="left">change_direction</th>
+<th align="left">comparable_coverage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Black</td>
+<td align="right">4.1654667</td>
+<td align="right">4.5734077</td>
+<td align="right">1.097934</td>
+<td align="left">higher</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Asian</td>
+<td align="right">0.9840448</td>
+<td align="right">1.0426963</td>
+<td align="right">1.059602</td>
+<td align="left">higher</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">Mixed</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NaN</td>
+<td align="left">NA</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">0.7994619</td>
+<td align="right">0.9296962</td>
+<td align="right">1.162902</td>
+<td align="left">higher</td>
+<td align="left">TRUE</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="va">coverage</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"status"</span>, <span class="st">"months_supplied"</span>, <span class="st">"months_missing"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; $status</span></span>
 <span><span class="co">#&gt; [1] "all_months_supplied"</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -190,7 +303,7 @@ object:</p>
 <span><span class="co">#&gt; [1] 0</span></span></code></pre></div>
 <p>A council profile works the same way, without ranks or coverage,
 because council counts depend on published stop coordinates:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_profile.html">btg_profile</a></span><span class="op">(</span>council <span class="op">=</span> <span class="st">"E09000022"</span>, draws <span class="op">=</span> <span class="fl">500</span><span class="op">)</span><span class="op">$</span><span class="va">statements</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                                                                                                                                                                                                                                                         coverage </span></span>
 <span><span class="co">#&gt;                                                                                                                  "Lambeth's counts are located by published stop coordinates, which some forces withhold, so they undercount and carry no rank or display rule." </span></span>
@@ -203,30 +316,30 @@ because council counts depend on published stop coordinates:</p>
 <h2 id="the-charts-a-briefing-needs">The charts a briefing needs<a class="anchor" aria-label="anchor" href="#the-charts-a-briefing-needs"></a>
 </h2>
 <p>The ranking chart with the area highlighted, as on the dashboard:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">year</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"force_ethnicity_year"</span>, years <span class="op">=</span> <span class="fl">2025</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/btg_plot_disparity.html">btg_plot_disparity</a></span><span class="op">(</span><span class="va">year</span>, highlight <span class="op">=</span> <span class="st">"metropolitan"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="briefing_files/figure-html/ranking-1.png" class="r-plt" alt="Black to White stop-rate ratios for the ten highest forces in 2025 with the Metropolitan Police highlighted." width="960"></p>
 <p>The same comparisons with their uncertainty shown honestly:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_plot_sensitivity.html">btg_plot_sensitivity</a></span><span class="op">(</span><span class="va">year</span>, highlight <span class="op">=</span> <span class="st">"metropolitan"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="briefing_files/figure-html/robust-1.png" class="r-plt" alt="Recorded ratios with sampling intervals and bounds under unknown ethnicity, Metropolitan Police highlighted." width="960"></p>
 <p>How the area’s ratios have moved, with incomplete periods marked:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">met</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"force_ethnicity_year"</span>, force <span class="op">=</span> <span class="st">"metropolitan"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/btg_plot_trend.html">btg_plot_trend</a></span><span class="op">(</span><span class="va">met</span><span class="op">)</span></span></code></pre></div>
 <p><img src="briefing_files/figure-html/trend-1.png" class="r-plt" alt="Metropolitan Police stop-rate ratios by group and year." width="960"></p>
 <p>Rates per 1,000 residents with one group emphasised and the rest as
 context:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_plot_trend.html">btg_plot_trend</a></span><span class="op">(</span><span class="va">met</span>, measure <span class="op">=</span> <span class="st">"rate"</span>, highlight <span class="op">=</span> <span class="st">"Black"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="briefing_files/figure-html/rates-1.png" class="r-plt" alt="Recorded stops per 1,000 residents by group for the Metropolitan Police, Black emphasised." width="960"></p>
 <p>National context: the share of recorded stops by group, month by
 month, and the outcome-linked search rate by group.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_plot_trend.html">btg_plot_trend</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"national_month_ethnicity"</span><span class="op">)</span>, measure <span class="op">=</span> <span class="st">"share"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="briefing_files/figure-html/national-1.png" class="r-plt" alt="Share of recorded stops by ethnic group across England and Wales by month." width="960"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_plot_trend.html">btg_plot_trend</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"hit_rate_ethnicity_year"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="briefing_files/figure-html/national-2.png" class="r-plt" alt="Share of recorded stops by ethnic group across England and Wales by month." width="960"></p>
 </div>
@@ -239,7 +352,7 @@ above, the tables behind them, monthly coverage, the methods and their
 limits, and the code and citations that reproduce every figure. It needs
 the rmarkdown package and Pandoc, which RStudio and Positron
 include.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_report.html">btg_report</a></span><span class="op">(</span>force <span class="op">=</span> <span class="st">"metropolitan"</span>, file <span class="op">=</span> <span class="st">"metropolitan-2025.html"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/btg_report.html">btg_report</a></span><span class="op">(</span>council <span class="op">=</span> <span class="st">"E09000022"</span>, year <span class="op">=</span> <span class="fl">2024</span>, file <span class="op">=</span> <span class="st">"lambeth-2024.docx"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/btg_report.html">btg_report</a></span><span class="op">(</span>force <span class="op">=</span> <span class="st">"kent"</span>, year <span class="op">=</span> <span class="fl">2024</span>, file <span class="op">=</span> <span class="st">"kent-2024.pdf"</span><span class="op">)</span></span></code></pre></div>
@@ -252,7 +365,7 @@ and the findings grouped by topic, and numbers its tables and figures.
 <code><a href="../reference/btg_table.html">btg_table()</a></code> sets any data frame in the same style inside
 your own R Markdown document, whichever of the three formats you knit
 to:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/btg_table.html">btg_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span><span class="st">"national_year"</span><span class="op">)</span><span class="op">$</span><span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"stops"</span>, <span class="st">"arrest_rate"</span>, <span class="st">"hit_rate"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>          caption <span class="op">=</span> <span class="st">"National totals by year"</span><span class="op">)</span></span></code></pre></div>
 <table class="table btg-table">
@@ -370,25 +483,47 @@ wants to add their own sections.</p>
 <p><code><a href="../reference/btg_export.html">btg_export()</a></code> writes a dataset to CSV with a JSON sidecar
 that records the release, checksums, selection, citation and
 limitations:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span></span>
 <span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_export.html">btg_export</a></span><span class="op">(</span><span class="fu"><a href="../reference/btg_get_data.html">btg_get_data</a></span><span class="op">(</span>force <span class="op">=</span> <span class="st">"metropolitan"</span><span class="op">)</span>, <span class="va">csv</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "file1c479e8ad2b.csv"          "file1c479e8ad2b.json"        </span></span>
-<span><span class="co">#&gt; [3] "file1c479e8ad2b-coverage.csv"</span></span>
+<span><span class="co">#&gt; [1] "file1c49336f5d23.csv"          "file1c49336f5d23.json"        </span></span>
+<span><span class="co">#&gt; [3] "file1c49336f5d23-coverage.csv"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span></span></code></pre></div>
 <p>And every term the package uses has one definition:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/btg_glossary.html">btg_glossary</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">g</span><span class="op">[</span><span class="va">g</span><span class="op">$</span><span class="va">term</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ratio"</span>, <span class="st">"allocation range"</span>, <span class="st">"coverage"</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="co">#&gt;                term</span></span>
-<span><span class="co">#&gt; 5             ratio</span></span>
-<span><span class="co">#&gt; 7  allocation range</span></span>
-<span><span class="co">#&gt; 10         coverage</span></span>
-<span><span class="co">#&gt;                                                                                                                                                                                        definition</span></span>
-<span><span class="co">#&gt; 5  A group's rate per 1,000 residents divided by the White rate. 1x is parity; 4x means four times the recorded rate of White residents. It is descriptive and does not establish discrimination.</span></span>
-<span><span class="co">#&gt; 7            The ratio if every stop with unknown ethnicity were counted as White (lower end) or as the compared group (upper end). Any allocation of those stops gives a ratio inside the range.</span></span>
-<span><span class="co">#&gt; 10                                Whether a force's monthly return for a month is supplied, missing or unverified. Supplied is not proof of complete recording; missing is never treated as zero.</span></span></code></pre></div>
+<span><span class="va">g</span><span class="op">[</span><span class="va">g</span><span class="op">$</span><span class="va">term</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ratio"</span>, <span class="st">"allocation range"</span>, <span class="st">"coverage"</span><span class="op">)</span>, <span class="op">]</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="8%">
+<col width="91%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">term</th>
+<th align="left">definition</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">ratio</td>
+<td align="left">A group’s rate per 1,000 residents divided by the White
+rate. 1x is parity; 4x means four times the recorded rate of White
+residents. It is descriptive and does not establish discrimination.</td>
+</tr>
+<tr class="even">
+<td align="left">allocation range</td>
+<td align="left">The ratio if every stop with unknown ethnicity were
+counted as White (lower end) or as the compared group (upper end). Any
+allocation of those stops gives a ratio inside the range.</td>
+</tr>
+<tr class="odd">
+<td align="left">coverage</td>
+<td align="left">Whether a force’s monthly return for a month is
+supplied, missing or unverified. Supplied is not proof of complete
+recording; missing is never treated as zero.</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
 <h2 id="saying-it-right">Saying it right<a class="anchor" aria-label="anchor" href="#saying-it-right"></a>

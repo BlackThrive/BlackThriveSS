@@ -29,13 +29,19 @@ different questions.
 x <- btg_get_data()
 s <- btg_sensitivity(x)
 head(s[c("force_label", "unknown_share", "ratio", "ratio_min", "ratio_max", "parity_direction")])
-#>        force_label unknown_share    ratio ratio_min ratio_max parity_direction
-#> 1          Norfolk    0.03060758 9.971068  9.616471 13.788563            above
-#> 2 Devon & Cornwall    0.03943304 9.748324  9.336930 20.940844            above
-#> 3      West Mercia    0.04433498 9.673905  9.134508 16.137257            above
-#> 4           Sussex    0.01047202 9.461250  9.338614 10.414488            above
-#> 5           Surrey    0.01692525 8.612550  8.419686  9.743609            above
-#> 6           Dorset    0.22046747 8.217899  6.250789 51.673153            above
+```
+
+| force_label      | unknown_share |    ratio | ratio_min | ratio_max | parity_direction |
+|:-----------------|--------------:|---------:|----------:|----------:|:-----------------|
+| Norfolk          |     0.0306076 | 9.971068 |  9.616471 | 13.788563 | above            |
+| Devon & Cornwall |     0.0394330 | 9.748324 |  9.336930 | 20.940844 | above            |
+| West Mercia      |     0.0443350 | 9.673906 |  9.134508 | 16.137257 | above            |
+| Sussex           |     0.0104720 | 9.461250 |  9.338614 | 10.414488 | above            |
+| Surrey           |     0.0169252 | 8.612550 |  8.419686 |  9.743609 | above            |
+| Dorset           |     0.2204675 | 8.217899 |  6.250789 | 51.673153 | above            |
+
+``` r
+
 table(s$parity_direction, useNA = "ifany")
 #> 
 #> above  <NA> 
@@ -81,20 +87,22 @@ the seed is fixed and the caller’s random number state is restored.
 
 r <- btg_rank_stability(x, draws = 500)
 head(r[c("force_label", "ratio", "rank", "rank_lower", "rank_upper", "prob_top")], 12)
-#>         force_label    ratio rank rank_lower rank_upper prob_top
-#> 1           Norfolk 9.971068    1          1          6    1.000
-#> 2  Devon & Cornwall 9.748324    2          1          7    1.000
-#> 3       West Mercia 9.673905    3          1          6    1.000
-#> 4            Sussex 9.461250    4          1          6    1.000
-#> 5            Surrey 8.612550    5          3          9    0.994
-#> 6            Dorset 8.217899    6          1         18    0.704
-#> 7   Nottinghamshire 8.105919    7          5         12    0.918
-#> 8           Cumbria 8.046936    8          3         17    0.712
-#> 9      Warwickshire 7.821879    9          3         19    0.648
-#> 10          Suffolk 7.655695   10          5         17    0.546
-#> 11   Cambridgeshire 7.573837   11          6         17    0.490
-#> 12     Lincolnshire 7.518498   12          4         20    0.450
 ```
+
+| force_label      |    ratio | rank | rank_lower | rank_upper | prob_top |
+|:-----------------|---------:|-----:|-----------:|-----------:|---------:|
+| Norfolk          | 9.971068 |    1 |          1 |          6 |    1.000 |
+| Devon & Cornwall | 9.748324 |    2 |          1 |          7 |    1.000 |
+| West Mercia      | 9.673906 |    3 |          1 |          6 |    1.000 |
+| Sussex           | 9.461250 |    4 |          1 |          6 |    1.000 |
+| Surrey           | 8.612550 |    5 |          3 |          9 |    0.994 |
+| Dorset           | 8.217899 |    6 |          1 |         18 |    0.704 |
+| Nottinghamshire  | 8.105919 |    7 |          5 |         12 |    0.918 |
+| Cumbria          | 8.046936 |    8 |          3 |         17 |    0.712 |
+| Warwickshire     | 7.821879 |    9 |          3 |         19 |    0.648 |
+| Suffolk          | 7.655695 |   10 |          5 |         17 |    0.546 |
+| Cambridgeshire   | 7.573837 |   11 |          6 |         17 |    0.490 |
+| Lincolnshire     | 7.518498 |   12 |          4 |         20 |    0.450 |
 
 `rank_best` and `rank_worst` in
 [`btg_sensitivity()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_sensitivity.md)
@@ -104,16 +112,18 @@ move the rank if they were allocated for or against it.
 ``` r
 
 head(s[s$eligible, c("force_label", "rank", "rank_best", "rank_worst")], 8)
-#>        force_label rank rank_best rank_worst
-#> 1          Norfolk    1         1         25
-#> 2 Devon & Cornwall    2         1         25
-#> 3      West Mercia    3         1         25
-#> 4           Sussex    4         1         25
-#> 5           Surrey    5         1         28
-#> 6           Dorset    6         1         33
-#> 7  Nottinghamshire    7         6         29
-#> 8          Cumbria    8         1         35
 ```
+
+| force_label      | rank | rank_best | rank_worst |
+|:-----------------|-----:|----------:|-----------:|
+| Norfolk          |    1 |         1 |         25 |
+| Devon & Cornwall |    2 |         1 |         25 |
+| West Mercia      |    3 |         1 |         25 |
+| Sussex           |    4 |         1 |         25 |
+| Surrey           |    5 |         1 |         28 |
+| Dorset           |    6 |         1 |         33 |
+| Nottinghamshire  |    7 |         6 |         29 |
+| Cumbria          |    8 |         1 |         35 |
 
 ## Across every year and group
 
@@ -135,17 +145,19 @@ with(settled, table(group, parity_direction))
 #>   Mixed    51     4        21
 #>   Other   220     4       121
 aggregate(unknown_share ~ year, data = all[all$group == "Black", ], FUN = median)
-#>   year unknown_share
-#> 1 2018    0.04992118
-#> 2 2019    0.05637255
-#> 3 2020    0.05107371
-#> 4 2021    0.05791267
-#> 5 2022    0.06480383
-#> 6 2023    0.06372176
-#> 7 2024    0.04906426
-#> 8 2025    0.05122450
-#> 9 2026    0.06164379
 ```
+
+| year | unknown_share |
+|-----:|--------------:|
+| 2018 |     0.0499212 |
+| 2019 |     0.0563725 |
+| 2020 |     0.0510737 |
+| 2021 |     0.0579127 |
+| 2022 |     0.0648038 |
+| 2023 |     0.0637218 |
+| 2024 |     0.0490643 |
+| 2025 |     0.0512245 |
+| 2026 |     0.0616438 |
 
 Rank stability over several years and groups is one call; keep `draws`
 modest for exploratory work and raise it for a final table.
@@ -154,11 +166,13 @@ modest for exploratory work and raise it for a final table.
 
 stable <- btg_rank_stability(btg_get_data("force_ethnicity_year", years = 2023:2025, groups = "Black"), draws = 300)
 aggregate(cbind(width = rank_upper - rank_lower) ~ year, data = stable, FUN = median)
-#>   year width
-#> 1 2023     7
-#> 2 2024     6
-#> 3 2025     7
 ```
+
+| year | width |
+|-----:|------:|
+| 2023 |     7 |
+| 2024 |     6 |
+| 2025 |     7 |
 
 [`btg_robustness_summary()`](https://blackthrive.github.io/BlackThriveSS/reference/btg_robustness_summary.md)
 puts the counts a study needs in one table: one row per year and group,
@@ -170,46 +184,22 @@ settled and how many forces have full-year returns.
 ``` r
 
 btg_robustness_summary(btg_get_data("force_ethnicity_year", years = 2023:2025), draws = 300)
-#>    year group forces eligible above below sensitive median_unknown_share
-#> 1  2023 Asian     43       40    29     1        10           0.06372176
-#> 2  2023 Black     43       40    38     0         2           0.06372176
-#> 3  2023 Mixed     43        6     4     0         2           0.06372176
-#> 4  2023 Other     43       40    29     0        11           0.06372176
-#> 5  2024 Asian     42       39    31     1         7           0.04906426
-#> 6  2024 Black     42       39    39     0         0           0.04906426
-#> 7  2024 Mixed     42        7     6     0         1           0.04906426
-#> 8  2024 Other     42       39    29     0        10           0.04906426
-#> 9  2025 Asian     42       40    32     1         7           0.05122450
-#> 10 2025 Black     42       40    40     0         0           0.05122450
-#> 11 2025 Mixed     42        7     5     0         2           0.05122450
-#> 12 2025 Other     42       39    32     0         7           0.05122450
-#>    max_unknown_share median_rank_interval settled_top full_year_returns
-#> 1          1.0000000                  9.0           7                 0
-#> 2          1.0000000                  7.0           8                 0
-#> 3          1.0000000                  0.5           6                 0
-#> 4          1.0000000                  6.0           9                 0
-#> 5          0.9990545                 10.0           7                40
-#> 6          0.9990545                  6.0           8                40
-#> 7          0.9990545                  2.0           7                40
-#> 8          0.9990545                  6.0           8                40
-#> 9          0.3182773                 10.5           8                37
-#> 10         0.3182773                  7.0           6                37
-#> 11         0.3182773                  2.0           7                37
-#> 12         0.3182773                  6.0           8                37
-#>    months_in_source
-#> 1                12
-#> 2                12
-#> 3                12
-#> 4                12
-#> 5                12
-#> 6                12
-#> 7                12
-#> 8                12
-#> 9                12
-#> 10               12
-#> 11               12
-#> 12               12
 ```
+
+| year | group | forces | eligible | above | below | sensitive | median_unknown_share | max_unknown_share | median_rank_interval | settled_top | full_year_returns | months_in_source |
+|---:|:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 2023 | Asian | 43 | 40 | 29 | 1 | 10 | 0.0637218 | 1.0000000 | 9.0 | 7 | 0 | 12 |
+| 2023 | Black | 43 | 40 | 38 | 0 | 2 | 0.0637218 | 1.0000000 | 7.0 | 8 | 0 | 12 |
+| 2023 | Mixed | 43 | 6 | 4 | 0 | 2 | 0.0637218 | 1.0000000 | 0.5 | 6 | 0 | 12 |
+| 2023 | Other | 43 | 40 | 29 | 0 | 11 | 0.0637218 | 1.0000000 | 6.0 | 9 | 0 | 12 |
+| 2024 | Asian | 42 | 39 | 31 | 1 | 7 | 0.0490643 | 0.9990545 | 10.0 | 7 | 40 | 12 |
+| 2024 | Black | 42 | 39 | 39 | 0 | 0 | 0.0490643 | 0.9990545 | 6.0 | 8 | 40 | 12 |
+| 2024 | Mixed | 42 | 7 | 6 | 0 | 1 | 0.0490643 | 0.9990545 | 2.0 | 7 | 40 | 12 |
+| 2024 | Other | 42 | 39 | 29 | 0 | 10 | 0.0490643 | 0.9990545 | 6.0 | 8 | 40 | 12 |
+| 2025 | Asian | 42 | 40 | 32 | 1 | 7 | 0.0512245 | 0.3182773 | 10.5 | 8 | 37 | 12 |
+| 2025 | Black | 42 | 40 | 40 | 0 | 0 | 0.0512245 | 0.3182773 | 7.0 | 6 | 37 | 12 |
+| 2025 | Mixed | 42 | 7 | 5 | 0 | 2 | 0.0512245 | 0.3182773 | 2.0 | 7 | 37 | 12 |
+| 2025 | Other | 42 | 39 | 32 | 0 | 7 | 0.0512245 | 0.3182773 | 6.0 | 8 | 37 | 12 |
 
 ## Has the source moved on?
 
@@ -249,21 +239,16 @@ table(ch$change_direction, useNA = "ifany")
 #>       9      31       4
 head(ch[ch$change_direction %in% c("higher", "lower"),
         c("force_label", "ratio_from", "ratio_to", "change", "change_lower", "change_upper", "comparable_coverage")])
-#>            force_label ratio_from ratio_to   change change_lower change_upper
-#> 4       Cambridgeshire   6.011442 7.573837 1.259904     1.065722     1.489466
-#> 19       Hertfordshire   5.200155 5.731577 1.102193     1.003443     1.210662
-#> 20          Humberside   3.430921 4.495046 1.310157     1.039448     1.651369
-#> 25          Merseyside   2.364159 2.695715 1.140243     1.074713     1.209769
-#> 26 Metropolitan Police   4.165467 4.573408 1.097934     1.078518     1.117699
-#> 32     Nottinghamshire   6.678454 8.105919 1.213742     1.080109     1.363908
-#>    comparable_coverage
-#> 4                 TRUE
-#> 19                TRUE
-#> 20               FALSE
-#> 25                TRUE
-#> 26                TRUE
-#> 32                TRUE
 ```
+
+| force_label | ratio_from | ratio_to | change | change_lower | change_upper | comparable_coverage |
+|:---|---:|---:|---:|---:|---:|:---|
+| Cambridgeshire | 6.011442 | 7.573837 | 1.259904 | 1.065722 | 1.489466 | TRUE |
+| Hertfordshire | 5.200155 | 5.731577 | 1.102193 | 1.003443 | 1.210662 | TRUE |
+| Humberside | 3.430921 | 4.495046 | 1.310157 | 1.039448 | 1.651369 | FALSE |
+| Merseyside | 2.364159 | 2.695715 | 1.140243 | 1.074713 | 1.209769 | TRUE |
+| Metropolitan Police | 4.165467 | 4.573408 | 1.097934 | 1.078518 | 1.117699 | TRUE |
+| Nottinghamshire | 6.678454 | 8.105919 | 1.213742 | 1.080108 | 1.363908 | TRUE |
 
 ``` r
 
@@ -310,8 +295,8 @@ still says where its numbers came from.
 csv <- tempfile(fileext = ".csv")
 files <- btg_export(btg_get_data("force_ethnicity_year", years = 2025, groups = "Black"), csv)
 basename(files)
-#> [1] "file1cba717177d1.csv"          "file1cba717177d1.json"        
-#> [3] "file1cba717177d1-coverage.csv"
+#> [1] "file1cbb548ed442.csv"          "file1cbb548ed442.json"        
+#> [3] "file1cbb548ed442-coverage.csv"
 unlink(files)
 ```
 

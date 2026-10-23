@@ -39,7 +39,7 @@ A character vector of the written paths, invisibly.
 path <- tempfile(fileext = ".csv")
 btg_export(btg_get_data(force = c("metropolitan", "kent")), path)
 list.files(dirname(path), basename(sub("[.]csv$", "", path)))
-#> [1] "file198d5e5a3b6c-coverage.csv" "file198d5e5a3b6c.csv"         
-#> [3] "file198d5e5a3b6c.json"        
+#> [1] "file199142b8eb54-coverage.csv" "file199142b8eb54.csv"         
+#> [3] "file199142b8eb54.json"        
 unlink(list.files(dirname(path), basename(sub("[.]csv$", "", path)), full.names = TRUE))
 ```
