@@ -83,6 +83,8 @@ test_that("the briefing renders to a self-contained HTML file", {
   expect_match(html, 'class="btg-card"', fixed = TRUE)
   expect_match(html, "Table 1.", fixed = TRUE)
   expect_match(html, "Figure 1.", fixed = TRUE)
+  # Section 60 shares are computed row by row (2,200 of 3,024 searches were of Black people)
+  expect_match(html, "72.8%", fixed = TRUE)
   expect_match(html, "Reproduce it", fixed = TRUE)
   expect_match(html, "data:image", fixed = TRUE)
   expect_error(btg_report(force = "metropolitan", file = path), "File exists")

@@ -52,12 +52,19 @@ citation and release identifiers needed to reproduce every figure.
 Rendering needs the \code{rmarkdown} package and Pandoc, which
 RStudio and Positron supply, and a PDF additionally needs a LaTeX
 installation such as TinyTeX (\code{tinytex::install_tinytex()}); the
-function stops with a clear message when any is missing. Tables are set
-with \code{\link[=btg_table]{btg_table()}}, Word output uses the styled reference document
-installed with the template, and PDF output uses booktabs tables. The
-template is also available in those editors as the R Markdown template
-"BlackThriveSS briefing" for editing, where Knit to HTML, Word or PDF
-gives the same three outputs.
+function stops with a clear message when any is missing. Paragraphs are
+justified and the body text is 12-point Calibri in HTML and Word; the
+PDF uses Calibri too, through XeLaTeX, when the machine has that font or
+its open counterpart Carlito, and LaTeX's default face otherwise. Tables
+are set with \code{\link[=btg_table]{btg_table()}}, Word output uses the styled reference
+document installed with the template, and PDF output uses booktabs
+tables. Charts in a briefing carry only their coverage note, because the
+briefing states the sources and qualifications itself; the option
+\code{BlackThriveSS.caption = "short"} does the same for any chart. Figures
+are drawn at page width, as vector graphics in PDF and at print
+resolution in Word, on A4 pages. The template is also available in those
+editors as the R Markdown template "BlackThriveSS briefing" for editing,
+where Knit to HTML, Word or PDF gives the same three outputs.
 }
 \examples{
 \donttest{

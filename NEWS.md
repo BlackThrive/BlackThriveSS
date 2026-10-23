@@ -24,7 +24,11 @@
   panel and headline findings by topic, numbers its tables and figures, and
   sets tables with `btg_table()`: styled in HTML by the template's
   stylesheet, in Word by a reference document carrying the package's fonts,
-  colours and table style, and in PDF with booktabs rules.
+  colours and table style, and in PDF with booktabs rules. Figures fill
+  the text width of A4 pages, as vector graphics in PDF and at print
+  resolution in Word, and carry only their coverage note inside the image
+  because the briefing states sources and qualifications itself;
+  `options(BlackThriveSS.caption = "short")` does the same for any chart.
 * The package now lists its five authors in `DESCRIPTION` and the citation.
 * Sharing. `btg_export()` writes a dataset to CSV with a JSON provenance
   sidecar; `btg_glossary()` defines every term the package uses.

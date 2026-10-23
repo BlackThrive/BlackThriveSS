@@ -21,6 +21,7 @@ output:
     fig_caption: true
     latex_engine: pdflatex
     extra_dependencies: ["booktabs", "float"]
+papersize: a4
 geometry: margin=2.2cm
 fontsize: 12pt
 params:
@@ -35,9 +36,13 @@ params:
 ```{r setup, include = FALSE}
 html <- knitr::is_html_output()
 latex <- knitr::is_latex_output()
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, dpi = 110,
-                      fig.width = if (html) 10 else 7.3, fig.height = if (html) 6.5 else 4.8,
-                      out.width = "100%")
+# Figures fill the text width: vector graphics in PDF, print resolution in Word.
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, out.width = "100%",
+                      fig.width = if (html) 10 else 7.5, fig.height = if (html) 6.2 else 4.9,
+                      dpi = if (html) 144 else 200,
+                      dev = if (latex && isTRUE(capabilities("cairo"))) "cairo_pdf" else "png")
+# the briefing states sources and qualifications itself, so charts carry only their coverage note
+options(BlackThriveSS.caption = "short")
 if (html) {
   knitr::opts_chunk$set(fig.align = "left")
 } else {
@@ -174,13 +179,13 @@ btg_table(robust, caption = numbered(table_n(), sprintf("How robust each compari
 note("The ratio range is what the ratio would be if every stop with no recorded ethnicity were counted as White (lower end) or as the compared group (upper end); any allocation lies between them. The side of parity says whether the whole range sits above or below 1, or depends on those stops. The rank interval comes from redrawing the recorded counts (sampling); the rank range from allocating every force's unknown stops for or against this one.")
 ```
 
-```{r ranking, eval = is_force, fig.cap = if (is_force) numbered(figure(), paste("Black:White stop-rate ratios for the ten highest-ranked forces, with", profile$area$label, "highlighted where it falls among them.")), fig.alt = "Ranking of forces by Black to White stop-rate ratio with this force highlighted."}
+```{r ranking, eval = is_force, fig.height = if (html) 6.5 else 5.2, fig.cap = if (is_force) numbered(figure(), paste("Black:White stop-rate ratios for the ten highest-ranked forces, with", profile$area$label, "highlighted where it falls among them. Bars are recorded ratios with 95% Poisson intervals; a lighter bar and an asterisk mark incomplete or unverified returns.")), fig.alt = "Ranking of forces by Black to White stop-rate ratio with this force highlighted."}
 if (is_force && any(year_data$data$eligible[year_data$data$group == "Black"])) {
   btg_plot_disparity(year_data, year = profile$year, group = "Black", highlight = profile$area$id)
 }
 ```
 
-```{r robustness, eval = is_force, fig.cap = if (is_force) numbered(figure(), "The same forces with their sampling intervals and the range of each ratio under unknown ethnicity, on a logarithmic axis."), fig.alt = "Recorded ratios with sampling intervals and bounds under unknown ethnicity."}
+```{r robustness, eval = is_force, fig.height = if (html) 6.5 else 5.2, fig.cap = if (is_force) numbered(figure(), "The same forces on a logarithmic axis: dots are recorded ratios, dark lines their 95% Poisson intervals, and light bands the range of each ratio if every stop with unknown ethnicity were counted as White or as Black."), fig.alt = "Recorded ratios with sampling intervals and bounds under unknown ethnicity."}
 if (is_force && any(year_data$data$eligible[year_data$data$group == "Black"])) {
   btg_plot_sensitivity(year_data, year = profile$year, group = "Black", highlight = profile$area$id)
 }
@@ -188,7 +193,7 @@ if (is_force && any(year_data$data$eligible[year_data$data$group == "Black"])) {
 
 ## Over time
 
-```{r trend, fig.cap = numbered(figure(), "Stop-rate ratios compared with White residents by year, with 95% intervals; hollow markers show years the source does not cover in full."), fig.alt = "Stop-rate ratios by group and year for this area."}
+```{r trend, fig.cap = numbered(figure(), "Stop-rate ratios compared with White residents by year, with 95% Poisson intervals; hollow markers show years the source does not cover in full. Resident populations are fixed at Census 2021."), fig.alt = "Stop-rate ratios by group and year for this area."}
 btg_plot_trend(area_data)
 ```
 
@@ -221,7 +226,7 @@ if (is_force && !is.null(profile$section60) && nrow(profile$section60)) {
   s60 <- profile$section60
   total <- sum(s60$s60_stops, na.rm = TRUE)
   btg_table(data.frame(Group = s60$group, Searches = count(s60$s60_stops),
-                       `Share of Section 60 searches` = ifelse(total > 0, paste0(fmt(100 * s60$s60_stops / total), "%"), ""),
+                       `Share of Section 60 searches` = if (total > 0) paste0(fmt(100 * s60$s60_stops / total), "%") else rep("", nrow(s60)),
                        check.names = FALSE, stringsAsFactors = FALSE),
             caption = numbered(table_n(), sprintf("Searches under Section 60 by ethnic group, %s", period)), align = c("l", "r", "r"))
 }
@@ -253,7 +258,7 @@ note(if (is_force) "A supplied month is a reported submission, not proof that ev
 
 ## National context
 
-```{r national, fig.cap = numbered(figure(), "Share of recorded stops by ethnic group across England and Wales, by month."), fig.alt = "Share of recorded stops by ethnic group across England and Wales by month."}
+```{r national, fig.height = if (html) 5.8 else 4.4, fig.cap = numbered(figure(), "Share of recorded stops by ethnic group across England and Wales, by month, from all reporting forces."), fig.alt = "Share of recorded stops by ethnic group across England and Wales by month."}
 btg_plot_trend(btg_get_data("national_month_ethnicity", release = profile$release), measure = "share")
 ```
 
@@ -296,4 +301,5 @@ cat("Package citation: ", paste(format(utils::citation("BlackThriveSS"), style =
 cat("Validation of the bundled release: ", if (all(checks$passed)) "all checks passed" else "some checks failed",
     " (", nrow(checks), " checks). Rendered ", format(Sys.Date(), "%d %B %Y"), ".\n", sep = "")
 if (html) cat('</div>\n')
+options(BlackThriveSS.caption = NULL)
 ```

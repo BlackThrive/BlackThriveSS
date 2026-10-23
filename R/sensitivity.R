@@ -285,16 +285,15 @@ btg_plot_sensitivity <- function(x = btg_get_data(), n = 10L,
   settled <- sum(plotted$parity_direction %in% c("above", "below"))
   subtitle <- switch(ranking, highest = "Highest displayed ratios",
                      lowest = "Lowest displayed ratios", closest = "Closest to parity")
-  subtitle <- sprintf("%s: %d of %d eligible forces.\n%d of %d keep their side of parity under every allocation of unknown ethnicity.",
-                      subtitle, nrow(d), chart$n_eligible, settled, nrow(d))
-  caption <- paste(
+  subtitle <- .wrap_caption(sprintf("%s: %d of %d eligible forces.\n%d of %d keep their side of parity under every allocation of unknown ethnicity.",
+                                    subtitle, nrow(d), chart$n_eligible, settled, nrow(d)), 95)
+  caption <- .chart_caption(
     "Sources: Police.uk; ONS Census 2021. Resident-based event rates; officer-defined ethnicity.",
     "Dots are recorded ratios; dark lines are 95% Poisson intervals on the recorded counts (sampling only).",
     "Light bands run from the ratio with every unknown-ethnicity stop counted as White to the ratio with every one counted in the compared group.",
     .coverage_note(d),
     "Ranks follow dashboard eligibility, not a measure of individual risk or causal discrimination.",
-    paste("Fixed release:", x$metadata$release), sep = "\n")
-  caption <- .wrap_caption(caption)
+    paste("Fixed release:", x$metadata$release))
   # Ratios are multiplicative and the allocation bands can span orders of
   # magnitude where a group's resident population is small, so the axis is
   # logarithmic with parity at its centre of attention.

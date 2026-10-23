@@ -206,21 +206,22 @@ btg_plot_trend <- function(x, measure = NULL, highlight = NULL) {
     sprintf("Hollow markers: %s %s not covered in full (source month %s); counts are not annualised.",
             paste(format(periods), collapse = ", "), if (length(periods) > 1L) "are" else "is", latest)
   } else "Every period is covered in full by supplied returns within the source month."
-  caption <- paste(
+  caption <- .chart_caption(
     "Sources: Police.uk; ONS Census 2021. Officer-defined ethnicity; resident populations fixed at Census 2021.",
     if (identical(measure, "ratio")) "Vertical lines are 95% Poisson intervals on the recorded counts; they exclude reporting and classification uncertainty." else NULL,
     "Recorded events are not unique people, and a ratio or rate does not establish discrimination.",
-    paste("Fixed release:", x$metadata$release), sep = "\n")
-  caption <- .wrap_caption(caption)
+    paste("Fixed release:", x$metadata$release))
   area <- attr(table, "area")
   periods <- range(table$period)
   description <- sub(" [(].*$", "", measures[[measure]])
+  if (identical(measure, "ratio")) description <- "stop-rate ratios"
   if (!startsWith(description, "Section")) description <- paste0(tolower(substr(description, 1, 1)), substring(description, 2))
-  title <- sprintf("%s: %s, %s to %s", area, description, periods[1], periods[2])
-  if (identical(measure, "ratio")) title <- sprintf("%s: stop-rate ratios compared with White residents, %s to %s", area, periods[1], periods[2])
+  title <- .wrap_caption(sprintf("%s: %s, %s to %s", area, description, periods[1], periods[2]), 62)
+  compared <- if (measure %in% c("ratio", "rate")) "Compared with White residents. " else ""
   subtitle <- if (length(series) > 1L) {
-    sprintf("%s. %s", paste(series, collapse = ", "), incomplete_note)
-  } else incomplete_note
+    sprintf("%s%s. %s", compared, paste(series, collapse = ", "), incomplete_note)
+  } else paste0(compared, incomplete_note)
+  subtitle <- .wrap_caption(subtitle, 95)
   show_intervals <- any(is.finite(plotted$lower))
   p <- ggplot2::ggplot(plotted, ggplot2::aes(x = period, y = value, colour = series, group = series))
   if (identical(measure, "ratio")) {
@@ -416,19 +417,18 @@ btg_plot_change <- function(x, from = NULL, to = NULL, group = NULL, n = 10L,
   points$year <- factor(points$year, levels = levels_years)
   plotted$label_x <- pmax(plotted$ratio_from, plotted$ratio_to)
   clear <- sum(rows$change_direction %in% c("higher", "lower"))
-  subtitle <- sprintf("%s: %d of %d forces eligible in both years. %d of %d changes have 95%% intervals that exclude no change.",
+  subtitle <- .wrap_caption(sprintf("%s: %d of %d forces eligible in both years. %d of %d changes have 95%% intervals that exclude no change.",
                       switch(order, largest = "Largest changes in either direction",
                              increase = "Largest increases", decrease = "Largest decreases"),
                       nrow(rows), sum(ch$group == group & ch$force %in% eligible(ch$year_from[1]) &
                                         ch$force %in% eligible(ch$year_to[1]) & is.finite(ch$change)),
-                      clear, nrow(rows))
-  caption <- paste(
+                      clear, nrow(rows)), 95)
+  caption <- .chart_caption(
     "Sources: Police.uk; ONS Census 2021. Resident-based event rates; officer-defined ethnicity.",
     "Change is the later ratio divided by the earlier one; intervals treat the four recorded counts as independent Poisson counts.",
     if (any(!rows$comparable_coverage)) "* Returns do not cover both years in full; fewer months lower counts but not, under uniform reporting, the ratio." else "Every displayed force has full-year returns in both years.",
     "A change in recorded stops relative to fixed populations does not by itself show a change in policing or establish discrimination.",
-    paste("Fixed release:", x$metadata$release), sep = "\n")
-  caption <- .wrap_caption(caption)
+    paste("Fixed release:", x$metadata$release))
   upper <- max(plotted$label_x) * 1.18
   p <- ggplot2::ggplot(plotted, ggplot2::aes(y = axis_label)) +
     ggplot2::geom_vline(xintercept = 1, colour = col[["secondary"]], linewidth = 0.5) +

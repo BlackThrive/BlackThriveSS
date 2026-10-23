@@ -81,3 +81,18 @@ test_that("the chart uses the shared theme and labels incomplete returns by fill
   one <- btg_plot_disparity(btg_get_data(force = "metropolitan"), n = 1)
   expect_silent(ggplot2::ggplot_build(one))
 })
+
+test_that("chart captions can be shortened for documents that carry the notes", {
+  old <- options(BlackThriveSS.caption = "short")
+  on.exit(options(old))
+  p <- btg_plot_disparity()
+  expect_match(p$labels$caption, "^[*] ")
+  expect_false(grepl("Sources", p$labels$caption))
+  q <- btg_plot_trend(btg_get_data("force_ethnicity_year", force = "metropolitan"))
+  expect_null(q$labels$caption)
+  change <- btg_plot_change(btg_get_data("force_ethnicity_year", groups = "Black"), from = 2023, to = 2024)
+  expect_true(is.null(change$labels$caption) || grepl("^[*] ", change$labels$caption))
+  options(BlackThriveSS.caption = "full")
+  expect_match(btg_plot_disparity()$labels$caption, "Sources")
+  expect_match(btg_plot_trend(btg_get_data("force_ethnicity_year", force = "metropolitan"))$labels$caption, "Fixed release")
+})

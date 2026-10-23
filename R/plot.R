@@ -54,6 +54,18 @@ utils::globalVariables(c("ratio", "axis_label", "value_label", "fill_label",
   paste(unlist(lapply(lines, strwrap, width = width)), collapse = "\n")
 }
 
+# A chart's caption: every line in full, or only the coverage note when the
+# document around the chart states the sources and qualifications itself
+# (options(BlackThriveSS.caption = "short"), which btg_report() sets).
+.chart_caption <- function(...) {
+  lines <- c(...)
+  if (identical(getOption("BlackThriveSS.caption", "full"), "short")) {
+    lines <- lines[startsWith(lines, "*")]
+    if (!length(lines)) return(NULL)
+  }
+  .wrap_caption(paste(lines, collapse = "\n"))
+}
+
 # The caption line that explains the asterisks on a chart's displayed forces.
 .coverage_note <- function(d) {
   partial <- sum(d$coverage_status != "all_months_supplied")
@@ -106,7 +118,10 @@ utils::globalVariables(c("ratio", "axis_label", "value_label", "fill_label",
 #'   bars keep the ordinary fill and the caption says so. A highlighted force is
 #'   drawn only if it falls within the `n` displayed forces, as on the
 #'   dashboard. Counts are not annualised. Display eligibility does not imply
-#'   complete or comparable exposure, or establish discrimination.
+#'   complete or comparable exposure, or establish discrimination. The
+#'   caption states the sources and qualifications; in a document that
+#'   states them itself, `options(BlackThriveSS.caption = "short")` keeps
+#'   only the coverage note, as [btg_report()] does.
 #' @export
 #' @examples
 #' p <- btg_plot_disparity(btg_get_data())
@@ -143,13 +158,12 @@ btg_plot_disparity <- function(x = btg_get_data(), n = 10L,
   present <- fill_levels[fill_levels %in% plotted$fill_label]
   subtitle <- switch(ranking, highest = "Highest displayed ratios",
                      lowest = "Lowest displayed ratios", closest = "Closest to parity")
-  caption <- paste(
+  caption <- .chart_caption(
     "Sources: Police.uk; ONS Census 2021. Resident-based event rates; officer-defined ethnicity.",
     "Dark lines are 95% Poisson intervals on the recorded counts; they exclude reporting and classification uncertainty.",
     .coverage_note(d),
     "Ranks follow dashboard eligibility, not a measure of individual risk or causal discrimination.",
-    paste("Fixed release:", x$metadata$release), sep = "\n")
-  caption <- .wrap_caption(caption)
+    paste("Fixed release:", x$metadata$release))
   upper <- max(1.35, max(plotted$label_x) * 1.16)
   p <- ggplot2::ggplot(plotted, ggplot2::aes(x = ratio, y = axis_label)) +
     ggplot2::geom_col(ggplot2::aes(fill = fill_label), width = 0.62) +

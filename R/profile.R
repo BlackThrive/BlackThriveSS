@@ -288,10 +288,13 @@ print.btg_profile <- function(x, ...) {
 #'   its open counterpart Carlito, and LaTeX's default face otherwise. Tables
 #'   are set with [btg_table()], Word output uses the styled reference
 #'   document installed with the template, and PDF output uses booktabs
-#'   tables. The
-#'   template is also available in those editors as the R Markdown template
-#'   "BlackThriveSS briefing" for editing, where Knit to HTML, Word or PDF
-#'   gives the same three outputs.
+#'   tables. Charts in a briefing carry only their coverage note, because the
+#'   briefing states the sources and qualifications itself; the option
+#'   `BlackThriveSS.caption = "short"` does the same for any chart. Figures
+#'   are drawn at page width, as vector graphics in PDF and at print
+#'   resolution in Word, on A4 pages. The template is also available in those
+#'   editors as the R Markdown template "BlackThriveSS briefing" for editing,
+#'   where Knit to HTML, Word or PDF gives the same three outputs.
 #' @export
 #' @examples
 #' \donttest{
@@ -330,6 +333,9 @@ btg_report <- function(force = NULL, council = NULL, year = NULL, release = NULL
   work <- tempfile("btg-briefing-")
   dir.create(work)
   on.exit(unlink(work, recursive = TRUE), add = TRUE)
+  # the briefing states sources and qualifications itself, so charts carry short captions
+  old_caption <- options(BlackThriveSS.caption = "short")
+  on.exit(options(old_caption), add = TRUE)
   # the template's stylesheet and Word reference document travel with it
   file.copy(list.files(skeleton, full.names = TRUE), work)
   input <- file.path(work, "skeleton.Rmd")
