@@ -8,7 +8,6 @@
 ^[.]gitattributes$
 ^[.]github$
 ^install[.]R$
-^CRAN-READINESS[.]md$
 ^cran-comments[.]md$
 ^CONTRIBUTING[.]md$
 ^release-tools$
@@ -17,3 +16,4 @@
 ^_pkgdown[.]yml$
 ^docs$
 ^pkgdown$
+^index[.]md$

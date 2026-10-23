@@ -1,6 +1,6 @@
 # BlackThriveSS: path to CRAN
 
-Working version: **0.0.3.9000** (development). Review date: **22 October 2026**.
+Working version: **0.1.0**. Review date: **23 October 2026**.
 Scope: two immutable data releases (the original 2025 `force_disparity`
 dataset and a six-dataset catalogue from the same dashboard snapshot), the
 force ranking chart for any year and group, saved views, and the URL round

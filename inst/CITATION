@@ -6,5 +6,7 @@ bibentry(
              person("Souci", "Frissa"), person("Aisha", "Mohamed"),
              person("Nathan", "Stanley")),
   year = "2026",
-  note = paste("R package version", meta$Version, "; Black Thrive Global")
+  organization = "Black Thrive Global",
+  note = paste("R package version", meta$Version),
+  url = "https://blackthrive.github.io/BlackThriveSS/"
 )

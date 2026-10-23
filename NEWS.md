@@ -1,4 +1,4 @@
-# BlackThriveSS (development version)
+# BlackThriveSS 0.1.0
 
 * Robustness analysis. `btg_sensitivity()` bounds every ratio under the two
   extreme allocations of stops with no recorded ethnicity and reports
@@ -31,6 +31,12 @@
   `options(BlackThriveSS.caption = "short")` does the same for any chart.
 * The package now lists its five authors, with ORCID identifiers where held,
   in `DESCRIPTION` and the citation.
+* Documentation. The package has a logo, and its website opens with an
+  overview for first-time users: what the package gives, a gallery of its
+  charts, a quick start and who it is for, with a light and dark theme. The
+  README is shorter and points to the site; the developer workflow moved to
+  `CONTRIBUTING.md`, and the CRAN readiness notes to `dev/`. The citation
+  names Black Thrive Global as the organisation and gives the site address.
 * Sharing. `btg_export()` writes a dataset to CSV with a JSON provenance
   sidecar; `btg_glossary()` defines every term the package uses.
 * Auditing the source. `btg_source_status()` reads the Police.uk

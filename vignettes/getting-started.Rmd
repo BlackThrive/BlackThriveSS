@@ -26,11 +26,10 @@ one-call HTML briefing.
 
 ## Install and discover
 
-Before CRAN publication, use the supplied installation bundle or a source
-archive and its required dependencies. The package itself is pure R. Source
-installation of some dependencies can require a compiler; on Windows and macOS,
-use available CRAN dependency binaries. Installation instructions accompany the
-release; `install.packages("BlackThriveSS")` is not yet a supported public route.
+BlackThriveSS is not on CRAN yet. Install the current release from GitHub with
+`remotes::install_github("BlackThrive/BlackThriveSS")`; the package itself is
+pure R, and on Windows and macOS the dependencies install as CRAN binaries.
+Start by listing what is in the box:
 
 ```{r discover}
 library(BlackThriveSS)
@@ -220,9 +219,10 @@ btg_citation(x)
 citation("BlackThriveSS")
 ```
 
-The data dictionary is installed at:
+The [data dictionary](https://github.com/BlackThrive/BlackThriveSS/blob/main/inst/NOTES/data-dictionary.md)
+defines every column; it is also installed with the package:
 
-```{r dictionary}
+```{r dictionary, eval = FALSE}
 system.file("NOTES", "data-dictionary.md", package = "BlackThriveSS")
 ```
 

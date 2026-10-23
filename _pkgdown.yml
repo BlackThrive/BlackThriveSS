@@ -1,18 +1,40 @@
 url: https://blackthrive.github.io/BlackThriveSS/
+
 template:
   bootstrap: 5
+  light-switch: true
   bslib:
     primary: "#0B2545"
     base_font: {google: "Inter"}
     heading_font: {google: "Inter"}
+    code_font: {google: "JetBrains Mono"}
+  opengraph:
+    image:
+      src: man/figures/logo.png
+      alt: BlackThriveSS logo
 
 home:
   title: Reproducible stop and search evidence for England and Wales
+  description: >-
+    Fixed, checksummed releases of public stop and search data for every police
+    force and council in England and Wales, with charts, robustness checks and
+    briefings in R.
+  links:
+  - text: Open the Black Thrive dashboard
+    href: https://bgtresearch-stop-search-dashboard.share.connect.posit.cloud/
+  - text: Black Thrive Global
+    href: https://blackthrive.org
 
 navbar:
+  bg: primary
+  type: dark
   structure:
     left: [intro, reference, articles, news]
-    right: [search, github]
+    right: [search, github, lightswitch]
+  components:
+    intro:
+      text: Get started
+      href: articles/getting-started.html
 
 articles:
 - title: Guides
@@ -55,12 +77,13 @@ reference:
   - btg_change
   - btg_source_status
 - title: Briefings
-  desc: Plain statements and an HTML briefing for one force or council.
+  desc: Plain statements and a briefing in HTML, Word or PDF for one force or council.
   contents:
   - btg_profile
   - btg_report
   - btg_table
 - title: Saved views and the dashboard
+  desc: Replay a chart exactly, and carry it to and from the dashboard website.
   contents:
   - btg_save_view
   - btg_from_view
